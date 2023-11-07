@@ -4,14 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Akademik;
 use App\Models\Data_angkatan;
-use App\Models\Detail_jadwal;
 use App\Models\Guru;
-use App\Models\Jadwal;
-use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Nilai;
-use App\Models\Siswa;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -29,7 +24,7 @@ class NilaiSeeder extends Seeder
 
         foreach (Data_angkatan::with('siswa')->get() as $key => $angkatan) {
             $tahun_masuk = $angkatan->tahun_masuk;
-            $tahuns = Akademik::where('tahun_ajaran', 'like', $tahun_masuk . '%')->orWhere('tahun_ajaran', 'like', ($tahun_masuk + 1) . '%')->orWhere('tahun_ajaran', 'like', ($tahun_masuk + 2) . '%')->get();
+            $tahuns = Akademik::where('tahun_ajaran', 'like', $tahun_masuk.'%')->orWhere('tahun_ajaran', 'like', ($tahun_masuk + 1).'%')->orWhere('tahun_ajaran', 'like', ($tahun_masuk + 2).'%')->get();
 
             $counter = 0;
             foreach ($tahuns as $key => $tahun) {
@@ -52,7 +47,7 @@ class NilaiSeeder extends Seeder
                         break;
 
                     default:
-                        # code...
+                        // code...
                         break;
                 }
                 foreach ($angkatan->siswa as $key => $siswa) {
@@ -77,13 +72,13 @@ class NilaiSeeder extends Seeder
                             'nilai_akademik' => random_int(50, 100),
                             'id_nilai' => $id_raport_uts,
                             'id_mapel' => $mapel->id,
-                            'id_guru' => random_int(1, $guru_list)
+                            'id_guru' => random_int(1, $guru_list),
                         ]);
                         DB::table('detail_nilais')->insert([
                             'nilai_akademik' => random_int(50, 100),
                             'id_nilai' => $id_raport_uas,
                             'id_mapel' => $mapel->id,
-                            'id_guru' => random_int(1, $guru_list)
+                            'id_guru' => random_int(1, $guru_list),
                         ]);
                     }
                 }

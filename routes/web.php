@@ -1,31 +1,28 @@
 <?php
 
 use App\Http\Controllers\AbsensiController;
-use Illuminate\Http\Request;
-use App\Models\Data_angkatan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EditPasswordController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\InputNilaiController;
+use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\JadwalMengajarController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MapelController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PeminjamanBarangController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\RaportController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\InventarisController;
-use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\RaportController;
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\InputNilaiController;
-use App\Http\Controllers\PeminjamanController;
-use App\Http\Controllers\EditPasswordController;
-use App\Http\Controllers\JadwalMengajarController;
-use App\Http\Controllers\KalenderAkademikController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PengumumanController;
-use App\Models\Absensi;
 use App\Models\Akademik;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,8 +37,9 @@ use App\Models\Akademik;
 
 Route::post('/api/request-dd', function (Request $request) {
     $request->validate([
-        'alamat.jalan' => 'required'
+        'alamat.jalan' => 'required',
     ]);
+
     return dd($request->input('alamat'));
 });
 Route::get('/api/tes', function (Request $request) {
@@ -57,6 +55,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dashboard');
     }
+
     return redirect('/login');
 });
 
@@ -69,22 +68,21 @@ Route::middleware(['auth'])->group(function () {
     // ==============[ L O G O U T ]===============
     Route::get('/logout', function () {
         Auth::logout(); // Melakukan logout pengguna saat ini
+
         return redirect('/')->with('toast_success', 'Anda telah berhasil logout.');
     })->name('logout');
 
-    Route::post('/login/setRole', [LoginController::class, 'setRole'])->name('set_role');
-
     // ==============[ D A S H B O A R D ]===============
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
     //edit password
-    Route::get('/option/change-password', [EditPasswordController::class, 'index']);
-    Route::post('/option/change-password/{user}', [EditPasswordController::class, 'ubah'])->name('option.change-password');
+    Route::get('/editpassword', [EditPasswordController::class, 'index']);
+    Route::post('/edit-password/{id}', [EditPasswordController::class, 'ubah']);
     Route::post('/edit-passwordsiswa/{id}', [EditPasswordController::class, 'ubahpwdsiswa']);
 });
 
 Route::middleware(['userRole:admin,guru'])->group(function () {
-    Route::get('/akademik/jadwal-guru/{id}', [JadwalMengajarController::class, 'jadwalguru']);
+    Route::get('/akademik/jadwal/{id_guru}', [JadwalMengajarController::class, 'jadwalguru']);
     Route::get('/akademik/jadwal/cetak_pdf/{id_guru}', [JadwalMengajarController::class, 'cetakjadwalguru']);
 
     // input nilai
@@ -104,6 +102,11 @@ Route::middleware(['userRole:admin,guru'])->group(function () {
 
     //raport siswa
     Route::post('/data-raport-siswa/{id}', [RaportController::class, 'raportsiswa']);
+
+    //jadwal siswa
+    Route::get('/data-jadwal/{id}', [JadwalController::class, 'jadwalsiswa']);
+    Route::get('/data-jadwalsiswa/cetak_pdf/{id}', [JadwalController::class, 'cetakjadwalsiswa']);
+
     Route::get('/data-raport-cetak-siswa/{id}/{smt}', [RaportController::class, 'cetakraportsiswa']);
 
     //kepsek
@@ -113,16 +116,13 @@ Route::middleware(['userRole:admin,guru'])->group(function () {
     Route::get('/data-jadwalmengajar-cek/{id}', [JadwalMengajarController::class, 'cekjadwal']);
     Route::get('/data-jadwal-cek', [JadwalController::class, 'lihat']);
     Route::get('/data-jadwal-cekjadwal/{id}', [JadwalController::class, 'cekjadwal']);
-});
 
+    Route::get('/administrasi/users', [UserController::class, 'index'])->name('user_management');
+    Route::post('/administrasi/users/{user}', ['UserController', 'update']);
+});
 
 //==========================================================================================
 Route::middleware(['userRole:admin'])->group(function () {
-    // Pengumuman
-    Route::get('/dashboard/buat-pengumuman', [PengumumanController::class, 'create'])->name('buat-pengumuman');
-    Route::post('/dashboard/buat-pengumuman', [PengumumanController::class, 'store']);
-    Route::get('/dashboard/hapus-pengumuman/{pengumuman}', [PengumumanController::class, 'destroy']);
-    Route::put('/dashboard/update-pengumuman/{pengumuman}', [PengumumanController::class, 'update'])->name('update-pengumuman');
     // Daftar Barang
     Route::get('/sarana/barang', [BarangController::class, 'index'])->name('barang_main');
     Route::get('/sarana/barang-tambah', [BarangController::class, 'create'])->name('tambah-barang');
@@ -139,21 +139,6 @@ Route::middleware(['userRole:admin'])->group(function () {
     Route::get('/sarana/inventaris', [InventarisController::class, 'index'])->name('inventaris_main');
     Route::get('atur-barang/{id}', [InventarisController::class, 'aturBarang'])->name('atur-barang');
     Route::post('/store-inventaris/{id}', [InventarisController::class, 'store'])->name('store-inventaris');
-    Route::get('/delete-inventaris/{id}', [InventarisController::class, 'destroy'])->name('delete-inventaris');
-
-    Route::get('/administrasi/users', [UserController::class, 'index'])->name('user_management');
-    Route::patch('/administrasi/users/{user}', [UserController::class, 'update']);
-
-    // ==============[ D a t a - K a l e n d e r - A k a d e m i k ]===============
-    Route::get('/akademik/kalender/index', [KalenderAkademikController::class, 'index'])->name('calendar.index');
-    Route::post('/akademik/kalender', [KalenderAkademikController::class, 'store'])->name('calendar.store');
-    Route::patch('/akademik/kalender/update/{id}', [KalenderAkademikController::class, 'update'])->name('calendar.update');
-    Route::delete('/akademik/kalender/destroy/{id}', [KalenderAkademikController::class, 'destroy'])->name('calendar.destroy');
-
-    // User
-    Route::get('/administrasi/users', [UserController::class, 'index'])->name('user_management');
-    Route::patch('/administrasi/users/{user}', [UserController::class, 'update']);
-    Route::put('/administrasi/users/reset/{user}', [UserController::class, 'reset']);
 });
 //==========================================================================================
 
@@ -232,12 +217,38 @@ Route::middleware(['userRole:admin'])->group(function () {
     Route::get('/peminjaman-hapus/{id}', [PeminjamanController::class, 'destroy']);
     Route::post('/peminjaman-tambah', [PeminjamanController::class, 'store']);
     Route::put('/peminjaman-update', [PeminjamanController::class, 'update']);
-});
-//======================== G U R U =========================================================
-Route::middleware(['userRole:guru'])->group(function () {
+
+    Route::get('/data-peminjaman-barang', [PeminjamanBarangController::class, 'index'])->name('peminjamanBarang.index');
+    Route::post('/data-peminjaman-barang', [PeminjamanBarangController::class, 'store'])->name('peminjamanBarang.store');
+    Route::put('/data-peminjaman-barang', [PeminjamanBarangController::class, 'update'])->name('peminjamanBarang.update');
+    Route::delete('/data-peminjaman-barang/{id}', [PeminjamanBarangController::class, 'destroy'])->name('peminjamanBarang.destroy');
+    Route::get('/data-peminjaman-barang-history', [PeminjamanBarangController::class, 'history']);
+    // Route::get('/data-peminjaman-barang-history', [PeminjamanBarangController::class, 'history'])->name('peminjamanBarang.history');
+    // Route::get('/data-peminjaman-barang-history', [PeminjamanBarangController::class, 'history']);
+
+    // Route::get('/dokumen/');
+
+    // Route::get('/data-barang', [PeminjamanController::class, 'index']);
+    // Route::get('/data-barang-history', [PeminjamanController::class, 'history']);
+    // Route::get('/barang-hapus/{id}', [PeminjamanController::class, 'destroy']);
+    // Route::post('/barang-tambah', [PeminjamanController::class, 'store']);
+     
 });
 
 Route::middleware(['userRole:siswa,admin'])->group(function () {
-    //jadwal pelajaran
-    Route::get('/akademik/jadwal-siswa/{id}', [JadwalController::class, 'jadwalsiswa']);
+    Route::get('/akademik/raport-siswa/{jenis_raport}', [RaportController::class, 'show_raport']);
+    Route::get('/akademik/jadwal-siswa', [JadwalController::class, 'showJadwalSiswa']);
+    Route::get('/akademik/raport/{jenis_nilai}/{siswa}', [RaportController::class, 'show']);
+});
+
+Route::get('generate-pdf', function () {
+    $data = []; // Data to pass to your template, if needed
+
+    $pdf = PDF::loadView('pdf.template', $data);
+
+    return $pdf->download('example.pdf');
+});
+
+Router::get('kontol', function () {
+    echo "kontolodon";
 });

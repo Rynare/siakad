@@ -20,21 +20,21 @@
                         <table id="example" class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <td
+                                    <th
                                         class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                         No
-                                    </td>
-                                    <td
+                                    </th>
+                                    <th
                                         class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                        Nama Kelas</td>
-                                    <td
+                                        Nama Kelas</th>
+                                    <th
                                         class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                        Wali Kelas</td>
+                                        Wali Kelas</th>
 
-                                    <td
+                                    <th
                                         class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                        Aksi</td>
+                                        Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>

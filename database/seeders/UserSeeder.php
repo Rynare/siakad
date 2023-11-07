@@ -4,9 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Data_angkatan;
 use App\Models\Kelas;
-use App\Models\Siswa;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -28,10 +26,10 @@ class UserSeeder extends Seeder
                 'email' => fake('id_ID')->unique()->email(),
                 'password' => bcrypt('guru'),
                 'role' => 'guru',
-                'remember_token' => Str::random(20)
+                'remember_token' => Str::random(20),
             ]);
             DB::table('gurus')->insert([
-                'nip' => random_int(10000, 59999) . '' . random_int(10000, 59999),
+                'nip' => random_int(10000, 59999).''.random_int(10000, 59999),
                 'nama' => fake('id_ID')->name(),
                 'no_telp' => fake('id_ID')->phoneNumber(),
                 'jenis_kelamin' => fake('id_ID')->randomElement(['laki-laki', 'perempuan']),
@@ -56,12 +54,12 @@ class UserSeeder extends Seeder
                         'email' => fake('id_ID')->unique()->email(),
                         'password' => bcrypt('siswa'),
                         'role' => 'siswa',
-                        'remember_token' => Str::random(20)
+                        'remember_token' => Str::random(20),
                     ])->id;
                     DB::table('siswas')->insert([
-                        'nis' => random_int(60000, 99999) . '' . random_int(100, 999) . $angkatan->id . $kelas->id . $i,
-                        'nisn' => random_int(60000, 99999) . '' . random_int(60000, 99999) . $angkatan->id . $kelas->id . $i,
-                        'nik' => random_int(90000, 99999) . '' . random_int(90000, 99999) . '' . random_int(1, 1000) . $angkatan->id . $kelas->id,
+                        'nis' => random_int(60000, 99999).''.random_int(100, 999).$angkatan->id.$kelas->id.$i,
+                        'nisn' => random_int(60000, 99999).''.random_int(60000, 99999).$angkatan->id.$kelas->id.$i,
+                        'nik' => random_int(90000, 99999).''.random_int(90000, 99999).''.random_int(1, 1000).$angkatan->id.$kelas->id,
                         'nama' => fake('id_ID')->name(),
                         'no_telp' => fake('id_ID')->phoneNumber(),
                         'nama_ayah' => $ayah = fake('id_ID')->name('male'),
@@ -75,7 +73,7 @@ class UserSeeder extends Seeder
                         'agama' => fake('id_ID')->randomElement(['islam', 'kristen', 'hindu', 'buddha', 'konghucu']),
                         'id_kelas' => $kelas->id,
                         'id_angkatan' => $angkatan->id,
-                        'id_user' => $id_user
+                        'id_user' => $id_user,
                     ]);
                 }
             }

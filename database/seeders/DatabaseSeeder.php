@@ -4,17 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Daftar_pengajar;
-use App\Models\Detail_jadwal;
-use App\Models\Detail_nilai;
-use App\Models\Guru;
-use App\Models\Jadwal;
-use App\Models\Kelas;
-use App\Models\Lupa_password;
-use App\Models\Mapel;
-use App\Models\Nilai;
-use App\Models\Ruang;
-use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -37,7 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AngkatanSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(JadwalSeeder::class);
-        // $this->call(NilaiSeeder::class);
+        $this->call(NilaiSeeder::class);
         $this->call(BarangSeeder::class);
         $this->call(PeminjamanSeeder::class);
     }

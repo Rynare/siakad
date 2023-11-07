@@ -11,6 +11,38 @@
     <h6 class="font-weight-bolder mb-0">Peminjaman Ruang</h6>
 @endsection
 @section('content')
+
+<div class="row">
+    <div class="col-3">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-success shadow-primary border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">Jumlah Barang 
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive pb-2 px-3">
+                    <img src="{{ asset('storage/public/img/c.jpg') }}" alt="barang">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-success shadow-primary border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">Jumlah Ruang 
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive pb-2 px-3">
+                    <img src="{{ asset('storage/public/img/c.jpg') }}" alt="ruang">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-12">
         @if ($hariini->count())
@@ -45,7 +77,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+        </div>
         </div>
         @else
         <p class="text-center">Tidak ada data untuk hari ini.</p>

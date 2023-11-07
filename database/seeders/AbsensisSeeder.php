@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Absensi;
 use App\Models\Akademik;
 use App\Models\Siswa;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class AbsensisSeeder extends Seeder

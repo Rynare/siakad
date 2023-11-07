@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class AngkatanSeeder extends Seeder
 {
@@ -21,28 +19,27 @@ class AngkatanSeeder extends Seeder
 
         for ($i = 0; $i < $data_angkatan; $i++) {
             DB::table('data_angkatans')->insert([
-                'nama_angkatan' => 'Angkatan ' . $tahun_mulai,
+                'nama_angkatan' => 'Angkatan '.$tahun_mulai,
                 'tahun_masuk' => $tahun_mulai,
             ]);
 
             $tahun_counter = $tahun_mulai;
             foreach (['ganjil', 'genap'] as $key => $semester) {
                 DB::table('akademiks')->insert([
-                    'tahun_ajaran' => $tahun_counter . '/' . $tahun_counter + 1,
+                    'tahun_ajaran' => $tahun_counter.'/'.$tahun_counter + 1,
                     'semester' => $semester,
                 ]);
             }
             $tahun_mulai += 1;
         }
 
-
         $currentMonth = date('m'); // Mendapatkan bulan saat ini dalam format numerik (01-12)
         $semester = $currentMonth >= '07' ? 'ganjil' : 'genap';
-        $tahun_ajaran = $semester == 'ganjil' ? now()->year . '%' : '%' . now()->year;
+        $tahun_ajaran = $semester == 'ganjil' ? now()->year.'%' : '%'.now()->year;
 
         $existingRecord = DB::table('akademiks')->where('tahun_ajaran', 'like', $tahun_ajaran)->where('semester', $semester)->first();
 
-        DB::statement("UPDATE akademiks SET selected = 0");
+        DB::statement('UPDATE akademiks SET selected = 0');
 
         if ($existingRecord) {
             // Jika data sudah ada, update 'selected' menjadi $selectedValue
@@ -54,12 +51,12 @@ class AngkatanSeeder extends Seeder
         } else {
             if ($semester == 'ganjil') {
                 DB::table('akademiks')->insert([
-                    'tahun_ajaran' => now()->year . '/' . now()->year + 1,
+                    'tahun_ajaran' => now()->year.'/'.now()->year + 1,
                     'semester' => $semester,
                 ]);
-            } else if ($semester == 'genap') {
+            } elseif ($semester == 'genap') {
                 DB::table('akademiks')->insert([
-                    'tahun_ajaran' => now()->year - 1 . '/' . now()->year,
+                    'tahun_ajaran' => now()->year - 1 .'/'.now()->year,
                     'semester' => $semester,
                 ]);
             }

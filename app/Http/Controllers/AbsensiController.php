@@ -20,7 +20,7 @@ class AbsensiController extends Controller
     {
         // return $request->selected_kelas;
         $tahun_akademik = str_replace('-', '/', $tahun_akademik);
-        $kelas_list = Kelas::where('nama_kelas', 'LIKE', $kelas . ' %')->get();
+        $kelas_list = Kelas::where('nama_kelas', 'LIKE', $kelas.' %')->get();
 
         if ($request->has('selected_kelas') && $request->has('selected_semester')) {
             $akademik = Akademik::where('tahun_ajaran', $tahun_akademik)->where('semester', $request->selected_semester)->get();

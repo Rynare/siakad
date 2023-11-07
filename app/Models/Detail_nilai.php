@@ -10,11 +10,12 @@ class Detail_nilai extends Model
     use HasFactory;
 
     protected $table = 'detail_nilais';
+
     protected $fillable = [
         'nilai_akademik',
         'id_nilai',
         'id_mapel',
-        'id_guru'
+        'id_guru',
     ];
 
     // public function daftar_pengajar()
@@ -26,10 +27,12 @@ class Detail_nilai extends Model
     {
         return $this->belongsTo(Nilai::class, 'id_nilai', 'id');
     }
+
     public function mapel()
     {
         return $this->belongsTo(Mapel::class, 'id_mapel', 'id');
     }
+
     public function guru()
     {
         return $this->belongsTo(Guru::class, 'id_guru', 'id');

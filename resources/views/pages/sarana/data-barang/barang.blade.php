@@ -50,7 +50,7 @@
                                         <td class="text-center">{{ $barang->tahun_pengadaan }}</td>
                                         <td class="text-center">{{ $barang->jenis }}</td>
                                         <td class="text-center">{{ $barang->jumlah_seluruh_barang }}</td>
-                                        {{-- <td class="text-center">{{ $barang->ruang->nama_ruang }}</td> --}}
+                                        {{-- <td class="text-center">{{ $barang->barang->nama_barang }}</td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

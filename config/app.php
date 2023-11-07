@@ -164,7 +164,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
-        // Barryvdh\DomPDF\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -196,5 +196,4 @@ return [
         // 'PDF' => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
-    'DB_user_roles' => ['admin', 'guru', 'siswa', 'tamu', 'teknisi'],
 ];

@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Akademik;
 use App\Models\Data_angkatan;
 use App\Models\Detail_nilai;
 use App\Models\Guru;
-use App\Models\Jadwal;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\Siswa;
 use App\Models\User;
 use Carbon\Carbon;
-use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -24,25 +20,26 @@ class RaportController extends Controller
 {
     public function input($id, $smt)
     {
-        $siswa       = Siswa::where('id', $id)->first();
-        $raport      = Nilai::where('siswa_id', $id)->where('semester', $smt)->whereNotNull('mapel_id')->get();
-        $raport_ket  = Nilai::where('siswa_id', $id)->where('semester', $smt)->sum('sakit');
+        $siswa = Siswa::where('id', $id)->first();
+        $raport = Nilai::where('siswa_id', $id)->where('semester', $smt)->whereNotNull('mapel_id')->get();
+        $raport_ket = Nilai::where('siswa_id', $id)->where('semester', $smt)->sum('sakit');
         $raport_ket2 = Nilai::where('siswa_id', $id)->where('semester', $smt)->sum('ijin');
         $raport_ket3 = Nilai::where('siswa_id', $id)->where('semester', $smt)->sum('tanpa_ket');
-        $semester    = $smt;
-        $mapel  =  Mapel::select('id', 'namamapel')->get();
+        $semester = $smt;
+        $mapel = Mapel::select('id', 'namamapel')->get();
         $idraport = Nilai::where('siswa_id', $id)->where('mapel_id', null)->where('semester', $smt)->first();
         $kelas = Kelas::All();
+
         return view('dataraport.input', [
-            'siswa'         => $siswa,
-            'raport'        => $raport,
-            'mapel'         => $mapel,
-            'raport_ket'    => $raport_ket,
-            'raport_ket2'   => $raport_ket2,
-            'raport_ket3'   => $raport_ket3,
-            'idraport'      => $idraport,
-            'semester'      => $semester,
-            'kelas'         => $kelas
+            'siswa' => $siswa,
+            'raport' => $raport,
+            'mapel' => $mapel,
+            'raport_ket' => $raport_ket,
+            'raport_ket2' => $raport_ket2,
+            'raport_ket3' => $raport_ket3,
+            'idraport' => $idraport,
+            'semester' => $semester,
+            'kelas' => $kelas,
         ]);
     }
 
@@ -75,30 +72,32 @@ class RaportController extends Controller
             $nilai_huruf_ktr = 'E';
         }
 
-
         Nilai::create([
-            'sakit'             => 0,
-            'ijin'              => 0,
-            'tanpa_ket'         => 0,
-            'nilai_pth'         => $request->nilai_pth,
-            'nilai_ktr'         => $request->nilai_ktr,
-            'nilai_huruf_pth'   => $nilai_huruf_pth,
-            'nilai_huruf_ktr'   => $nilai_huruf_ktr,
-            'siswa_id'          => $request->siswa_id,
-            'mapel_id'          => $request->mapel_id,
-            'guru_id'           => $request->guru_id,
-            'semester'          => $request->semester
+            'sakit' => 0,
+            'ijin' => 0,
+            'tanpa_ket' => 0,
+            'nilai_pth' => $request->nilai_pth,
+            'nilai_ktr' => $request->nilai_ktr,
+            'nilai_huruf_pth' => $nilai_huruf_pth,
+            'nilai_huruf_ktr' => $nilai_huruf_ktr,
+            'siswa_id' => $request->siswa_id,
+            'mapel_id' => $request->mapel_id,
+            'guru_id' => $request->guru_id,
+            'semester' => $request->semester,
 
         ]);
 
         return Redirect::back();
     }
+
     public function destroy($id)
     {
         $raport = Nilai::find($id);
         $raport->delete();
+
         return Redirect::back();
     }
+
     public function store(Request $request)
     {
         // dd($request->idraport);
@@ -107,14 +106,14 @@ class RaportController extends Controller
         } else {
             $data = Nilai::where(
                 [
-                    "id" => $request->idraport
+                    'id' => $request->idraport,
                 ]
             )->first();
             $data->update($request->all());
         }
         $datasiswa = Siswa::where(
             [
-                "id" => $request->siswa_id
+                'id' => $request->siswa_id,
             ]
         )->first();
         // $datasiswa->kelas_id = $request->kelassiswa;
@@ -123,8 +122,10 @@ class RaportController extends Controller
 
         $semester = $request->semester;
         $siswaid = $request->siswa_id;
-        return redirect('/data-cetak-raport/' . $semester . '/' . $siswaid);
+
+        return redirect('/data-cetak-raport/'.$semester.'/'.$siswaid);
     }
+
     public function cetak($smt, $id)
     {
         $data = Auth::guard('guru')->user()->id;
@@ -132,7 +133,7 @@ class RaportController extends Controller
         $kelas = Kelas::where('guru_id', $data)->first();
         $kelasid = $kelas->id;
         $siswa = Siswa::where('kelas_id', $kelasid)->first();
-        $mapel  =  Mapel::select('id', 'namamapel')->get();
+        $mapel = Mapel::select('id', 'namamapel')->get();
         $raport = Nilai::where('siswa_id', $id)->where('semester', $smt)->whereNotNull('mapel_id')->get();
         $raport_ket = Nilai::where('siswa_id', $id)->where('semester', $smt)->sum('sakit');
         $raport_ket2 = Nilai::where('siswa_id', $id)->where('semester', $smt)->sum('ijin');
@@ -147,21 +148,22 @@ class RaportController extends Controller
         $tanggalSekarang = Carbon::now()->setTimezone('Asia/Jakarta')->translatedFormat('d F Y');
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('dataraport.cetak', [
-            'kelas'             => $kelas,
-            'siswa'             => $siswa,
-            'mapel'             => $mapel,
-            'raport'            => $raport,
-            'raport_ket'        => $raport_ket,
-            'raport_ket2'       => $raport_ket2,
-            'raport_ket3'       => $raport_ket3,
-            'kepsek'            => $kepsek,
-            'tanggal'           => $tanggalSekarang,
-            'walikelasnama'     => $walikelas_nama,
-            'walikelasnip'      => $walikelas_nip,
-            'semester'          => $smt,
-            'status'            => $status
+            'kelas' => $kelas,
+            'siswa' => $siswa,
+            'mapel' => $mapel,
+            'raport' => $raport,
+            'raport_ket' => $raport_ket,
+            'raport_ket2' => $raport_ket2,
+            'raport_ket3' => $raport_ket3,
+            'kepsek' => $kepsek,
+            'tanggal' => $tanggalSekarang,
+            'walikelasnama' => $walikelas_nama,
+            'walikelasnip' => $walikelas_nip,
+            'semester' => $smt,
+            'status' => $status,
         ]);
-        return $pdf->stream('Laporan hasil belajar - ' . $siswa->nisn . ' (' . $siswa->fullname . ') .pdf');
+
+        return $pdf->stream('Laporan hasil belajar - '.$siswa->nisn.' ('.$siswa->fullname.') .pdf');
     }
 
     public function index()
@@ -169,9 +171,10 @@ class RaportController extends Controller
         $angkatan = Data_angkatan::All();
 
         return view('pages.akademik.data-raport.raport-admin', [
-            'angkatans'      => $angkatan,
+            'angkatans' => $angkatan,
         ])->with('title', 'Raport');
     }
+
     public function show(Request $request, $jenis_nilai, Siswa $siswa)
     {
         $datas = null;
@@ -197,23 +200,27 @@ class RaportController extends Controller
                 'mapels' => Mapel::all(),
             ];
         }
+
         // return Detail_nilai::all();
         return view('pages.akademik.data-raport.show_raport', $datas)->with('title', 'Raport');
     }
+
     public function showRaportAngkatan(Data_angkatan $angkatan)
     {
-        $siswa =  Siswa::all()->where("id_angkatan", $angkatan->id);
+        $siswa = Siswa::all()->where('id_angkatan', $angkatan->id);
+
         return view('pages.akademik.data-raport.siswa', [
-            'siswas'      => $siswa,
-        ])->with('title', 'Raport ' . $angkatan->nama_angkatan);
+            'siswas' => $siswa,
+        ])->with('title', 'Raport '.$angkatan->nama_angkatan);
     }
+
     public function cetakraport($id, $smt)
     {
         $siswa = Siswa::where('id', $id)->first();
         $dataraport = Nilai::where(
             [
-                "siswa_id"  => $id,
-                "semester"  => $smt
+                'siswa_id' => $id,
+                'semester' => $smt,
             ]
         )->first();
 
@@ -232,18 +239,19 @@ class RaportController extends Controller
             $tanggalSekarang = Carbon::now()->setTimezone('Asia/Jakarta')->translatedFormat('d F Y');
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pages.dataraportadmin.cetak', [
-                'siswa'             => $siswa,
-                'raport'            => $raport,
-                'raport_ket'        => $raport_ket,
-                'raport_ket2'       => $raport_ket2,
-                'raport_ket3'       => $raport_ket3,
-                'kepsek'            => $kepsek,
-                'tanggal'           => $tanggalSekarang,
-                'semester'          => $smt,
-                'status'            => $status,
-                'walikelas'         => $walikelas,
+                'siswa' => $siswa,
+                'raport' => $raport,
+                'raport_ket' => $raport_ket,
+                'raport_ket2' => $raport_ket2,
+                'raport_ket3' => $raport_ket3,
+                'kepsek' => $kepsek,
+                'tanggal' => $tanggalSekarang,
+                'semester' => $smt,
+                'status' => $status,
+                'walikelas' => $walikelas,
             ]);
-            return $pdf->stream('Laporan hasil belajar - ' . $siswa->nisn . ' (' . $siswa->fullname . ') .pdf');
+
+            return $pdf->stream('Laporan hasil belajar - '.$siswa->nisn.' ('.$siswa->fullname.') .pdf');
         } else {
             return Redirect::back()->with('toast_error', 'Data raport belum ada');
         }
@@ -254,8 +262,8 @@ class RaportController extends Controller
         $siswa = Siswa::where('id', $id)->first();
         $dataraport = Nilai::where(
             [
-                "siswa_id"  => $id,
-                "semester"  => $smt
+                'siswa_id' => $id,
+                'semester' => $smt,
             ]
         )->first();
 
@@ -274,18 +282,19 @@ class RaportController extends Controller
             $tanggalSekarang = Carbon::now()->setTimezone('Asia/Jakarta')->translatedFormat('d F Y');
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pages.dataraportadmin.cetak', [
-                'siswa'             => $siswa,
-                'raport'            => $raport,
-                'raport_ket'        => $raport_ket,
-                'raport_ket2'       => $raport_ket2,
-                'raport_ket3'       => $raport_ket3,
-                'kepsek'            => $kepsek,
-                'tanggal'           => $tanggalSekarang,
-                'semester'          => $smt,
-                'status'            => $status,
-                'walikelas'         => $walikelas,
+                'siswa' => $siswa,
+                'raport' => $raport,
+                'raport_ket' => $raport_ket,
+                'raport_ket2' => $raport_ket2,
+                'raport_ket3' => $raport_ket3,
+                'kepsek' => $kepsek,
+                'tanggal' => $tanggalSekarang,
+                'semester' => $smt,
+                'status' => $status,
+                'walikelas' => $walikelas,
             ]);
-            return $pdf->stream('Laporan hasil belajar - ' . $siswa->nisn . ' (' . $siswa->fullname . ') .pdf');
+
+            return $pdf->stream('Laporan hasil belajar - '.$siswa->nisn.' ('.$siswa->fullname.') .pdf');
         } else {
             return Redirect::back()->with('toast_error', 'Data raport belum ada');
         }
@@ -297,6 +306,7 @@ class RaportController extends Controller
         $detail_nilai->update([
             'nilai_akademik' => $request->nilai_akademik,
         ]);
+
         return Redirect::back()->with('title', 'Raport');
     }
 }

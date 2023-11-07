@@ -4,12 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Akademik;
 use App\Models\Guru;
-use App\Models\Jadwal;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Ruang;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -27,8 +25,8 @@ class JadwalSeeder extends Seeder
         $numberOfRooms = Ruang::count();
         $numberOfTeachers = Guru::count();
         $days = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
-        $akademik = Akademik::all()->where('tahun_ajaran', '=', now()->year . '/' . now()->year + 1);
-        $tahun_akademiks = array();
+        $akademik = Akademik::all()->where('tahun_ajaran', '=', now()->year.'/'.now()->year + 1);
+        $tahun_akademiks = [];
         foreach ($akademik as $key => $value) {
             array_push($tahun_akademiks, $value->id);
         }
@@ -42,7 +40,7 @@ class JadwalSeeder extends Seeder
                             'status' => 'masuk',
                             'id_akademik' => $tahun_akademik,
                             'catatan' => 'Tidak Ada',
-                            'id_kelas' => $kelas->id
+                            'id_kelas' => $kelas->id,
                         ]);
 
                         for ($hour = 1; $hour <= 4; $hour++) {
@@ -63,7 +61,7 @@ class JadwalSeeder extends Seeder
                     // ...
                 } catch (\Exception $e) {
                     // Tangani kesalahan di sini jika perlu
-                    Log::error('Error while seeding: ' . $e->getMessage());
+                    Log::error('Error while seeding: '.$e->getMessage());
                 }
             }
         }

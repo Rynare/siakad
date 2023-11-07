@@ -9,24 +9,24 @@ use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Ruang;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
 
 class JadwalController extends Controller
 {
     public function showJadwalAdmin()
     {
         $kelas = Kelas::All();
+
         return view('pages.akademik.data-jadwal.jadwal', [
-            'daftar_kelas'      => $kelas,
+            'daftar_kelas' => $kelas,
         ])->with('title', 'Data Jadwal');
     }
+
     public function showJadwalGuru()
     {
     }
+
     public function showJadwalSiswa()
     {
         $jadwals = Jadwal::whereHas('akademik', function ($query) {
@@ -34,20 +34,21 @@ class JadwalController extends Controller
         })->where('id_kelas', '=', auth()->user()->siswa->id_kelas)->get();
 
         return view('pages.data-jadwal.jadwal-kelas', [
-            'jadwals' => $jadwals
-        ])->with('title', 'Jadwal ' . auth()->user()->siswa->kelas->nama_kelas);
+            'jadwals' => $jadwals,
+        ])->with('title', 'Jadwal '.auth()->user()->siswa->kelas->nama_kelas);
     }
+
     public function jadwalKelas(Request $request, Kelas $kelas)
     {
         if ($request->has('masuk')) {
             $jadwal = Jadwal::find($request->masuk);
             $jadwal->update([
-                'status' => 'masuk'
+                'status' => 'masuk',
             ]);
         } elseif ($request->has('libur')) {
             $jadwal = Jadwal::find($request->libur);
             $jadwal->update([
-                'status' => 'libur'
+                'status' => 'libur',
             ]);
         }
         $jadwals = Jadwal::whereHas('akademik', function ($query) {
@@ -60,7 +61,7 @@ class JadwalController extends Controller
             'mapels' => Mapel::all(),
             'gurus' => Guru::all(),
             'ruangs' => Ruang::all(),
-        ])->with('title', 'Jadwal ' . $kelas->nama_kelas);
+        ])->with('title', 'Jadwal '.$kelas->nama_kelas);
     }
 
     public function store(Request $request)
@@ -108,8 +109,10 @@ class JadwalController extends Controller
 
         $jadwal = $request->all();
         Detail_jadwal::create($jadwal);
+
         return Redirect::back()->with('toast_success', 'Data berhasil ditambahkan !');
     }
+
     public function update(Request $request, Detail_jadwal $detail_jadwal)
     {
         $this->validate($request, [
@@ -134,10 +137,10 @@ class JadwalController extends Controller
         $selisihMenit = $jamSelesai->diffInMinutes($jamMulai);
 
         if ($jamSelesai->isBefore($jamMulai)) {
-            return redirect()->back()->with('toast_error', "Jam mulai tidak valid");
+            return redirect()->back()->with('toast_error', 'Jam mulai tidak valid');
         }
         if ($selisihMenit < 45 && $selisihMenit >= 0) {
-            return redirect()->back()->with('toast_error', 'Durasi pelajaran minimal 45 menit.' . $selisihMenit);
+            return redirect()->back()->with('toast_error', 'Durasi pelajaran minimal 45 menit.'.$selisihMenit);
         }
 
         foreach ($apiData as $data) {
@@ -160,19 +163,22 @@ class JadwalController extends Controller
             'id_mapel' => $request->mapel,
             'id_guru' => $request->guru,
         ]);
+
         // return $jadwaldata;
         return Redirect::back()->with('toast_success', 'Data berhasil diubah !');
     }
+
     public function destroy($id)
     {
         $jadwal = Detail_jadwal::find($id);
         $jadwal->delete();
+
         return Redirect::back()->with('toast_success', 'Data berhasil dihapus !');
     }
 
     public function cetak($id)
     {
-        $jadwal =  Jadwal::select('hari', 'kelas_id')->where("kelas_id", $id)->groupBy('hari', 'kelas_id')->orderBy("hari", 'asc')->get();
+        $jadwal = Jadwal::select('hari', 'kelas_id')->where('kelas_id', $id)->groupBy('hari', 'kelas_id')->orderBy('hari', 'asc')->get();
         $data = [];
         $no = 0;
         foreach ($jadwal as $item) {
@@ -183,9 +189,9 @@ class JadwalController extends Controller
         }
         // echo json_encode($data);
         // die;
-        $kelas  =  Kelas::find($id);
-        $mapel  =  Mapel::select('id', 'namamapel')->get();
-        $guru   =  Guru::select('id', 'nama')->get();
+        $kelas = Kelas::find($id);
+        $mapel = Mapel::select('id', 'namamapel')->get();
+        $guru = Guru::select('id', 'nama')->get();
 
         $hari = [
             1 => 'Senin',
@@ -198,59 +204,44 @@ class JadwalController extends Controller
 
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('pages.data-jadwal.cetak', [
-            'guru'      => $guru,
-            'mapel'     => $mapel,
-            'jadwal'    => $data,
-            'kelas'     => $kelas,
-            'hari' => $hari
+            'guru' => $guru,
+            'mapel' => $mapel,
+            'jadwal' => $data,
+            'kelas' => $kelas,
+            'hari' => $hari,
         ]);
+
         return $pdf->stream('laporan-jadwal-pelajaran-pdf');
     }
 
     public function jadwalsiswa($id)
     {
-        $kelasId = $id;
-        // $detail_jadwal = Detail_jadwal::todaySchedule($guruId);
-        $jadwal = Detail_jadwal::with('jadwal', 'mapel', 'ruang')
-            ->whereHas('jadwal', function ($query) use ($kelasId) {
-                $query->where('id_kelas', $kelasId)->whereHas('akademik', function ($query) {
-                    $query->where('selected', 1);
-                });
-            })
-            ->get();
+        $hari = [
+            1 => 'Senin',
+            2 => 'Selasa',
+            3 => 'Rabu',
+            4 => 'Kamis',
+            5 => 'Jumat',
+            6 => 'Sabtu',
+        ];
+        $jadwal = Jadwal::where('kelas_id', $id)->orderBy('hari', 'asc')->get();
         $kelas = Kelas::find($id);
-        $hari_list = array(
-            'Minggu',
-            'Senin',
-            'Selasa',
-            'Rabu',
-            'Kamis',
-            'Jumat',
-            'Sabtu'
-        );
-        $hari_ini = strtolower($hari_list[Carbon::now()->dayOfWeek]);
+        $mapel = Mapel::select('id', 'namamapel')->get();
+        $guru = Guru::select('id', 'nama')->get();
 
-        // $all_jadwal = Detail_jadwal::with('jadwal', 'mapel', 'ruang')
-        //     ->whereHas('guru', function ($query) use ($guruId) {
-        //         $query->where('id', $guruId);
-        //     })
-        //     ->whereHas('jadwal', function ($query) use ($hari_ini) {
-        //         $query->where('hari', $hari_ini);
-        //     })
-        //     ->orderBy('jam_mulai', 'asc')
-        //     ->get();
-
-        return view('pages.akademik.data-jadwal-siswa.jadwalsiswa', [
-            'jadwals'    => $jadwal,
+        return view('pages.data-jadwal.jadwalsiswa', [
+            'guru' => $guru,
+            'mapel' => $mapel,
+            'jadwal' => $jadwal,
             'kelas' => $kelas,
-            'hari_ini' => $hari_ini
+            'hari' => $hari,
 
-        ])->with('title', 'Jadwal Pelajaran');
+        ]);
     }
 
     public function cetakjadwalsiswa($id)
     {
-        $jadwal =  Jadwal::select('hari', 'kelas_id')->where("kelas_id", $id)->groupBy('hari', 'kelas_id')->orderBy("hari", 'asc')->get();
+        $jadwal = Jadwal::select('hari', 'kelas_id')->where('kelas_id', $id)->groupBy('hari', 'kelas_id')->orderBy('hari', 'asc')->get();
         $data = [];
         $no = 0;
         foreach ($jadwal as $item) {
@@ -261,9 +252,9 @@ class JadwalController extends Controller
         }
         // echo json_encode($data);
         // die;
-        $kelas  =  Kelas::find($id);
-        $mapel  =  Mapel::select('id', 'namamapel')->get();
-        $guru   =  Guru::select('id', 'nama')->get();
+        $kelas = Kelas::find($id);
+        $mapel = Mapel::select('id', 'namamapel')->get();
+        $guru = Guru::select('id', 'nama')->get();
 
         $hari = [
             1 => 'Senin',
@@ -276,12 +267,13 @@ class JadwalController extends Controller
 
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('pages.data-jadwal.cetaksiswa', [
-            'guru'      => $guru,
-            'mapel'     => $mapel,
-            'jadwal'    => $data,
-            'kelas'     => $kelas,
-            'hari' => $hari
+            'guru' => $guru,
+            'mapel' => $mapel,
+            'jadwal' => $data,
+            'kelas' => $kelas,
+            'hari' => $hari,
         ]);
+
         return $pdf->stream('laporan-jadwal-pelajaran-pdf');
     }
 
@@ -290,10 +282,11 @@ class JadwalController extends Controller
         $kelas = Kelas::All();
 
         return view('pages.data-jadwal.lihat', [
-            'kelas'      => $kelas,
+            'kelas' => $kelas,
 
         ]);
     }
+
     public function cekjadwal($id)
     {
         $hari = [
@@ -304,16 +297,17 @@ class JadwalController extends Controller
             5 => 'Jumat',
             6 => 'Sabtu',
         ];
-        $jadwal = Jadwal::where("kelas_id", $id)->orderBy("hari", 'asc')->get();
-        $kelas  =  Kelas::find($id);
-        $mapel  =  Mapel::select('id', 'namamapel')->get();
-        $guru   =  Guru::select('id', 'nama')->get();
+        $jadwal = Jadwal::where('kelas_id', $id)->orderBy('hari', 'asc')->get();
+        $kelas = Kelas::find($id);
+        $mapel = Mapel::select('id', 'namamapel')->get();
+        $guru = Guru::select('id', 'nama')->get();
+
         return view('pages.data-jadwal.cekjadwal', [
-            'guru'      => $guru,
-            'mapel'     => $mapel,
-            'jadwal'    => $jadwal,
-            'kelas'     => $kelas,
-            'hari' => $hari
+            'guru' => $guru,
+            'mapel' => $mapel,
+            'jadwal' => $jadwal,
+            'kelas' => $kelas,
+            'hari' => $hari,
 
         ]);
     }
@@ -328,16 +322,17 @@ class JadwalController extends Controller
             5 => 'Jumat',
             6 => 'Sabtu',
         ];
-        $jadwal = Jadwal::where("kelas_id", $id)->orderBy("hari", 'asc')->get();
-        $kelas  =  Kelas::find($id);
-        $mapel  =  Mapel::select('id', 'namamapel')->get();
-        $guru   =  Guru::select('id', 'nama')->get();
+        $jadwal = Jadwal::where('kelas_id', $id)->orderBy('hari', 'asc')->get();
+        $kelas = Kelas::find($id);
+        $mapel = Mapel::select('id', 'namamapel')->get();
+        $guru = Guru::select('id', 'nama')->get();
+
         return view('pages.datajadwalmengajar.cek', [
-            'guru'      => $guru,
-            'mapel'     => $mapel,
-            'jadwal'    => $jadwal,
-            'kelas'     => $kelas,
-            'hari' => $hari
+            'guru' => $guru,
+            'mapel' => $mapel,
+            'jadwal' => $jadwal,
+            'kelas' => $kelas,
+            'hari' => $hari,
 
         ]);
     }

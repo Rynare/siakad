@@ -18,13 +18,13 @@ class Inventaris extends Model
         'jumlah_barang',
         'jumlah_baik',
         'jumlah_rusak',
-        'ruang_id',  
-        'barang_id'  
+        'ruang_id',
+        'barang_id',
     ];
 
     public function ruang()
     {
-        return $this->belongsTo(ruangs::class, 'ruang_id', 'id');  
+        return $this->belongsTo(ruangs::class, 'ruang_id', 'id');
     }
 
     public function barang()

@@ -84,7 +84,6 @@
                                                 foto="{{ asset('storage/guru/img/' . $guru->foto) }}"
                                                 onclick="showModalDialog(this)">
                                                 <i class="fa fa-eye"></i>
-
                                             </button>
                                             <a href="/administrasi/guru-update/{{ $guru->id }}"
                                                 class=" btn btn-warning font-weight-bold text-sm rounded-circle"

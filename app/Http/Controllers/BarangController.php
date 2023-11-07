@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
@@ -11,8 +10,9 @@ class BarangController extends Controller
     public function index()
     {
         $daftarBarang = Barang::orderBy('id', 'asc')->get();
+
         return view('pages.sarana.data-barang.barang', [
-            'daftarBarang' => $daftarBarang
+            'daftarBarang' => $daftarBarang,
         ])->with('title', 'Daftar Barang');
     }
 
@@ -41,12 +41,14 @@ class BarangController extends Controller
             'jenis_barang' => ['meubel', 'elektronik', 'atk'],
         ])->with('title', 'Tambah Barang');
     }
+
     public function destroy(Barang $barang)
     {
         $barang->delete();
 
         return redirect()->route('barang_main')->with('success', 'Data barang berhasil dihapus.');
     }
+
     public function edit(Barang $barang)
     {
         return view('pages.sarana.data-barang.edit-barang', [

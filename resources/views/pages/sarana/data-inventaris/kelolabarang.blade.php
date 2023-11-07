@@ -35,7 +35,7 @@
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">No</th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Nama Barang</th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Tahun Pengadaan</th>
-                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Jenis</th>
+                                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Jenis</th>       1
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Jumlah Barang</th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Jumlah Barang Baik</th>
                                     <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">Jumlah Barang Rusak</th>
@@ -53,13 +53,15 @@
                                     <td class="text-center">{{ $i->jumlah_baik ?? '-' }}</td>
                                     <td class="text-center">{{ $i->jumlah_rusak ?? '-' }}</td>
                                     <td class="text-center">
-                                    <a href="{{ route('delete-inventaris', ['id' => $i->id]) }}"
-                                        onclick="return confirm('Anda yakin akan menghapus data ini?')"
-                                        class="btn btn-danger font-weight-bold text-sm rounded-circle"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-
+                                                <button type="button"data-bs-toggle="modal" class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit"">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <a class=" btn btn-danger font-weight-bold text-sm rounded-circle"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Kelas extends Model
 {
     use HasFactory;
+
     protected $table = 'kelas';
+
     protected $fillable = [
         'nama_kelas',
         'id_guru',
@@ -19,10 +21,12 @@ class Kelas extends Model
     {
         return $this->hasMany(Siswa::class, 'id', 'id_kelas');
     }
+
     public function jadwal()
     {
         return $this->hasMany(Jadwal::class, 'id', 'id_kelas');
     }
+
     // public function daftar_mengajar()
     // {
     //     return $this->hasMany(Daftar_pengajar::class, 'id_kelas', 'id');
