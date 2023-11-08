@@ -143,6 +143,11 @@
                                     <th
                                         class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                        Surat Pengajuan
+                                    </th>
+                                    <th
+                                        class="
+                                            text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                         Aksi
                                     </th>   
                                 </tr>
@@ -171,18 +176,14 @@
                                             {{ $value->tanggal_pengembalian }}
                                         </td>
                                         <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
-                                            <button type="button"data-bs-toggle="modal" data-bs-target="#detail-modal"
+                                            <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#detailSurat"
                                                 class="btn
-                                                btn-info font-weight-bold btn--edit text-sm rounded-circle"
+                                                btn-info font-weight-bold btn--edit text-sm text-white"
                                                 style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                title="Detail" id-surat="{{ $value->id }}" nip="{{ $value->nip }}"
-                                                nama-value="{{ $value->nama }}" jenis-kelamin="{{ $value->jenis_kelamin }}"
-                                                tempat-tanggal-lahir="{{ $value->tempat_lahir }}, {{ \Carbon\Carbon::parse($value->tanggal_lahir)->format('d/m/Y') }}"
-                                                no-telp="{{ $value->no_telp }}"agama="{{ $value->agama }}"
-                                                alamat="{{ $value->alamat }}" status-value="{{ $value->status }}"
-                                                value-signature="{{ asset('storage/value/signatures/' . $value->signature) }}"
-                                                foto="{{ asset('storage/value/img/' . $value->foto) }}"
-                                                onclick="showModalDialog(this)">
+                                                data-bs-placement="bottom" title="Surat"
+                                                onclick="showUpdateModalDialog(this)">
+                                                <span>Surat Pengajuan</span>
+                                                
                                                 <i class="fa fa-eye"></i>
                                         <td class="text-center">
                                             <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#update-modal"
@@ -307,15 +308,14 @@
                             <div class="modal-dialog  modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
-                                        <h5 class="modal-title text-white" id="exampleModalLabel">Tambah Barang
+                                        <h5 class="modal-title text-white" id="exampleModalLabel"> Tambah Barang
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/peminjaman-store" class="row g-3 py-1 px-4" method="POST"
+                                        <form action="{{ route('peminjamanBarang.store') }}" class="row g-3 py-1 px-4" method="POST"
                                             enctype="multipart/form-data">
-                                            @method('PUT')
                                             @csrf
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Barang</label>
@@ -380,6 +380,48 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="modal fade" id="detailSurat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Surat Pengajuan Barang</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <button class="btn btn-primary">Download</button>
+                                            <button class="btn btn-primary">Update</button>
+                                        </div>
+                                        <div>
+                                            <form action="">
+                                                <div class="mb-3">
+                                                    <label for="name" class="form-label">Nama</label>
+                                                    <input type="text" class="form-control" id="name" placeholder="" name="nama">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                    <label for="itemName" class="form-label">Nama Barang</label>
+                                                    <input type="text" class="form-control" id="itemName" placeholder="" name="nama_barang">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                    <label for="loan_date" class="form-label">Tanggal Peminjaman</label>
+                                                    <input type="date" class="form-control" id="loan_date" name="tanggal_peminjaman">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                    <label for="return_date" class="form-label">Tanggal Pengembalian</label>
+                                                    <input type="date" class="form-control" id="return_date" name="tanggal_pengembalian">
+                                                  </div>
+                                                  <div class="mb-3">
+                                                    <label for="file" class="form-label">File</label>
+                                                    <input type="file" class="form-control" id="file" placeholder="" name="surat_peminjaman">
+                                                  </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Oke</button>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>

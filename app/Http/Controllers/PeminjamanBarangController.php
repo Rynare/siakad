@@ -57,7 +57,6 @@ class PeminjamanBarangController extends Controller
             'nama_peminjam' => ['string'],
             'tanggal_peminjaman' => ['date'],
             'tanggal_pengembalian' => ['date'],
-            // 'dokumen' => 'mines:doc,docx,pdf,pdf,xls,xlsx,ppt,pptx',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -155,5 +154,8 @@ class PeminjamanBarangController extends Controller
             'peminjaman_barang' => $peminjaman_barang,
         ])->with('title', 'Data Peminjaman');
     }
-
+    public function surat()
+    {
+        
+    }
 }
