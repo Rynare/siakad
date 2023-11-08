@@ -249,6 +249,3 @@ Route::get('generate-pdf', function () {
     return $pdf->download('example.pdf');
 });
 
-Router::get('kontol', function () {
-    echo "kontolodon";
-});
