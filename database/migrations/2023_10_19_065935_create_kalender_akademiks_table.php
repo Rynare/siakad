@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status', ['masuk', 'libur'])->nullable(true);;
+            $table->enum('status', ['masuk', 'libur'])->nullable(true);
             $table->timestamps();
         });
     }

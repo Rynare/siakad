@@ -28,9 +28,9 @@ class PeminjamanController extends Controller
         $ruang = Ruang::all();
 
         return view('pages.humas.peminjaman-ruang.peminjaman', [
-            'hariini'      => $hariini,
-            'peminjaman'   => $peminjaman,
-            'ruang'        => $ruang
+            'hariini' => $hariini,
+            'peminjaman' => $peminjaman,
+            'ruang' => $ruang,
         ])->with('title', 'Data Peminjaman');
     }
 
@@ -47,7 +47,6 @@ class PeminjamanController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     // public function store(Request $request)
@@ -104,11 +103,9 @@ class PeminjamanController extends Controller
         return redirect('/data-peminjaman')->with('toast_success', 'Data Ruang Berhasil di Tambahkan');
     }
 
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
     public function show(Peminjaman $peminjaman)
@@ -119,7 +116,6 @@ class PeminjamanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
     public function edit(Peminjaman $peminjaman)
@@ -130,8 +126,6 @@ class PeminjamanController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
     // public function update(Request $request, Peminjaman $peminjaman)
@@ -163,7 +157,7 @@ class PeminjamanController extends Controller
 
         // Validasi ketersediaan ruangan
         $existingPeminjaman = Peminjaman::where('ruang_id', $request->ruang)
-            ->where(function ($query) use ($request, $peminjaman) {
+            ->where(function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {
                     $q->where('tanggal_peminjaman', '>=', $request->tgl_peminjaman)
                         ->where('tanggal_peminjaman', '<=', $request->tgl_pengembalian);
@@ -188,6 +182,7 @@ class PeminjamanController extends Controller
         ];
 
         $peminjaman->update($data);
+
         return redirect('/data-peminjaman')->with('toast_success', 'Data Ruang Berhasil di Ubah');
     }
 
@@ -211,8 +206,9 @@ class PeminjamanController extends Controller
     {
         $peminjaman = Peminjaman::whereDate('tanggal_pengembalian', '<', now())
             ->get();
+
         return view('pages.humas.peminjaman-ruang.history', [
-            'peminjaman'   => $peminjaman
+            'peminjaman' => $peminjaman,
         ])->with('title', 'Data Peminjaman');
     }
 }

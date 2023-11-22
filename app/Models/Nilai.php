@@ -18,7 +18,7 @@ class Nilai extends Model
         'izin',
         'tanpa_keterangan',
         'id_siswa',
-        'id_akademik'
+        'id_akademik',
     ];
 
     public function detail_nilai()
@@ -30,6 +30,7 @@ class Nilai extends Model
     {
         return $this->belongsTo(Siswa::class, 'id_siswa', 'id');
     }
+
     public function akademik()
     {
         return $this->belongsTo(Akademik::class, 'id_akademik', 'id');

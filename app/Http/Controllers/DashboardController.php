@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guru;
+use App\Models\KalenderAkademik;
 use App\Models\Kelas;
+use App\Models\Pengumuman;
 use App\Models\Siswa;
 use App\Models\User;
-use App\Models\Pengumuman;
-use App\Models\KalenderAkademik;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -22,11 +22,11 @@ class DashboardController extends Controller
             $siswa = Siswa::where('status', 'belum lulus')->orWhere('status', 'mutasi')->get();
             $rolePengumuman = [];
 
-            $datas = array();
+            $datas = [];
             $role = auth()->user()->current_role;
 
             //Kalender Akademik
-            $events = array();
+            $events = [];
             $kalender = KalenderAkademik::all();
             foreach ($kalender as $k) {
                 $color = null;
@@ -38,12 +38,12 @@ class DashboardController extends Controller
                 }
 
                 $events[] = [
-                    'id'   => $k->id,
+                    'id' => $k->id,
                     'title' => $k->title,
                     'start' => $k->start_date,
                     'end' => $k->end_date,
                     'status' => $k->status,
-                    'color' => $color
+                    'color' => $color,
                 ];
             }
 
@@ -52,11 +52,11 @@ class DashboardController extends Controller
                 case 'kepsek':
                     $currentMonth = date('m');
                     $semester = $currentMonth >= '07' ? 'ganjil' : 'genap';
-                    $tahun_ajaran = $semester == 'ganjil' ? now()->year . '%' : '%' . now()->year;
+                    $tahun_ajaran = $semester == 'ganjil' ? now()->year.'%' : '%'.now()->year;
 
                     $existingRecord = DB::table('akademiks')->where('tahun_ajaran', 'like', $tahun_ajaran)->where('semester', $semester)->first();
 
-                    DB::statement("UPDATE akademiks SET selected = 0");
+                    DB::statement('UPDATE akademiks SET selected = 0');
 
                     if ($existingRecord) {
                         if ($semester == 'ganjil') {
@@ -66,7 +66,7 @@ class DashboardController extends Controller
                         }
                     } else {
                         DB::table('akademiks')->insert([
-                            'tahun_ajaran' => now()->year . '/' . now()->year + 1,
+                            'tahun_ajaran' => now()->year.'/'.now()->year + 1,
                             'semester' => $semester,
                         ]);
                     }
@@ -74,7 +74,7 @@ class DashboardController extends Controller
                         'teknisi' => 0,
                         'guru' => $guru,
                         'kelas' => $kelas,
-                        'siswa' => $siswa
+                        'siswa' => $siswa,
                     ];
                     break;
                 case 'guru':
@@ -82,18 +82,18 @@ class DashboardController extends Controller
 
                     $datas = [
                         'myData' => $myData,
-                        'events' => $events
+                        'events' => $events,
                     ];
                     break;
                 case 'siswa':
                     $myData = Siswa::all()->where('id_user', '=', auth()->user()->id)->first();
                     $datas = [
                         'myData' => $myData,
-                        'events' => $events
+                        'events' => $events,
                     ];
                     break;
                 default:
-                    # code...
+                    // code...
                     break;
             }
             if (Auth::check()) {

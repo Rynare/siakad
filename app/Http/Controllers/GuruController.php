@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Guru;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class GuruController extends Controller
@@ -14,8 +14,9 @@ class GuruController extends Controller
     public function index()
     {
         $guru = Guru::where('deleted', 0)->get();
+
         return view('pages.administrasi.data-guru.guru', [
-            'gurus'      => $guru
+            'gurus' => $guru,
         ])->with('title', 'Data Guru');
     }
 
@@ -42,17 +43,17 @@ class GuruController extends Controller
         //apakah NIP sudah terpakai
         $guru_new = Guru::where('nip', $request->nip)->where('deleted', 1);
 
-
         // jika sudah terpakai maka perbarui data
         if (count($guru_new->get()) > 0) {
             $user = User::create([
                 'username' => $request->nip,
-                'email' => $request->nip . '@school.teacher.com',
+                'email' => $request->nip.'@school.teacher.com',
                 'password' => Hash::make($request->nip),
                 'role' => 'guru',
             ])->id;
 
             $guru_new->update(['deleted' => 0, 'id_user' => $user]);
+
             return redirect('/administrasi/guru')->with('toast_success', 'Data Guru Berhasil di Tambahkan')->with('title', 'Daftar Guru');
         }
 
@@ -61,16 +62,16 @@ class GuruController extends Controller
             'nip' => 'required|unique:gurus',
             'jenis_kelamin' => 'required',
             'no_telp' => 'required|unique:gurus',
-            "agama" => 'required',
-            "tempat_lahir" => "required",
-            "tanggal_lahir" => "required|date",
-            "alamat.provinsi" => "required",
-            "alamat.kabupaten" => "required",
-            "alamat.kecamatan" => "required",
-            "alamat.desa" => "required",
-            "status" => "required",
+            'agama' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'alamat.provinsi' => 'required',
+            'alamat.kabupaten' => 'required',
+            'alamat.kecamatan' => 'required',
+            'alamat.desa' => 'required',
+            'status' => 'required',
             'signature' => 'required',
-            "foto" => "required",
+            'foto' => 'required',
         ], $messages);
 
         $alamat_fix = '';
@@ -94,21 +95,21 @@ class GuruController extends Controller
         if ($request->hasFile('foto')) {
             $tujuan_upload = 'storage/guru/img/';
             $file = $request->file('foto');
-            $filegambar = time() . "_" . $file->getClientOriginalName();
+            $filegambar = time().'_'.$file->getClientOriginalName();
             // isi dengan nama folder tempat kemana file diupload
             $file->move($tujuan_upload, $filegambar);
         }
         if ($request->has('signature')) {
             $signatureData = $request->input('signature');
             $file_path = 'storage/guru/signatures/';
-            $filesignature = time() . "_$request->nip" . "_signature.png";
+            $filesignature = time()."_$request->nip".'_signature.png';
             $signature = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $signatureData));
-            $result_file = file_put_contents($file_path . $filesignature, $signature);
+            $result_file = file_put_contents($file_path.$filesignature, $signature);
             // $file_signature = Storage::disk('public')->put('storage/guru/signatures/' . $filesignature, $signature);
         }
         $user = User::create([
             'username' => $request->nip,
-            'email' => $request->nip . '@school.teacher.com',
+            'email' => $request->nip.'@school.teacher.com',
             'password' => Hash::make($request->nip),
             'role' => 'guru',
         ]);
@@ -130,29 +131,31 @@ class GuruController extends Controller
 
         return redirect('/administrasi/guru')->with('toast_success', 'Data Guru Berhasil di Tambahkan')->with('title', 'Daftar Guru');
     }
+
     public function edit(Guru $guru)
     {
         return view('pages.administrasi.data-guru.edit', [
             'agamas' => ['islam', 'kristen', 'buddha', 'konghucu', 'hindu'],
             'status_gurus' => ['honorer', 'tetap', 'magang'],
-            'guru'      => $guru
+            'guru' => $guru,
         ])->with('title', 'Update Data Guru');
     }
+
     public function update(Request $request, Guru $guru)
     {
         $messages = [
             'regex' => ':attribute harus diisi dengan huruf saja',
-            'unique' => 'Data ini sudah digunakan'
+            'unique' => 'Data ini sudah digunakan',
         ];
 
         $this->validate($request, [
             'nama' => 'regex:/^[a-zA-Z\s.,]+$/',
-            "alamat" => "required",
-            "alamat.provinsi" => "required",
-            "alamat.kabupaten" => "required",
-            "alamat.kecamatan" => "required",
-            "alamat.desa" => "required",
-            "status" => "required",
+            'alamat' => 'required',
+            'alamat.provinsi' => 'required',
+            'alamat.kabupaten' => 'required',
+            'alamat.kecamatan' => 'required',
+            'alamat.desa' => 'required',
+            'status' => 'required',
         ], $messages);
 
         $alamat_fix = '';
@@ -171,16 +174,18 @@ class GuruController extends Controller
         }
 
         $data = [
-            'nama'        => $request->nama,
-            'alamat'      => $alamat_fix,
-            'status'      => $request->status,
+            'nama' => $request->nama,
+            'alamat' => $alamat_fix,
+            'status' => $request->status,
         ];
 
         if (count($guru->where('deleted', 0)->get()) > 0) {
             $guru->update($data);
         }
+
         return redirect('/administrasi/guru')->with('toast_success', 'Data Guru Berhasil di Ubah');
     }
+
     public function destroy(Guru $guru)
     {
         //delete data

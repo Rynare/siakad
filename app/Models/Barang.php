@@ -16,7 +16,7 @@ class Barang extends Model
         'tahun_pengadaan',
         'jenis',
         'jumlah_seluruh_barang',
-        'id_ruang'
+        'id_ruang',
     ];
 
     // Jika ada kolom tanggal 'created_at' dan 'updated_at', tambahkan kode berikut
@@ -26,6 +26,7 @@ class Barang extends Model
     {
         return $this->belongsTo(Ruang::class, 'id_ruang', 'id');
     }
+
     public function inventaris()
     {
         return $this->hasMany(Inventaris::class, 'barang_id', 'id');

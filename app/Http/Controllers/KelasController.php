@@ -6,7 +6,6 @@ use App\Models\Akademik;
 use App\Models\Guru;
 use App\Models\Jadwal;
 use App\Models\Kelas;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,14 +21,16 @@ class KelasController extends Controller
         return view('pages.sarana.data-kelas.kelas', [
             'daftar_kelas' => $kelas,
             'guruTersedia' => $guruTersedia,
-            'list_guru' => Guru::all()
+            'list_guru' => Guru::all(),
         ])->with('title', 'Data Kelas');
     }
+
     public function store(Request $request)
     {
         $kelas = Kelas::firstWhere('nama_kelas', strtoupper($request->nama_kelas));
         if ($kelas) {
             $kelas->update(['deleted' => 0]);
+
             return redirect()->route('kelas_main')->with('toast_success', 'Kelas terhapus telah aktif kembali!');
         }
 
@@ -52,8 +53,10 @@ class KelasController extends Controller
                 'id_akademik' => $id_akademik,
             ]);
         }
+
         return redirect()->route('kelas_main')->with('toast_success', 'Data berhasil ditambahkan !');
     }
+
     public function update(Request $request, Kelas $kelas)
     {
         $validated_condition = [
@@ -74,13 +77,16 @@ class KelasController extends Controller
             'nama_kelas' => strtoupper($request->nama_kelas),
             'id_guru' => $request->id_guru,
         ]);
+
         return redirect()->route('kelas_main')->with('toast_success', 'Data berhasil diubah !');
     }
+
     public function destroy(Kelas $kelas)
     {
         $kelas->update([
-            'deleted' => 1
+            'deleted' => 1,
         ]);
+
         return redirect()->route('kelas_main')->with('toast_success', 'Data berhasil dihapus !');
     }
 }

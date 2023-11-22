@@ -14,7 +14,7 @@ class KalenderAkademikController extends Controller
      */
     public function index(Request $request)
     {
-        $events = array();
+        $events = [];
         $kalender = KalenderAkademik::all();
         foreach ($kalender as $k) {
             $color = null;
@@ -26,14 +26,15 @@ class KalenderAkademikController extends Controller
             }
 
             $events[] = [
-                'id'   => $k->id,
+                'id' => $k->id,
                 'title' => $k->title,
                 'start' => $k->start_date,
                 'end' => $k->end_date,
                 'status' => $k->status,
-                'color' => $color
+                'color' => $color,
             ];
         }
+
         return view('pages.akademik.data-kalender-akademik.kalender', ['events' => $events])->with('title', 'Kalender Akademik');
     }
 
@@ -50,20 +51,19 @@ class KalenderAkademikController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string'
+            'title' => 'required|string',
         ]);
 
         $booking = KalenderAkademik::create([
             'title' => $request->title,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'status' => 'libur'
+            'status' => 'libur',
         ]);
 
         $color = null;
@@ -85,7 +85,6 @@ class KalenderAkademikController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\KalenderAkademik  $kalenderAkademik
      * @return \Illuminate\Http\Response
      */
     public function show(KalenderAkademik $kalenderAkademik)
@@ -96,7 +95,6 @@ class KalenderAkademikController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\KalenderAkademik  $kalenderAkademik
      * @return \Illuminate\Http\Response
      */
     public function edit(KalenderAkademik $kalenderAkademik)
@@ -107,22 +105,22 @@ class KalenderAkademikController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\KalenderAkademik  $kalenderAkademik
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $booking = KalenderAkademik::find($id);
-        if (!$booking) {
+        if (! $booking) {
             return response()->json([
-                'error' => 'Unable to locate the event'
+                'error' => 'Unable to locate the event',
             ], 404);
         }
         $booking->update([
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ]);
+
         return response()->json('Event updated');
     }
 
@@ -135,12 +133,13 @@ class KalenderAkademikController extends Controller
     public function destroy($id)
     {
         $booking = KalenderAkademik::find($id);
-        if (!$booking) {
+        if (! $booking) {
             return response()->json([
-                'error' => 'Unable to locate the event'
+                'error' => 'Unable to locate the event',
             ], 404);
         }
         $booking->delete();
+
         return $id;
     }
 }

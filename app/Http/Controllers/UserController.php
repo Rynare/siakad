@@ -27,7 +27,7 @@ class UserController extends Controller
         $updated_data = [];
 
         if (in_array('root', $role_from_db) && $user->id != auth()->user()->id) {
-            return back()->with('toast_error', "Anda tidak memiliki akses untuk mengubah data ini");
+            return back()->with('toast_error', 'Anda tidak memiliki akses untuk mengubah data ini');
         }
 
         foreach ($request->roles as $key => $role) {
@@ -39,18 +39,18 @@ class UserController extends Controller
             }
         }
 
-        if (in_array('root', $role_from_db) && !in_array('root', $role_to_submit)) {
+        if (in_array('root', $role_from_db) && ! in_array('root', $role_to_submit)) {
             array_push($role_to_submit, 'root');
-            if (!in_array('admin', $role_to_submit)) {
+            if (! in_array('admin', $role_to_submit)) {
                 array_push($role_to_submit, 'admin');
             }
         }
 
         if (count($role_to_submit) <= 0) {
-            return back()->with('toast_error', "Role yang dimasukkan tidak ada yang valid");
+            return back()->with('toast_error', 'Role yang dimasukkan tidak ada yang valid');
         }
 
-        if (!in_array($user->current_role, $role_to_submit)) {
+        if (! in_array($user->current_role, $role_to_submit)) {
             $updated_data['current_role'] = $role_to_submit[0];
         }
 
@@ -60,13 +60,15 @@ class UserController extends Controller
 
         return back()->with('toast_success', "User: $user->username berhasil diperbarui");
     }
+
     public function reset(Request $request, User $user)
     {
         $hashedPassword = Hash::make($request->username);
         $data = [
-            'password'      => $hashedPassword,
+            'password' => $hashedPassword,
         ];
         $user->update($data);
+
         return redirect()->route('user_management')->with('toast_success', 'Password Berhasil di Reset');
     }
 }

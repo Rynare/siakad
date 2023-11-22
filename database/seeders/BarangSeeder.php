@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Kelas;
 use App\Models\Ruang;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class BarangSeeder extends Seeder
 {

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +17,7 @@ class MapelSeeder extends Seeder
         $mapels = ['Bahasa Inggris', 'Bahasa Indonesia', 'Matematika', 'PKN', 'IPS', 'BIOLOGI', 'KIMIA', 'FISIKA'];
         foreach ($mapels as $mapel) {
             DB::table('mapels')->insert([
-                'nama_mapel' => $mapel
+                'nama_mapel' => $mapel,
             ]);
         }
     }

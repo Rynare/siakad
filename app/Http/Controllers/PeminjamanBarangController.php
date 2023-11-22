@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Peminjaman_barang;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PeminjamanBarangController extends Controller
 {
@@ -114,15 +113,14 @@ class PeminjamanBarangController extends Controller
             'tanggal_pengembalian' => ['sometimes', 'date'],
         ]);
 
-            $data->barang_id = $request->barang_id;
-            $data->jumlah = $request->jumlah;
-            $data->nama_peminjam = $request->nama_peminjam;
-            $data->tanggal_peminjaman = $request->tanggal_peminjaman;
-            $data->tanggal_pengembalian = $request->tanggal_pengembalian;
-            $data->dokumen = $nama_dokumen;
-            $data->save();
-            session::flash('sukses','Data berhasil ditambahkan');
-
+        $data->barang_id = $request->barang_id;
+        $data->jumlah = $request->jumlah;
+        $data->nama_peminjam = $request->nama_peminjam;
+        $data->tanggal_peminjaman = $request->tanggal_peminjaman;
+        $data->tanggal_pengembalian = $request->tanggal_pengembalian;
+        $data->dokumen = $nama_dokumen;
+        $data->save();
+        session::flash('sukses', 'Data berhasil ditambahkan');
 
         return redirect()->route('peminjamanBarang.index');
     }
@@ -154,8 +152,9 @@ class PeminjamanBarangController extends Controller
             'peminjaman_barang' => $peminjaman_barang,
         ])->with('title', 'Data Peminjaman');
     }
+
     public function surat()
     {
-        
+
     }
 }

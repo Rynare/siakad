@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Pengumuman;
+use Illuminate\Http\Request;
 
 class PengumumanController extends Controller
 {
@@ -13,6 +12,7 @@ class PengumumanController extends Controller
         // Show a form to create a new notification
         return view('pengumumans.create');
     }
+
     public function store(Request $request)
     {
         if ($request->has('roles')) {
@@ -27,6 +27,7 @@ class PengumumanController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Pengumuman berhasil disimpan');
     }
+
     public function destroy($id)
     {
         $barang = Pengumuman::findOrFail($id);

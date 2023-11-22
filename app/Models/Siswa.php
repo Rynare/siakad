@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Siswa extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
+
     protected $table = 'siswas';
 
     protected $fillable = [
@@ -37,6 +38,7 @@ class Siswa extends Model
     {
         return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
@@ -51,6 +53,7 @@ class Siswa extends Model
     {
         return $this->hasMany(Nilai::class, 'id', 'id_user');
     }
+
     public function detail_siswa()
     {
         return $this->hasOne(Detail_siswa::class, 'id_siswa', 'id');

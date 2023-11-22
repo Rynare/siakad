@@ -13,36 +13,7 @@
 @section('content')
 {{-- @dd($peminjaman) --}}
 
-<div class="row">
-    <div class="col-3">
-        <div class="card my-4">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                <div class="bg-gradient-success shadow-primary border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3">Jumlah Barang 
-                </div>
-            </div>
-            <div class="card-body px-0 pb-2">
-                <div class="table-responsive pb-2 px-3">
-                    <img src="{{ asset('storage/public/img/c.jpg') }}" alt="barang">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-3">
-        <div class="card my-4">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                <div class="bg-gradient-success shadow-primary border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3">Jumlah Ruang 
-                </div>
-            </div>
-            <div class="card-body px-0 pb-2">
-                <div class="table-responsive pb-2 px-3">
-                    <img src="{{ asset('storage/public/img/c.jpg') }}" alt="ruang">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="row">
     <div class="col-12">
@@ -76,6 +47,7 @@
                                 <td class="text-center">{{ $p->nama_peminjam }}</td>
                                 <td class="text-center">{{ $p->tanggal_peminjaman }}</td>
                                 <td class="text-center">{{ $p->tanggal_pengembalian }}</td>
+                                <td></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -139,6 +111,11 @@
                                         class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                         Tanggal Pengembalian
+                                    </th>
+                                    <th
+                                        class="
+                                            text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                        File
                                     </th>
                                     <th
                                         class="
@@ -366,6 +343,13 @@
                                                         id="inputEmail4" required value="{{ old('tanggal_pengembalian') }}"
                                                         {{ $errors->has('tanggal_pengembalian') ? 'autofocus="true"' : '' }}>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">File</label>
+                                            <div class="input-group">
+                                                <label for="file" class="form-label">File</label>
+                                                <input type="file" class="form-control" id="file" placeholder="" name="surat_peminjaman">
+                                              </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-primary ml-5 text-sm rounded-3"

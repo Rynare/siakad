@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Akademik;
 use App\Models\Jadwal;
 use App\Models\Mapel;
 use App\Models\Nilai;
 use App\Models\Siswa;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -15,31 +13,34 @@ class InputNilaiController extends Controller
 {
     public function index($id)
     {
-        $jadwal =  Jadwal::where("guru_id", $id)->groupBy("mapel_id", "kelas_id")->get();
+        $jadwal = Jadwal::where('guru_id', $id)->groupBy('mapel_id', 'kelas_id')->get();
+
         return view('datainputnilai.nilai', [
-            'jadwal'      => $jadwal,
+            'jadwal' => $jadwal,
 
         ]);
     }
+
     public function atur($id, $smt)
     {
-        $jadwal  = Jadwal::find($id);
+        $jadwal = Jadwal::find($id);
         $kelas = $jadwal->kelas_id;
-        $siswa = Siswa::where("kelas_id", $kelas)->get();
-        $nilai = Nilai::where("kelas_id", $kelas)->get();
+        $siswa = Siswa::where('kelas_id', $kelas)->get();
+        $nilai = Nilai::where('kelas_id', $kelas)->get();
         $semester = $smt;
 
         // dd($kelas);
         // $siswa = Siswa::where()
         //Jadwal::distinct("mapel_id")->where("guru_id",$id)->get();
         return view('datainputnilai.inputnilai', [
-            'jadwal'      => $jadwal,
-            'nilai'       => $nilai,
-            'siswa'       => $siswa,
-            'semester'    => $semester
+            'jadwal' => $jadwal,
+            'nilai' => $nilai,
+            'siswa' => $siswa,
+            'semester' => $semester,
 
         ]);
     }
+
     public function input($idjadwal, $idsiswa, $idmapel, $smt)
     {
         $jadwal = Jadwal::find($idjadwal);
@@ -48,19 +49,21 @@ class InputNilaiController extends Controller
         $semester = $smt;
         $nilai = Nilai::where(
             [
-                "siswa_id"  => $idsiswa,
-                "mapel_id"  => $idmapel,
-                "semester"  => $smt
+                'siswa_id' => $idsiswa,
+                'mapel_id' => $idmapel,
+                'semester' => $smt,
             ]
         )->first();
+
         return view('datainputnilai.inputnilaisiswa', [
-            'mapel'      => $mapel,
-            'siswa'      => $siswa,
-            'jadwal'     => $jadwal,
-            'nilai'      => $nilai,
-            'semester'   => $semester
+            'mapel' => $mapel,
+            'siswa' => $siswa,
+            'jadwal' => $jadwal,
+            'nilai' => $nilai,
+            'semester' => $semester,
         ]);
     }
+
     public function detail($idjadwal, $idsiswa, $idmapel, $smt)
     {
         $jadwal = Jadwal::find($idjadwal);
@@ -69,19 +72,21 @@ class InputNilaiController extends Controller
         $semester = $smt;
         $nilai = Nilai::where(
             [
-                "siswa_id"   => $idsiswa,
-                "mapel_id"   => $idmapel,
-                "semester"   => $semester
+                'siswa_id' => $idsiswa,
+                'mapel_id' => $idmapel,
+                'semester' => $semester,
             ]
         )->first();
+
         return view('datainputnilai.detailnilai', [
-            'mapel'      => $mapel,
-            'siswa'      => $siswa,
-            'jadwal'     => $jadwal,
-            'nilai'      => $nilai,
-            'semester'   => $semester
+            'mapel' => $mapel,
+            'siswa' => $siswa,
+            'jadwal' => $jadwal,
+            'nilai' => $nilai,
+            'semester' => $semester,
         ]);
     }
+
     public function store(Request $request, $id_jadwal, $idsiswa, $idmapel, $smt)
     {
 
@@ -114,9 +119,9 @@ class InputNilaiController extends Controller
 
         $data = Nilai::where(
             [
-                "siswa_id"  => $idsiswa,
-                "mapel_id"  => $idmapel,
-                "semester"  => $smt
+                'siswa_id' => $idsiswa,
+                'mapel_id' => $idmapel,
+                'semester' => $smt,
             ]
         )->first();
         if ($data) {
@@ -148,20 +153,20 @@ class InputNilaiController extends Controller
 
             // dd($nilairata);
             $nilaii = [
-                'tugas1'         => $request->tugas1,
-                'tugas2'         => $request->tugas2,
-                'tugas3'         => $request->tugas3,
-                'tugas4'         => $request->tugas4,
-                'tugas5'         => $request->tugas5,
-                'uts'            => $request->uts,
-                'uas'            => $request->uas,
-                'semester'       => $request->semester,
-                'siswa_id'       => $request->siswa_id,
-                'kelas_id'       => $request->kelas_id,
-                'guru_id'        => $request->guru_id,
-                'mapel_id'       => $request->mapel_id,
-                'rata_nilai'     => $nilairata,
-                'nilai_huruf'    => $nilai_huruf_pth
+                'tugas1' => $request->tugas1,
+                'tugas2' => $request->tugas2,
+                'tugas3' => $request->tugas3,
+                'tugas4' => $request->tugas4,
+                'tugas5' => $request->tugas5,
+                'uts' => $request->uts,
+                'uas' => $request->uas,
+                'semester' => $request->semester,
+                'siswa_id' => $request->siswa_id,
+                'kelas_id' => $request->kelas_id,
+                'guru_id' => $request->guru_id,
+                'mapel_id' => $request->mapel_id,
+                'rata_nilai' => $nilairata,
+                'nilai_huruf' => $nilai_huruf_pth,
             ];
             //update
             $data->update($nilaii);
@@ -169,25 +174,26 @@ class InputNilaiController extends Controller
             //add
             // Nilai::create($nilai);
             Nilai::create([
-                'tugas1'         => $request->tugas1,
-                'tugas2'         => $request->tugas2,
-                'tugas3'         => $request->tugas3,
-                'tugas4'         => $request->tugas4,
-                'tugas5'         => $request->tugas5,
-                'uts'            => $request->uts,
-                'uas'            => $request->uas,
-                'semester'       => $request->semester,
-                'siswa_id'       => $request->siswa_id,
-                'kelas_id'       => $request->kelas_id,
-                'guru_id'        => $request->guru_id,
-                'mapel_id'       => $request->mapel_id,
-                'rata_nilai'     => $nilai_rata,
-                'nilai_huruf'    => $nilai_huruf_pth
+                'tugas1' => $request->tugas1,
+                'tugas2' => $request->tugas2,
+                'tugas3' => $request->tugas3,
+                'tugas4' => $request->tugas4,
+                'tugas5' => $request->tugas5,
+                'uts' => $request->uts,
+                'uas' => $request->uas,
+                'semester' => $request->semester,
+                'siswa_id' => $request->siswa_id,
+                'kelas_id' => $request->kelas_id,
+                'guru_id' => $request->guru_id,
+                'mapel_id' => $request->mapel_id,
+                'rata_nilai' => $nilai_rata,
+                'nilai_huruf' => $nilai_huruf_pth,
 
             ]);
         }
+
         // Nilai::create($nilai);
-        return Redirect('/data-nilai-atur/' . $id_jadwal . '/' . $smt)->with('toast_success', 'Data berhasil disimpan !');;
+        return Redirect('/data-nilai-atur/'.$id_jadwal.'/'.$smt)->with('toast_success', 'Data berhasil disimpan !');
         // return Redirect::back()->with('toast_success','Data berhasil ditambahkan !');
     }
 }

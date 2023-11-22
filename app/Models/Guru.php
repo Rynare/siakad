@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Guru extends Model
 {
     use HasFactory;
 
-    protected $table = "gurus";
+    protected $table = 'gurus';
 
     protected $fillable = [
         'nip',
@@ -39,6 +38,7 @@ class Guru extends Model
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
+
     public function kelas()
     {
         return $this->hasOne(Kelas::class, 'id_guru', 'id');

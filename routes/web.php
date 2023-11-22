@@ -1,32 +1,30 @@
 <?php
 
 use App\Http\Controllers\AbsensiController;
-use Illuminate\Http\Request;
-use App\Models\Data_angkatan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EditPasswordController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\InputNilaiController;
+use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\JadwalMengajarController;
+use App\Http\Controllers\KalenderAkademikController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MapelController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PeminjamanBarangController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengumumanController;
+use App\Http\Controllers\RaportController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\SiswaController;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\InventarisController;
-use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\RaportController;
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\InputNilaiController;
-use App\Http\Controllers\PeminjamanController;
-use App\Http\Controllers\PeminjamanBarangController;
-use App\Http\Controllers\EditPasswordController;
-use App\Http\Controllers\JadwalMengajarController;
-use App\Http\Controllers\KalenderAkademikController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PengumumanController;
-use App\Models\Absensi;
 use App\Models\Akademik;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,8 +39,9 @@ use App\Models\Akademik;
 
 Route::post('/api/request-dd', function (Request $request) {
     $request->validate([
-        'alamat.jalan' => 'required'
+        'alamat.jalan' => 'required',
     ]);
+
     return dd($request->input('alamat'));
 });
 Route::get('/api/tes', function (Request $request) {
@@ -58,6 +57,7 @@ Route::get('/', function () {
     if (Auth::check()) {
         return redirect('/dashboard');
     }
+
     return redirect('/login');
 });
 
@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
     // ==============[ L O G O U T ]===============
     Route::get('/logout', function () {
         Auth::logout(); // Melakukan logout pengguna saat ini
+
         return redirect('/')->with('toast_success', 'Anda telah berhasil logout.');
     })->name('logout');
 
@@ -115,7 +116,6 @@ Route::middleware(['userRole:admin,guru'])->group(function () {
     Route::get('/data-jadwal-cek', [JadwalController::class, 'lihat']);
     Route::get('/data-jadwal-cekjadwal/{id}', [JadwalController::class, 'cekjadwal']);
 });
-
 
 //==========================================================================================
 Route::middleware(['userRole:admin'])->group(function () {

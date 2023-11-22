@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class KalenderAkademik extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'title',
         'start_date',

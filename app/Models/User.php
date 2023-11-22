@@ -17,7 +17,6 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-
     public $table = 'users';
 
     protected $fillable = [
@@ -27,7 +26,7 @@ class User extends Authenticatable
         'password',
         'role',
         'current_role',
-        'remember_token'
+        'remember_token',
     ];
 
     /**
@@ -54,10 +53,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Guru::class, 'id_user', 'id');
     }
+
     public function siswa()
     {
         return $this->hasOne(Siswa::class, 'id_user', 'id');
     }
+
     public function hasRole(...$roles)
     {
         return in_array($this->current_role, $roles);
