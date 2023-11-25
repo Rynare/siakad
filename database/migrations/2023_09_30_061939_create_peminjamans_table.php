@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama_peminjam');
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_pengembalian');
+            $table->string('surat')->nullable();
             $table->timestamps();
 
             $table->foreign('ruang_id')->references('id')->on('ruangs');

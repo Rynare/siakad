@@ -18,9 +18,9 @@ return new class extends Migration
             $table->foreignId('barang_id')->constrained('barangs');
             $table->integer('jumlah');
             $table->string('nama_peminjam');
-            $table->boolean('status')->default(false);
             $table->date('tanggal_peminjaman');
             $table->date('tanggal_pengembalian');
+            $table->string('surat')->nullable();
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Jadwal;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -25,7 +26,10 @@ class DatabaseSeeder extends Seeder
         $this->call(MapelSeeder::class);
         $this->call(AngkatanSeeder::class);
         $this->call(UserSeeder::class);
+        // jadwal dummy
         $this->call(JadwalSeeder::class);
+        // jadwal kosong
+        // $this->call(JadwalSeeder2::class);
         // $this->call(NilaiSeeder::class);
         $this->call(BarangSeeder::class);
         $this->call(PeminjamanSeeder::class);
