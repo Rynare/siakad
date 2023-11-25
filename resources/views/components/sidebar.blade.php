@@ -12,7 +12,7 @@
             <a class="btn rounded text-white font-weight-bold {{ Request::is('dashboard*') ? 'bg-gradient-primary ' : '' }}"
                 style="text-transform: none; width: 100%;display: flex; align-items: center; column-gap:10px"
                 href="/dashboard"> <span class="material-symbols-outlined">dashboard</span> Dashboard</a>
-        </li>
+        </li>~
         @if (auth()->user()->hasRole(''))
             <li class="mb-1" style="width: 100%">
                 <button class="btn align-items-center rounded collapsed text-white font-weight-bold"

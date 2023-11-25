@@ -403,9 +403,12 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Oke</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tolak</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Setuju</button>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>

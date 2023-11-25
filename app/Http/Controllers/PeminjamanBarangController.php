@@ -103,26 +103,32 @@ class PeminjamanBarangController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->all());
-        $validated = $request->validate([
-            'id' => ['required'],
-            'barang_id' => ['sometimes', 'numeric'],
-            'jumlah' => ['sometimes', 'numeric'],
-            'nama_peminjam' => ['sometimes', 'string'],
-            'tanggal_peminjaman' => ['sometimes', 'date'],
-            'tanggal_pengembalian' => ['sometimes', 'date'],
-        ]);
+        $params = $request->except('_token');
+        $user = \Auth::user();
 
-        $data->barang_id = $request->barang_id;
-        $data->jumlah = $request->jumlah;
-        $data->nama_peminjam = $request->nama_peminjam;
-        $data->tanggal_peminjaman = $request->tanggal_peminjaman;
-        $data->tanggal_pengembalian = $request->tanggal_pengembalian;
-        $data->dokumen = $nama_dokumen;
-        $data->save();
-        session::flash('sukses', 'Data berhasil ditambahkan');
+        if ($user->update($params)){
+            \Session::flash('succes', 'your profile update');
+            return redirect('data-peminjaman-barang');
+        }
+        // $validated = $request->validate([
+        //     'id' => ['required'],
+        //     'barang_id' => ['sometimes', 'numeric'],
+        //     'jumlah' => ['sometimes', 'numeric'],
+        //     'nama_peminjam' => ['sometimes', 'string'],
+        //     'tanggal_peminjaman' => ['sometimes', 'date'],
+        //     'tanggal_pengembalian' => ['sometimes', 'date'],
+        // ]);
 
-        return redirect()->route('peminjamanBarang.index');
+        // $data->barang_id = $request->barang_id;
+        // $data->jumlah = $request->jumlah;
+        // $data->nama_peminjam = $request->nama_peminjam;
+        // $data->tanggal_peminjaman = $request->tanggal_peminjaman;
+        // $data->tanggal_pengembalian = $request->tanggal_pengembalian;
+        // $data->dokumen = $nama_dokumen;
+        // $data->save();
+        // session::flash('sukses', 'Data berhasil ditambahkan');
+
+        // return redirect()->route('peminjamanBarang.index');
     }
 
     /**
