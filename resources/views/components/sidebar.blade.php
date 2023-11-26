@@ -13,7 +13,7 @@
                 style="text-transform: none; width: 100%;display: flex; align-items: center; column-gap:10px"
                 href="/dashboard"> <span class="material-symbols-outlined">dashboard</span> Dashboard</a>
         </li>
-        @if (auth()->user()->hasRole('admin'))
+        @if (auth()->user()->hasRole(''))
             <li class="mb-1" style="width: 100%">
                 <button class="btn align-items-center rounded collapsed text-white font-weight-bold"
                     style="text-transform: none; width: 100%;display: flex; align-items: center; column-gap:10px;"
@@ -130,6 +130,38 @@
                     </ul>
                 </div>
             </li>
+            @elseif (auth()->user()->hasRole('admin'))
+           
+            <li class="mb-1">
+                <button class="btn align-items-center rounded collapsed text-white font-weight-bold"
+                    style="text-transform: none; width: 100%;display: flex; align-items: center; column-gap:10px"
+                    data-bs-toggle="collapse" data-bs-target="#sarpras-collapse" aria-expanded="false">
+                    <span class="material-symbols-outlined">
+                        architecture
+                    </span>
+                    Sapras <i class="material-icons opacity-10 ms-auto">expand_more</i>
+                </button>
+                <div class="collapse {{ Request::is('sarana/inventaris*') || Request::is('data-peminjaman*') 
+                    ||Request::is('data-peminjaman-barang') ? 'show' : '' }}"
+                    id="sarpras-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a class="link-light rounded mb-1 {{ Request::is('sarana/inventaris*') ? 'bg-gradient-primary ' : '' }}"
+                                href="/sarana/inventaris"> <i class="material-icons opacity-10 mx-2">task</i>
+                                Inventaris</a></li>
+                            </ul>
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a class="link-light rounded mb-1 {{ Request::is('data-peminjaman') ? 'bg-gradient-primary ' : '' }}"
+                        href="/data-peminjaman"> <i class="material-icons opacity-10 mx-2">task</i>
+                        Peminjaman Ruang</a></li>
+                    </ul>
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a class="link-light rounded mb-1 {{ Request::is('data-peminjaman-barang') ? 'bg-gradient-primary ' : '' }}"
+                                href="{{ route('peminjamanBarang.index') }}"> <i class="material-icons opacity-10 mx-2">task</i>
+                                Peminjaman Barang</a></li>
+                    </ul>
+                </div>
+            </li>
         @endif
+
     </ul>
 </div>

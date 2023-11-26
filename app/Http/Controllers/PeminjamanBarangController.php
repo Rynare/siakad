@@ -30,7 +30,7 @@ class PeminjamanBarangController extends Controller
             'hariini' => $hariini,
             'peminjaman' => $peminjaman_barang,
             'barang' => $barang,
-        ])->with('title', 'Data Peminjaman');
+        ])->with('title', 'Data Peminjaman Barang');
     }
 
     /**
@@ -61,10 +61,10 @@ class PeminjamanBarangController extends Controller
             'updated_at' => now(),
         ]);
 
-        $file = $request->file('surat');
-        $fileName = uniqid().'.'.$file->getClientOriginalExtension();
-        $file->storeAs('public/surat', $fileName);
-        $data['surat'] = $fileName;
+        $path = $request->file('surat')->store('surat');
+        // $fileName = uniqid().'.'.$file->getClientOriginalExtension();
+        // $file->storeAs('public/surat', $fileName);
+        $validated['surat'] = $path;
 
         Peminjaman_barang::create($validated);
 
@@ -146,9 +146,7 @@ class PeminjamanBarangController extends Controller
         $peminjaman_barang = Peminjaman_barang::whereDate('tanggal_pengembalian', '<', now())
             ->get();
 
-        return view('pages.humas.peminjaman-ruang.peminjaman.history', [
-            'peminjaman_barang' => $peminjaman_barang,
-        ])->with('title', 'Data Peminjaman');
+        return view('pages.sarana.data-peminjaman-barang.history', compact('peminjaman_barang'))->with('title', 'Data Peminjaman Barang');
     }
 
     public function surat()
