@@ -65,7 +65,7 @@ class PeminjamanBarangController extends Controller
         $file = $request->file('surat');
         $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
         $file->storeAs('public/surat', $fileName);
-        $data['surat'] = $fileName;
+        $validated['surat'] = $fileName;
 
         Peminjaman_barang::create($validated);
 
