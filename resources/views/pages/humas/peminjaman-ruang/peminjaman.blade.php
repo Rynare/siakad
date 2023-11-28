@@ -118,10 +118,7 @@ Data Peminjaman Ruang
                                     {{ $p->tanggal_pengembalian }}
                                 </td>
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
-                                    <button  type="button"data-bs-toggle="modal" data-bs-target="#detail-modal"
-                                                class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle"
-                                                style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                title="Detail" onclick="showModalDialog(this)">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail" onclick="showModalDialog(this)">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}" class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
@@ -142,7 +139,72 @@ Data Peminjaman Ruang
                         </tbody>
                         @endif
                     </table>
-
+                    <div class="modal fade" id="detail-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog  modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary">
+                                    <h5 class="modal-title text-white" id="exampleModalLabel">Detail Peminjaman</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Ruang</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="nama"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Nama Peminjam</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="jenis_kelamin"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Tanggal Peminjaman</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="tempat_tanggal_lahir"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Tanggal Pengembalian</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="no_telp"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Surat Pengajuan</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="status"></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog  modal-lg">
                             <div class="modal-content">
