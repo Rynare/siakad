@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Peminjaman_barang;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class PeminjamanBarangController extends Controller
 {
@@ -31,7 +30,7 @@ class PeminjamanBarangController extends Controller
             'hariini' => $hariini,
             'peminjaman' => $peminjaman_barang,
             'barang' => $barang,
-        ])->with('title', 'Data Peminjaman');
+        ])->with('title', 'Data Peminjaman Barang');
     }
 
     /**
@@ -62,10 +61,10 @@ class PeminjamanBarangController extends Controller
             'updated_at' => now(),
         ]);
 
-        $file = $request->file('surat');
-        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public/surat', $fileName);
-        $validated['surat'] = $fileName;
+        $path = $request->file('surat')->store('surat');
+        // $fileName = uniqid().'.'.$file->getClientOriginalExtension();
+        // $file->storeAs('public/surat', $fileName);
+        $validated['surat'] = $path;
 
         Peminjaman_barang::create($validated);
 
@@ -102,7 +101,7 @@ class PeminjamanBarangController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $validated = $request->validate([
             'id' => ['required'],
             'barang_id' => ['sometimes', 'numeric'],
@@ -112,15 +111,14 @@ class PeminjamanBarangController extends Controller
             'tanggal_pengembalian' => ['sometimes', 'date'],
         ]);
 
-            // $data->barang_id = $request->barang_id;
-            // $data->jumlah = $request->jumlah;
-            // $data->nama_peminjam = $request->nama_peminjam;
-            // $data->tanggal_peminjaman = $request->tanggal_peminjaman;
-            // $data->tanggal_pengembalian = $request->tanggal_pengembalian;
-            // $data->dokumen = $request->nama_dokumen;
-            // $data->save();
-            // session::flash('sukses','Data berhasil ditambahkan');
-
+        // $data->barang_id = $request->barang_id;
+        // $data->jumlah = $request->jumlah;
+        // $data->nama_peminjam = $request->nama_peminjam;
+        // $data->tanggal_peminjaman = $request->tanggal_peminjaman;
+        // $data->tanggal_pengembalian = $request->tanggal_pengembalian;
+        // $data->dokumen = $request->nama_dokumen;
+        // $data->save();
+        // session::flash('sukses','Data berhasil ditambahkan');
 
         return redirect()->route('peminjamanBarang.index');
     }
@@ -148,12 +146,11 @@ class PeminjamanBarangController extends Controller
         $peminjaman_barang = Peminjaman_barang::whereDate('tanggal_pengembalian', '<', now())
             ->get();
 
-        return view('pages.humas.peminjaman-ruang.peminjaman.history', [
-            'peminjaman_barang' => $peminjaman_barang,
-        ])->with('title', 'Data Peminjaman');
+        return view('pages.humas.data-peminjaman-barang.history', compact('peminjaman_barang'))->with('title', 'Data Peminjaman Barang');
     }
+
     public function surat()
     {
-        
+
     }
 }
