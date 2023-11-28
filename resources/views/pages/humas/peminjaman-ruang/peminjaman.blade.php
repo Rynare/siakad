@@ -263,11 +263,55 @@ Data Peminjaman Ruang
                             </div>
                         </div>
                     </div>
-
+                    <div class="modal fade" id="detailSurat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Surat Pengajuan Barang</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div>
+                                    <button class="btn btn-primary">Download</button>
+                                    <button class="btn btn-primary">Update</button>
+                                </div>
+                                <div>
+                                    <form action="">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Nama</label>
+                                            <input type="text" class="form-control" id="name" placeholder="" name="nama">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="itemName" class="form-label">Nama Barang</label>
+                                            <input type="text" class="form-control" id="itemName" placeholder="" name="nama_barang">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="loan_date" class="form-label">Tanggal Peminjaman</label>
+                                            <input type="date" class="form-control" id="loan_date" name="tanggal_peminjaman">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="return_date" class="form-label">Tanggal Pengembalian</label>
+                                            <input type="date" class="form-control" id="return_date" name="tanggal_pengembalian">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="file" class="form-label">File</label>
+                                            <input type="file" class="form-control" id="file" placeholder="" name="surat_peminjaman">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tolak</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Setuju</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script>
     function showUpdateModalDialog(button) {
