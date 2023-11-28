@@ -294,7 +294,7 @@ Data Peminjaman Ruang
                                             <input type="date" class="form-control" id="return_date" name="tanggal_pengembalian">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="file" class="form-label">File</label>
+                                            <label for="file" class="form-label">Surat Pengajuan</label>
                                             <input type="file" class="form-control" id="file" placeholder="" name="surat_peminjaman">
                                         </div>
                                     </form>

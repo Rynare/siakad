@@ -288,7 +288,7 @@ Data Peminjaman barang
                                             </div>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="surat" class="form-label">Surat Peminjaman</label>
+                                            <label for="surat" class="form-label">Surat Pengajuan</label>
                                             <input class="form-control" type="file" id="surat" name="surat">
                                         </div>
                                         <div class="modal-footer">
