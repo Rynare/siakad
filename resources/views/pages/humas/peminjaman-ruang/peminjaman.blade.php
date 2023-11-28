@@ -188,7 +188,7 @@ Data Peminjaman Ruang
                                                 <li class="list-group-item">
                                                     <div class="row">
                                                         <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Surat Pengajuan</span>
+                                                            <span class="float-start fw-bold">Surat</span>
                                                             <div class="float-end">:</div>
                                                         </div>
                                                         <div class="col-md-7" style="text-transform: capitalize" id="status"></div>
