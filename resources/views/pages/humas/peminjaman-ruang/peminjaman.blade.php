@@ -117,6 +117,14 @@ Data Peminjaman Ruang
                                 <td class="text-center">
                                     {{ $p->tanggal_pengembalian }}
                                 </td>
+                                @if (auth()->user()->hasRole('waka'))
+                                <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
+                                    <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#detailSurat" class="btn
+                                                btn-info font-weight-bold btn--edit text-sm text-white" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-placement="bottom" title="Surat" onclick="showUpdateModalDialog(this)">
+                                        <span>Surat Pengajuan</span>
+                                        <i class="fa fa-eye"></i>
+                                </td>
+                                @elseif (auth()->user()->hasRole('admin'))
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}" class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail" onclick="showModalDialog(this)">
                                         <i class="fa fa-eye"></i>
@@ -128,6 +136,7 @@ Data Peminjaman Ruang
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
@@ -331,6 +340,9 @@ Data Peminjaman Ruang
                             </div>
                         </div>
                     </div>
+
+                    <!--Aksi Detail surat waka-->
+                    @if (auth()->user()->hasRole('waka'))
                     <div class="modal fade" id="detailSurat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -376,6 +388,7 @@ Data Peminjaman Ruang
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

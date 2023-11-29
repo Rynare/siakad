@@ -173,7 +173,81 @@ Data Peminjaman barang
                         </tbody>
                         @endif
                     </table>
-
+                    <div class="modal fade" id="detail-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog  modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary">
+                                    <h5 class="modal-title text-white" id="exampleModalLabel">Detail Peminjaman</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Nama Peminjam</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="nama"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Nama Barang</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="jenis_kelamin"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Jumlah Barang</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="jenis_kelamin"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Tanggal Peminjaman</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="tempat_tanggal_lahir"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Tanggal Pengembalian</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="no_telp"></div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Surat</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="status"></div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog  modal-lg">
                             <div class="modal-content">
