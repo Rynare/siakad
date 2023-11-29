@@ -121,7 +121,7 @@ Data Peminjaman Ruang
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
                                     <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#detailSurat" class="btn
                                                 btn-info font-weight-bold btn--edit text-sm text-white" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-placement="bottom" title="Surat" onclick="showUpdateModalDialog(this)">
-                                        <span>Surat Pengajuan</span>
+                                        <span>Lihat Pengajuan</span>
                                         <i class="fa fa-eye"></i>
                                 </td>
                                 @elseif (auth()->user()->hasRole('admin'))
@@ -418,7 +418,7 @@ Data Peminjaman Ruang
         var namaPeminjam = button.getAttribute("nama-peminjam");
         var tglPeminjaman = button.getAttribute("tgl-peminjaman");
         var tglPengembalian = button.getAttribute("tgl-pengembalian");
-        var suratPeminjaman = button.getAttribute("surat-peminjaman");
+        var suratPeminjaman = button.getAttribute("surat");
 
 
         // Mengambil elemen input dengan id yang sesuai
@@ -426,7 +426,7 @@ Data Peminjaman Ruang
         var inputNamaPeminjam = document.querySelector('input[name="nama_peminjam"]');
         var inputTglPeminjaman = document.querySelector('input[name="tgl_peminjaman"]');
         var inputTglPengembalian = document.querySelector('input[name="tgl_pengembalian"]');
-        var inputSuratPeminjaman = document.querySelector('input[name="surat_peminjaman"]');
+        var inputSuratPeminjaman = document.querySelector('input[name="surat"]');
 
         // Mengisi nilai input dengan nilai yang diperoleh dari tombol
         inputIdPeminjam.value = idPeminjaman;
