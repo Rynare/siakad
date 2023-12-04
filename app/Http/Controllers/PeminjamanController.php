@@ -251,4 +251,26 @@ class PeminjamanController extends Controller
             'peminjaman'   => $peminjaman
         ])->with('title', 'Data Peminjaman');
     }
+    public function pending()
+    {
+        $peminjaman = Peminjaman::all();
+
+        return view('/pending', compact('pending'));
+    }
+
+    public function confirm($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman->update(['status' => 'confirmed']);
+
+        return redirect('/pending')->with('success', 'Order confirmed successfully.');
+    }
+
+    public function reject($id)
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman->update(['status' => 'rejected']);
+
+        return redirect('/pending')->with('success', 'Order rejected successfully.');
+    }
 }

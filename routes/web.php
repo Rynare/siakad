@@ -27,6 +27,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PengumumanController;
 use App\Models\Absensi;
 use App\Models\Akademik;
+use App\Models\Peminjaman;
 
 /*
 |--------------------------------------------------------------------------
@@ -233,6 +234,9 @@ Route::middleware(['userRole:admin'])->group(function () {
     Route::get('/peminjaman-hapus/{id}', [PeminjamanController::class, 'destroy']);
     Route::post('/peminjaman-tambah', [PeminjamanController::class, 'store']);
     Route::put('/peminjaman-update', [PeminjamanController::class, 'update']);
+    Route::get('/pending', [PeminjamanController::class, 'index']);
+    Route::get('/confirm/{id}', 'PeminjamanController@confirm')->name('peminjaman.confirm');
+
 
     // ==============[ D a t a - P e m i n j a m a n B a r a n g]===============
     Route::get('/data-peminjaman-barang', [PeminjamanBarangController::class, 'index'])->name('peminjamanBarang.index');
