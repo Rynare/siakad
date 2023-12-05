@@ -61,10 +61,10 @@ class PeminjamanBarangController extends Controller
             'updated_at' => now(),
         ]);
 
-        $path = $request->file('surat')->store('surat');
-        // $fileName = uniqid().'.'.$file->getClientOriginalExtension();
-        // $file->storeAs('public/surat', $fileName);
-        $validated['surat'] = $path;
+        $file = $request->file('surat');
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/surat', $fileName);
+        $data['surat'] = $fileName;
 
         Peminjaman_barang::create($validated);
 

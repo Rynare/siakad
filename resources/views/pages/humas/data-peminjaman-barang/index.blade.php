@@ -100,10 +100,10 @@ Data Peminjaman barang
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                     Tanggal Pengembalian
                                 </th>
-                                <!--  <th class="
+                                <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                    Surat Pengajuan
-                                </th> -->
+                                    surat Peminjaman
+                                </th>
                                 <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                     Aksi
@@ -119,7 +119,9 @@ Data Peminjaman barang
                                 <td class="text-center">
                                     {{ $loop->iteration }}
                                 </td>
-                                <td data-id-barang="{{ $value->barang_id }}" class="text-center">{{ isset($value->barang) ? $value->barang->nama_barang : 'Barang tidak tersedia' }}</td>
+                                <td data-id-barang="{{ $value->barang_id }}" class="text-center">
+                                    {{ isset($value->barang) ? $value->barang->nama_barang : 'Barang tidak tersedia' }}
+                                </td>
                                 </td>
                                 <td class="text-center">
                                     {{ $value->jumlah }}
@@ -133,25 +135,20 @@ Data Peminjaman barang
                                 <td class="text-center">
                                     {{ $value->tanggal_pengembalian }}
                                 </td>
+                                <td class="text-center">
+                                    <a href="{{ asset('storage/surat/' . str_replace(' ', '%20', $value->surat)) }}" target="_blank">Lihat file </a>
+                                </td>
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" 
-                                    class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" 
-                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail" onclick="showModalDialog(this)">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" id-peminjaman="{{ $value->id }}" id-barang="{{ $value->barang_id }}" nama-barang="{{$value->barang->nama_barang}}" jumlah="{{ $value->jumlah }}" nama-peminjam="{{ $value->nama_peminjam }}" tgl-peminjaman="{{ $value->tanggal_peminjaman }}" tgl-pengembalian="{{ $value->tanggal_pengembalian }}" class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail" onclick="showModalDialog(this)">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <button class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" 
-                                    type="button" data-bs-toggle="modal" data-bs-target="#update-modal" 
-                                    id-peminjaman="{{ $value->id }}" id-barang="{{ $value->barang_id }}" jumlah="{{ $value->jumlah }}" 
-                                    nama-peminjam="{{ $value->nama_peminjam }}" tgl-peminjaman="{{ $value->tanggal_peminjaman }}" 
-                                    tgl-pengembalian="{{ $value->tanggal_pengembalian }}" 
-                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
+                                    <button class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $value->id }}" id-barang="{{ $value->barang_id }}" jumlah="{{ $value->jumlah }}" nama-peminjam="{{ $value->nama_peminjam }}" tgl-peminjaman="{{ $value->tanggal_peminjaman }}" tgl-pengembalian="{{ $value->tanggal_pengembalian }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <form class="d-inline" action="{{ route('peminjamanBarang.destroy', $value->id) }}" method="POST">
                                         @method('delete')
                                         @csrf
-                                        <button onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" style="margin: 5px 0;" 
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                        <button onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
@@ -189,7 +186,7 @@ Data Peminjaman barang
                                                             <span class="float-start fw-bold">Nama Peminjam</span>
                                                             <div class="float-end">:</div>
                                                         </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="nama"></div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="nama_peminjam"></div>
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item">
@@ -198,7 +195,7 @@ Data Peminjaman barang
                                                             <span class="float-start fw-bold">Nama Barang</span>
                                                             <div class="float-end">:</div>
                                                         </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="jenis_kelamin"></div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="barang"></div>
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item">
@@ -207,7 +204,7 @@ Data Peminjaman barang
                                                             <span class="float-start fw-bold">Jumlah Barang</span>
                                                             <div class="float-end">:</div>
                                                         </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="jenis_kelamin"></div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="jumlah"></div>
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item">
@@ -216,7 +213,7 @@ Data Peminjaman barang
                                                             <span class="float-start fw-bold">Tanggal Peminjaman</span>
                                                             <div class="float-end">:</div>
                                                         </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="tempat_tanggal_lahir"></div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="tanggal_peminjaman"></div>
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item">
@@ -225,7 +222,7 @@ Data Peminjaman barang
                                                             <span class="float-start fw-bold">Tanggal Pengembalian</span>
                                                             <div class="float-end">:</div>
                                                         </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="no_telp"></div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="tanggal_pengembalian"></div>
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item">
@@ -234,7 +231,7 @@ Data Peminjaman barang
                                                             <span class="float-start fw-bold">Surat</span>
                                                             <div class="float-end">:</div>
                                                         </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="status"></div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="surat"></div>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -387,6 +384,24 @@ Data Peminjaman barang
         </div>
     </div>
     <script>
+        function showModalDialog(element) {
+            const updateModalDialog = document.getElementById('detail-modal');
+            const nama = updateModalDialog.querySelector('#nama_peminjam');
+            const namaBarang = updateModalDialog.querySelector('#barang');
+            const jumlahBarang = updateModalDialog.querySelector('#jumlah');
+            const tglPeminjaman = updateModalDialog.querySelector('#tanggal_peminjaman');
+            const tglPengembalian = updateModalDialog.querySelector('#tanggal_pengembalian');
+            const suratPeminjaman = updateModalDialog.querySelector('#surat');
+
+
+            nama.innerText = element.getAttribute('nama-peminjam');
+            namaBarang.innerText = element.getAttribute('nama-barang')
+            jumlahBarang.innerText = element.getAttribute('jumlah');
+            tglPeminjaman.innerText = element.getAttribute('tgl-peminjaman');
+            tglPengembalian.innerText = element.getAttribute('tgl-pengembalian');
+            suratPeminjaman.innerText = element.getAttribute('surat');
+        }
+
         function showUpdateModalDialog(button) {
             // Mendapatkan nilai id-ruang dari button yang diklik
             var idBarang = button.getAttribute("id-barang");
@@ -399,18 +414,21 @@ Data Peminjaman barang
             let namaPeminjam = tr.children[4].innerHTML;
             let tanggalPeminjam = tr.children[5].innerHTML;
             let tanggalPengembalian = tr.children[6].innerHTML;
+            let suratPeminjaman = tr.children[7].innerHTML;
 
             const inputNamaBarang = form_modal.querySelector('select[name="barang"]');
             const inputNamaPeminjan = form_modal.querySelector('input[name="nama_peminjam"]');
             const inputJumlahBarang = form_modal.querySelector('input[name="jumlah"]');
             const inputTanggalPeminjaman = form_modal.querySelector('input[name="tanggal_peminjaman"]');
             const inputTanggalPengembalian = form_modal.querySelector('input[name="tanggal_pengembalian"]');
+            const inputSuratPeminjaman = form_modal.querySelector('input[name="surat"]');
 
             inputNamaBarang.value = namaBarang;
             inputJumlahBarang.value = jumlahBarng;
             inputNamaPeminjan.value = namaPeminjam;
             inputTanggalPeminjaman.value = tanggalPeminjam;
             inputTanggalPengembalian.value = tanggalPengembalian;
+            inputSuratPeminjaman.value = suratPeminjaman;
 
             console.log(inputNamaPeminjam);
 

@@ -218,7 +218,7 @@ class PeminjamanController extends Controller
         ];
 
         $file = $request->file('surat');
-        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
         $file->storeAs('public/surat', $fileName);
         $data['surat'] = $fileName;
 
