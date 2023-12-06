@@ -85,7 +85,7 @@ Data Peminjaman Barang
                                     {{ $p->status ? 'Dikembalikan' :  'Belum Dikembalikan' }}
                                 </td>
                                 <td class="text-center">
-                                    <a href="peminjaman-confirm/{{ $p->id }}" class=" btn btn-success font-weight-bold text-sm rounded-circle" title="konfirmasi" onclick="return confirm('Apakah Ruangan sudah dikembalikan?')">
+                                    <a id="confirmButton{{ $p->id }}" href="data-peminjaman-barang-confirm/{{ $p->id }}" class=" btn btn-success font-weight-bold text-sm rounded-circle" title="konfirmasi" onclick="return confirm('Apakah Ruangan sudah dikembalikan?')">
                                         <i class="fa fa-calendar-check"></i>
                                     </a>
                                     <a href="/peminjaman-barang-hapus/{{ $p->id }}" onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">

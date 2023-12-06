@@ -111,7 +111,7 @@ class PeminjamanBarangController extends Controller
             'tanggal_pengembalian' => ['sometimes', 'date'],
         ]);
 
-       
+    
         Peminjaman_barang::saved($validated);
 
         return redirect()->route('peminjamanBarang.index');
