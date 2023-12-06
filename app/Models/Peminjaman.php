@@ -17,6 +17,7 @@ class Peminjaman extends Model
         'tanggal_peminjaman',
         'tanggal_pengembalian',
         'surat',
+        'status',
     ];
 
     public function ruang()

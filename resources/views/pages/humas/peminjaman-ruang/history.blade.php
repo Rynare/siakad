@@ -76,12 +76,12 @@ Data Peminjaman Ruang
                                     {{ $p->tanggal_pengembalian }}
                                 </td>
                                 <td class="text-center">
-                                    {{ $p->status }}
+                                    {{ $p->status ? 'Dikembalikan' :  'Belum Dikembalikan' }}
                                 </td>
                                 <td class="text-center">
-                                    <!-- Confirm and Reject buttons -->
-                                    <a href="{{ route('peminjaman.confirm', ['id' => $p->id]) }}" class="btn btn-success">Confirm</a>    
-                                
+                                    <a href="peminjaman-confirm/{{ $p->id }}" class=" btn btn-success font-weight-bold text-sm rounded-circle" title="konfirmasi" onclick="return confirm('Apakah Ruangan sudah dikembalikan?')">
+                                        <i class="fa fa-calendar-check"></i>
+                                    </a>
                                     <a href="/peminjaman-hapus/{{ $p->id }}" onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
                                         <i class="fa fa-trash"></i>
                                     </a>

@@ -62,9 +62,9 @@ class PeminjamanBarangController extends Controller
         ]);
 
         $file = $request->file('surat');
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $fileName = time() . '.' . $file->getClientOriginalName();
         $file->storeAs('public/surat', $fileName);
-        $data['surat'] = $fileName;
+        $validated['surat'] = $fileName;
 
         Peminjaman_barang::create($validated);
 
@@ -111,14 +111,8 @@ class PeminjamanBarangController extends Controller
             'tanggal_pengembalian' => ['sometimes', 'date'],
         ]);
 
-        // $data->barang_id = $request->barang_id;
-        // $data->jumlah = $request->jumlah;
-        // $data->nama_peminjam = $request->nama_peminjam;
-        // $data->tanggal_peminjaman = $request->tanggal_peminjaman;
-        // $data->tanggal_pengembalian = $request->tanggal_pengembalian;
-        // $data->dokumen = $request->nama_dokumen;
-        // $data->save();
-        // session::flash('sukses','Data berhasil ditambahkan');
+       
+        Peminjaman_barang::saved($validated);
 
         return redirect()->route('peminjamanBarang.index');
     }
@@ -152,5 +146,23 @@ class PeminjamanBarangController extends Controller
     public function surat()
     {
 
+    }
+
+    public function confirm( $id)
+    {
+        
+        $peminjaman_barang = Peminjaman_barang::find($id);
+
+        if ($peminjaman_barang) {
+            if ($peminjaman_barang->status) {
+                $peminjaman_barang->status = 0;
+            } else {
+                $peminjaman_barang->status = 1;
+            }
+
+            $peminjaman_barang->save();
+        }
+
+        return back();
     }
 }

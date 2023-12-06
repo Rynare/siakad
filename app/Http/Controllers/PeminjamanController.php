@@ -34,6 +34,7 @@ class PeminjamanController extends Controller
             'ruang'        => $ruang
         ])->with('title', 'Data Peminjaman');
     }
+    
 
     /* public function simpan(Request $request) {
         $this->validate($request, [
@@ -251,26 +252,24 @@ class PeminjamanController extends Controller
             'peminjaman'   => $peminjaman
         ])->with('title', 'Data Peminjaman');
     }
-    public function pending()
-    {
-        $peminjaman = Peminjaman::all();
 
-        return view('/pending', compact('pending'));
+    public function confirm( $id)
+    {
+        
+        $peminjaman = Peminjaman::find($id);
+
+        if ($peminjaman) {
+            if ($peminjaman->status) {
+                $peminjaman->status = 0;
+            } else {
+                $peminjaman->status = 1;
+            }
+
+            $peminjaman->save();
+        }
+
+        return back();
     }
 
-    public function confirm($id)
-    {
-        $peminjaman = Peminjaman::findOrFail($id);
-        $peminjaman->update(['status' => 'confirmed']);
 
-        return redirect('/pending')->with('success', 'Order confirmed successfully.');
-    }
-
-    public function reject($id)
-    {
-        $peminjaman = Peminjaman::findOrFail($id);
-        $peminjaman->update(['status' => 'rejected']);
-
-        return redirect('/pending')->with('success', 'Order rejected successfully.');
-    }
 }

@@ -102,7 +102,7 @@ Data Peminjaman barang
                                 </th>
                                 <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-                                    surat Peminjaman
+                                    Surat Peminjaman
                                 </th>
                                 <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
@@ -136,12 +136,9 @@ Data Peminjaman barang
                                     {{ $value->tanggal_pengembalian }}
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ asset('storage/surat/' . str_replace(' ', '%20', $value->surat)) }}" target="_blank">Lihat file </a>
+                                    <a href="{{ asset('storage/public/surat/' . str_replace(' ', '%20', $value->surat)) }}" target="_blank">Lihat file </a>
                                 </td>
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" id-peminjaman="{{ $value->id }}" id-barang="{{ $value->barang_id }}" nama-barang="{{$value->barang->nama_barang}}" jumlah="{{ $value->jumlah }}" nama-peminjam="{{ $value->nama_peminjam }}" tgl-peminjaman="{{ $value->tanggal_peminjaman }}" tgl-pengembalian="{{ $value->tanggal_pengembalian }}" class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail" onclick="showModalDialog(this)">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
                                     <button class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $value->id }}" id-barang="{{ $value->barang_id }}" jumlah="{{ $value->jumlah }}" nama-peminjam="{{ $value->nama_peminjam }}" tgl-peminjaman="{{ $value->tanggal_peminjaman }}" tgl-pengembalian="{{ $value->tanggal_pengembalian }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
                                         <i class="fa fa-edit"></i>
                                     </button>
@@ -170,81 +167,6 @@ Data Peminjaman barang
                         </tbody>
                         @endif
                     </table>
-                    <div class="modal fade" id="detail-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog  modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header bg-primary">
-                                    <h5 class="modal-title text-white" id="exampleModalLabel">Detail Peminjaman</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <ul class="list-group">
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Nama Peminjam</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="nama_peminjam"></div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Nama Barang</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="barang"></div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Jumlah Barang</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="jumlah"></div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Tanggal Peminjaman</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="tanggal_peminjaman"></div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Tanggal Pengembalian</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="tanggal_pengembalian"></div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Surat</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="surat"></div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog  modal-lg">
                             <div class="modal-content">
@@ -296,6 +218,12 @@ Data Peminjaman barang
                                             <label class="form-label">Tanggal pengembalian</label>
                                             <div class="input-group">
                                                 <input type="date" name="tanggal_pengembalian" class="form-control rounded-3" id="inputEmail4" required value="" {{ $errors->has('tanggal_pengembalian') ? 'autofocus="true"' : '' }}>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Surat Peminjaman</label>
+                                            <div for="surat" class="input-group">
+                                                <input class="form-control rounded-3" type="file" id="inputEmail4" name="surat" required value="" {{ $errors->has('surat') ? 'autofocus="true"' : '' }}>
                                             </div>
                                         </div>
                                         <div class="modal-footer">

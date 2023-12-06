@@ -122,7 +122,9 @@ Data Peminjaman Ruang
                                     {{ $p->tanggal_pengembalian }}
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ asset('storage/public/surat/' . str_replace(' ', '%20', $p->surat)) }}" target="_blank">Lihat file </a>
+                                    <a href="{{ asset('storage/public/surat/' . str_replace(' ', '%20', $p->surat)) }}" target="_blank">
+                                        Lihat file
+                                     </a>
                                 </td>
                                 @if (auth()->user()->hasRole('waka'))
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
@@ -133,9 +135,9 @@ Data Peminjaman Ruang
                                 </td>
                                 @elseif (auth()->user()->hasRole('admin'))
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
-                                    <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}"  class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail" onclick="showModalDialog(this)">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}"  class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail" onclick="showModalDialog(this)">
                                         <i class="fa fa-eye"></i>
-                                    </button> -->
+                                    </button> 
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}"  class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
                                         <i class="fa fa-edit"></i>
                                     </button>
@@ -155,74 +157,7 @@ Data Peminjaman Ruang
                         </tbody>
                         @endif
                     </table>
-                    <!-- Detail Peminjaman
-                    <div class="modal fade" id="detail-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog  modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header bg-primary">
-                                    <h5 class="modal-title text-white" id="exampleModalLabel">Detail Peminjaman</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <ul class="list-group">
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Nama Peminjam</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" id="nama_peminjam">
 
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Tanggal Peminjaman</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" id="tanggal_peminjaman">
-
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Tanggal Pengembalian</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" id="tanggal_pengembalian">
-
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="list-group-item">
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <span class="float-start fw-bold">Surat</span>
-                                                            <div class="float-end">:</div>
-                                                        </div>
-                                                        <div class="col-md-7" style="text-transform: capitalize" >
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div> -->
                     <!--Update modal-->
                     <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog  modal-lg">
