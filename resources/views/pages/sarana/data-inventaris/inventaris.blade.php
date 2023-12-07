@@ -72,7 +72,7 @@
                                     </td>
                                     @elseif (auth()->user()->hasRole('waka'))
                                     <td class="text-center">
-                                        <a href="{{ route('atur-barang', $ruang->id) }}" class="btn btn-primary">Detail Barang</a>
+                                        <a href="{{ route('atur-barang', $ruang->id) }}" class="btn btn-primary">detail Barang</a>
                                     </td>
                                     @endif
                                 </tr>
