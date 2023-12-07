@@ -8,7 +8,7 @@
         <li class="mb-1" style="">
             <a class="btn rounded text-white font-weight-bold {{ Request::is('dashboard*') ? 'bg-gradient-primary ' : '' }}" style="text-transform: none; width: 100%;display: flex; align-items: center; column-gap:10px" href="/dashboard"> <span class="material-symbols-outlined">dashboard</span> Dashboard</a>
         </li>
-        @if (auth()->user()->hasRole(''))
+        @if (auth()->user()->hasRole('admin'))
         <li class="mb-1" style="width: 100%">
             <button class="btn align-items-center rounded collapsed text-white font-weight-bold" style="text-transform: none; width: 100%;display: flex; align-items: center; column-gap:10px;" data-bs-toggle="collapse" data-bs-target="#master-collapse" aria-expanded="true">
                 <span class="material-symbols-outlined"> database </span> Master <i class="material-icons opacity-10 ms-auto" style="">expand_more</i>
@@ -94,7 +94,7 @@
                 </ul>
             </div>
         </li>
-        @elseif (auth()->user()->hasRole('admin'))
+        @elseif (auth()->user()->hasRole('waka'))
         <li class="mb-1">
             <button class="btn align-items-center rounded collapsed text-white font-weight-bold" style="text-transform: none; width: 100%;display: flex; align-items: center; column-gap:10px" data-bs-toggle="collapse" data-bs-target="#sarpras-collapse" aria-expanded="false">
                 <span class="material-symbols-outlined">
