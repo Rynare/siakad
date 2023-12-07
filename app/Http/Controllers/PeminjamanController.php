@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Peminjaman;
 use App\Models\Ruang;
-use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,7 +33,6 @@ class PeminjamanController extends Controller
             'ruang' => $ruang,
         ])->with('title', 'Data Peminjaman');
     }
-    
 
     /* public function simpan(Request $request) {
         $this->validate($request, [
@@ -43,7 +41,7 @@ class PeminjamanController extends Controller
     );
 
     $surat = $request->file('surat');
-    $nama_surat = 'FT'.date('Ymdhis').'.'.$request->file('surat')->getClientOriginalExtension(); 
+    $nama_surat = 'FT'.date('Ymdhis').'.'.$request->file('surat')->getClientOriginalExtension();
     $surat->move('/dokumen',$nama_surat);
 
     $data = new Peminjaman();
@@ -69,7 +67,7 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function  create()
+    public function create()
     {
         //
     }
@@ -136,11 +134,7 @@ class PeminjamanController extends Controller
         ];
 
         $file = $request->file('surat');
-<<<<<<< HEAD
-        $fileName = uniqid().'.'.$file->getClientOriginalExtension();
-=======
-        $fileName = uniqid() . '.' . $file->getClientOriginalName();
->>>>>>> bintang
+        $fileName = uniqid().'.'.$file->getClientOriginalName();
         $file->storeAs('public/surat', $fileName);
         $data['surat'] = $fileName;
 
@@ -231,18 +225,10 @@ class PeminjamanController extends Controller
         ];
 
         $file = $request->file('surat');
-<<<<<<< HEAD
-        $fileName = uniqid().'.'.$file->getClientOriginalExtension();
+        $fileName = time().'.'.$file->getClientOriginalExtension();
         $file->storeAs('public/surat', $fileName);
         $data['surat'] = $fileName;
 
-=======
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public/surat', $fileName);
-        $data['surat'] = $fileName;
-
-
->>>>>>> bintang
         $peminjaman->update($data);
 
         return redirect('/data-peminjaman')->with('toast_success', 'Data Ruang Berhasil di Ubah');
@@ -274,11 +260,9 @@ class PeminjamanController extends Controller
         ])->with('title', 'Data Peminjaman');
     }
 
-
-
-    public function confirm( $id)
+    public function confirm($id)
     {
-        
+
         $peminjaman = Peminjaman::find($id);
 
         if ($peminjaman) {
@@ -296,7 +280,7 @@ class PeminjamanController extends Controller
 
     public function approve(Peminjaman $peminjaman)
     {
-        
+
         $peminjaman->status_pengajuan = true;
 
         $peminjaman->save();
@@ -312,7 +296,4 @@ class PeminjamanController extends Controller
 
         return back();
     }
-    
-    
-
 }

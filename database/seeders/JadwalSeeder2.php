@@ -5,10 +5,6 @@ namespace Database\Seeders;
 use App\Models\Akademik;
 use App\Models\Jadwal;
 use App\Models\Kelas;
-<<<<<<< HEAD
-=======
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
->>>>>>> bintang
 use Illuminate\Database\Seeder;
 
 class JadwalSeeder2 extends Seeder

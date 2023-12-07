@@ -118,28 +118,15 @@ class JadwalMengajarController extends Controller
 
         $guruId = auth()->user()->guru->id;
         $detail_jadwal = Detail_jadwal::with('jadwal', 'mapel', 'ruang')
-<<<<<<< HEAD
             ->whereHas('guru', function ($query) use ($guruId) {
                 $query->where('id', $guruId);
-            })->whereHas('jadwal', function ($query) {
+            })
+            ->whereHas('jadwal', function ($query) {
                 $query->whereHas('akademik', function ($query) {
                     $query->where('selected', 1);
                 });
             })
             ->get();
-
-        $hari_list = [
-=======
-        ->whereHas('guru', function ($query) use ($guruId) {
-            $query->where('id', $guruId);
-        })
-        ->whereHas('jadwal', function ($query) {
-            $query->whereHas('akademik', function ($query) {
-                $query->where('selected', 1);
-            });
-        })
-        ->get();
-    
 
         // $detail_jadwal = Detail_jadwal::with('jadwal', 'mapel', 'ruang')
         //     ->join('jadwals', 'detail_jadwals.id', '=', 'jadwals.id')
@@ -151,8 +138,7 @@ class JadwalMengajarController extends Controller
         //     ->orderBy('jadwals.hari') // Ubah menjadi nama kolom yang sesuai
         //     ->get();
 
-        $hari_list = array(
->>>>>>> bintang
+        $hari_list = [
             'Minggu',
             'Senin',
             'Selasa',
@@ -183,15 +169,10 @@ class JadwalMengajarController extends Controller
             ->orderBy('jam_mulai', 'asc')
             ->get();
 
-
         return view('pages.akademik.data-jadwal-guru.jadwalguru', [
             'all_jadwal' => $all_jadwal,
             'all_jadwals' => $detail_jadwal,
-<<<<<<< HEAD
             'hari_ini' => $hari_ini,
-=======
-            'hari_ini' => $hari_ini
->>>>>>> bintang
         ])->with('title', 'Jadwal Mengajar');
     }
 

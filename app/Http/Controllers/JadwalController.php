@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Akademik;
 use App\Models\Detail_jadwal;
 use App\Models\Guru;
 use App\Models\Jadwal;
@@ -107,20 +106,12 @@ class JadwalController extends Controller
                     if (($jamMulai >= $existingJamMulai && $jamMulai < $existingJamSelesai) ||
                         ($jamSelesai > $existingJamMulai && $jamSelesai <= $existingJamSelesai) || ($jamMulai == $existingJamMulai && $jamSelesai == $existingJamSelesai)
                     ) {
-<<<<<<< HEAD
                         return redirect()->back()->with('toast_error', $value->guru->nama.' telah mengajar mapel '.$value->mapel->nama_mapel.' dikelas '.$value->jadwal->kelas->nama_kelas.' pada waktu '.$value->jam_mulai.' sampai '.$value->jam_selesai);
-=======
-                        return redirect()->back()->with('toast_error', $value->guru->nama . ' telah mengajar mapel ' . $value->mapel->nama_mapel . ' dikelas ' . $value->jadwal->kelas->nama_kelas . ' pada waktu ' . $value->jam_mulai  . ' sampai ' . $value->jam_selesai);
->>>>>>> bintang
                     }
                 } else {
                     $request['jam_mulai'] = $value['jam_mulai'];
                     $request['jam_selesai'] = $value['jam_selesai'];
-<<<<<<< HEAD
                     $toast_success_msg = 'Data berhasil diubah! kelas ini digabung dengan kelas '.$value->jadwal->kelas->nama_kelas.' karena memiliki guru dan mapel yang sama dan dengan waktu yang saling tumpang tindih';
-=======
-                    $toast_success_msg = 'Data berhasil diubah! kelas ini digabung dengan kelas ' . $value->jadwal->kelas->nama_kelas . ' karena memiliki guru dan mapel yang sama dan dengan waktu yang saling tumpang tindih';
->>>>>>> bintang
                     break;
                 }
             }
@@ -147,7 +138,6 @@ class JadwalController extends Controller
             }
         }
 
-
         $jadwal = $request->all();
         Detail_jadwal::create($jadwal);
 
@@ -170,11 +160,7 @@ class JadwalController extends Controller
             'guru' => 'required',
         ]);
 
-<<<<<<< HEAD
         $toast_success_msg = 'Data berhasil diubah !';
-=======
-        $toast_success_msg =  'Data berhasil diubah !';
->>>>>>> bintang
 
         $jamMulai = \Carbon\Carbon::createFromFormat('H:i', $request->jam_mulai);
         $jamSelesai = \Carbon\Carbon::createFromFormat('H:i', $request->jam_selesai);
@@ -197,20 +183,12 @@ class JadwalController extends Controller
                     if (($jamMulai >= $existingJamMulai && $jamMulai < $existingJamSelesai) ||
                         ($jamSelesai > $existingJamMulai && $jamSelesai <= $existingJamSelesai) || ($jamMulai == $existingJamMulai && $jamSelesai == $existingJamSelesai)
                     ) {
-<<<<<<< HEAD
                         return redirect()->back()->with('toast_error', $value->guru->nama.' telah mengajar mapel '.$value->mapel->nama_mapel.' dikelas '.$value->jadwal->kelas->nama_kelas.' pada waktu '.$value->jam_mulai.' sampai '.$value->jam_selesai);
-=======
-                        return redirect()->back()->with('toast_error', $value->guru->nama . ' telah mengajar mapel ' . $value->mapel->nama_mapel . ' dikelas ' . $value->jadwal->kelas->nama_kelas . ' pada waktu ' . $value->jam_mulai  . ' sampai ' . $value->jam_selesai);
->>>>>>> bintang
                     }
                 } else {
                     $request['jam_mulai'] = $value['jam_mulai'];
                     $request['jam_selesai'] = $value['jam_selesai'];
-<<<<<<< HEAD
                     $toast_success_msg = 'Data berhasil diubah! kelas ini digabung dengan kelas '.$value->jadwal->kelas->nama_kelas.' karena memiliki guru dan mapel yang sama dan dengan waktu yang saling tumpang tindih';
-=======
-                    $toast_success_msg = 'Data berhasil diubah! kelas ini digabung dengan kelas ' . $value->jadwal->kelas->nama_kelas . ' karena memiliki guru dan mapel yang sama dan dengan waktu yang saling tumpang tindih';
->>>>>>> bintang
                     break;
                 }
             }

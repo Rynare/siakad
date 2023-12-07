@@ -22,11 +22,8 @@ return new class extends Migration
             $table->date('tanggal_pengembalian');
             $table->string('surat')->nullable();
             $table->timestamps();
-<<<<<<< HEAD
-=======
             $table->integer('status')->default('0'); // 0: belum terkonfirmasi 1: sudah dikonfirmasi
             $table->integer('status_pengajuan')->default('0'); // 0: belum terkonfirmasi 1: sudah dikonfirmasi
->>>>>>> bintang
         });
     }
 

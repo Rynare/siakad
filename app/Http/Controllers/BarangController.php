@@ -19,7 +19,7 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        
+
         $data = $request->validate([
             'nama_barang' => 'required|string',
             'tahun_pengadaan' => 'required|date',
@@ -28,9 +28,8 @@ class BarangController extends Controller
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
-   
         $file = $request->file('image');
-        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+        $fileName = uniqid().'.'.$file->getClientOriginalExtension();
         $file->storeAs('public/', $fileName);
         $data['image'] = $fileName;
 
@@ -49,7 +48,7 @@ class BarangController extends Controller
     public function destroy(Barang $barang)
     {
         $barang->delete();
-        Storage::delete('public/'. $barang->image);
+        Storage::delete('public/'.$barang->image);
 
         return redirect()->route('barang_main')->with('success', 'Data barang berhasil dihapus.');
     }
@@ -71,28 +70,28 @@ class BarangController extends Controller
             'jumlah_seluruh_barang' => 'required|integer',
             'image' => 'nullable|image|file',
         ]);
-    
+
         $data = [
             'nama_barang' => $request->input('nama_barang'),
             'tahun_pengadaan' => $request->input('tahun_pengadaan'),
             'jenis' => $request->input('jenis'),
             'jumlah_seluruh_barang' => $request->input('jumlah_seluruh_barang'),
         ];
-    
+
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $fileName = uniqid().'.'.$file->getClientOriginalExtension();
             $file->storeAs('public/', $fileName);
-    
+
             // Hapus gambar lama jika ada
-            Storage::delete('public/' . $barang->image);
-    
+            Storage::delete('public/'.$barang->image);
+
             // Update nama file gambar baru
             $data['image'] = $fileName;
         }
-    
+
         $barang->update($data);
-    
+
         return redirect()->route('barang_main')->with('success', 'Data barang berhasil diperbarui.');
     }
 }

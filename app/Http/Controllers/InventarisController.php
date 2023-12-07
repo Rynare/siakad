@@ -46,13 +46,13 @@ class InventarisController extends Controller
                 'tahun_pengadaan' => $request->tahun_pengadaan,
                 'jenis' => $request->jenis,
                 'jumlah_seluruh_barang' => $request->jumlah_barang,
-                'id_ruang' => $id,  
+                'id_ruang' => $id,
             ]);
 
             // Simpan data ke tabel inventaris
             $inventaris = Inventaris::create([
                 'ruang_id' => $id,
-                'barang_id' => $barang->id, 
+                'barang_id' => $barang->id,
                 'nama_barang' => $request->nama_barang,
                 'tahun_pengadaan' => $request->tahun_pengadaan,
                 'jenis' => $request->jenis,
@@ -71,8 +71,6 @@ class InventarisController extends Controller
         }
     }
 
-
-
     public function destroy($id)
     {
         try {
@@ -90,5 +88,4 @@ class InventarisController extends Controller
             return redirect()->back()->with('error', 'Gagal menghapus inventaris: '.$e->getMessage());
         }
     }
-
 }

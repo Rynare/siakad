@@ -61,17 +61,10 @@ class PeminjamanBarangController extends Controller
             'updated_at' => now(),
         ]);
 
-<<<<<<< HEAD
-        $path = $request->file('surat')->store('surat');
-        // $fileName = uniqid().'.'.$file->getClientOriginalExtension();
-        // $file->storeAs('public/surat', $fileName);
-        $validated['surat'] = $path;
-=======
         $file = $request->file('surat');
-        $fileName = time() . '.' . $file->getClientOriginalName();
+        $fileName = time().'.'.$file->getClientOriginalName();
         $file->storeAs('public/surat', $fileName);
         $validated['surat'] = $fileName;
->>>>>>> bintang
 
         Peminjaman_barang::create($validated);
 
@@ -118,19 +111,7 @@ class PeminjamanBarangController extends Controller
             'tanggal_pengembalian' => ['sometimes', 'date'],
         ]);
 
-<<<<<<< HEAD
-        // $data->barang_id = $request->barang_id;
-        // $data->jumlah = $request->jumlah;
-        // $data->nama_peminjam = $request->nama_peminjam;
-        // $data->tanggal_peminjaman = $request->tanggal_peminjaman;
-        // $data->tanggal_pengembalian = $request->tanggal_pengembalian;
-        // $data->dokumen = $request->nama_dokumen;
-        // $data->save();
-        // session::flash('sukses','Data berhasil ditambahkan');
-=======
-    
         Peminjaman_barang::saved($validated);
->>>>>>> bintang
 
         return redirect()->route('peminjamanBarang.index');
     }
@@ -158,23 +139,17 @@ class PeminjamanBarangController extends Controller
         $peminjaman_barang = Peminjaman_barang::whereDate('tanggal_pengembalian', '<', now())
             ->get();
 
-<<<<<<< HEAD
-        return view('pages.sarana.data-peminjaman-barang.history', compact('peminjaman_barang'))->with('title', 'Data Peminjaman Barang');
-=======
         return view('pages.humas.data-peminjaman-barang.history', compact('peminjaman_barang'))->with('title', 'Data Peminjaman Barang');
->>>>>>> bintang
     }
 
     public function surat()
     {
 
     }
-<<<<<<< HEAD
-=======
 
-    public function confirm( $id)
+    public function confirm($id)
     {
-        
+
         $peminjaman_barang = Peminjaman_barang::find($id);
 
         if ($peminjaman_barang) {
@@ -190,9 +165,9 @@ class PeminjamanBarangController extends Controller
         return back();
     }
 
-    public function approve( $id)
+    public function approve($id)
     {
-        
+
         $peminjaman_barang = Peminjaman_barang::find($id);
 
         if ($peminjaman_barang) {
@@ -207,5 +182,4 @@ class PeminjamanBarangController extends Controller
 
         return back();
     }
->>>>>>> bintang
 }

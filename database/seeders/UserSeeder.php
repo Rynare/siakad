@@ -57,16 +57,10 @@ class UserSeeder extends Seeder
                         'remember_token' => Str::random(20),
                     ])->id;
                     DB::table('siswas')->insert([
-<<<<<<< HEAD
+                        // 'no_pendaftaran' => random_int(60000, 99999). '' . random_int(100, 999) . $angkatan->id . $kelas->id . $i,
                         'nis' => random_int(60000, 99999).''.random_int(100, 999).$angkatan->id.$kelas->id.$i,
                         'nisn' => random_int(60000, 99999).''.random_int(60000, 99999).$angkatan->id.$kelas->id.$i,
                         'nik' => random_int(90000, 99999).''.random_int(90000, 99999).''.random_int(1, 1000).$angkatan->id.$kelas->id,
-=======
-                        // 'no_pendaftaran' => random_int(60000, 99999). '' . random_int(100, 999) . $angkatan->id . $kelas->id . $i,
-                        'nis' => random_int(60000, 99999) . '' . random_int(100, 999) . $angkatan->id . $kelas->id . $i,
-                        'nisn' => random_int(60000, 99999) . '' . random_int(60000, 99999) . $angkatan->id . $kelas->id . $i,
-                        'nik' => random_int(90000, 99999) . '' . random_int(90000, 99999) . '' . random_int(1, 1000) . $angkatan->id . $kelas->id,
->>>>>>> bintang
                         'nama' => fake('id_ID')->name(),
                         'no_telp' => fake('id_ID')->phoneNumber(),
                         'nama_ayah' => $ayah = fake('id_ID')->name('male'),
@@ -94,17 +88,16 @@ class UserSeeder extends Seeder
             }
         }
 
-
         $guru = User::create([
             'username' => 'guru',
             'email' => fake('id_ID')->unique()->email(),
             'password' => bcrypt('guru'),
             'role' => 'guru',
-            'remember_token' => Str::random(20)
+            'remember_token' => Str::random(20),
         ]);
 
         DB::table('gurus')->insert([
-            'nip' => random_int(10000, 59999) . '' . random_int(10000, 59999),
+            'nip' => random_int(10000, 59999).''.random_int(10000, 59999),
             'nama' => fake('id_ID')->name(),
             'no_telp' => fake('id_ID')->phoneNumber(),
             'jenis_kelamin' => fake('id_ID')->randomElement(['laki-laki', 'perempuan']),
@@ -123,14 +116,14 @@ class UserSeeder extends Seeder
             'email' => fake('id_ID')->unique()->email(),
             'password' => bcrypt('siswa'),
             'role' => 'siswa',
-            'remember_token' => Str::random(20)
+            'remember_token' => Str::random(20),
         ]);
 
         DB::table('siswas')->insert([
             // 'no_pendaftaran' => random_int(60000, 99999). '' . random_int(100, 999) . $angkatan->id . $kelas->id . $i,
-            'nis' => random_int(60000, 99999) . '' . random_int(100, 999) . 1 . 1 . $i,
-            'nisn' => random_int(60000, 99999) . '' . random_int(60000, 99999) . 1 . 1 . $i,
-            'nik' => random_int(90000, 99999) . '' . random_int(90000, 99999) . '' . random_int(1, 1000) . 1 . 1,
+            'nis' => random_int(60000, 99999).''.random_int(100, 999). 1 . 1 .$i,
+            'nisn' => random_int(60000, 99999).''.random_int(60000, 99999). 1 . 1 .$i,
+            'nik' => random_int(90000, 99999).''.random_int(90000, 99999).''.random_int(1, 1000). 1 . 1,
             'nama' => fake('id_ID')->name(),
             'no_telp' => fake('id_ID')->phoneNumber(),
             'nama_ayah' => $ayah = fake('id_ID')->name('male'),
@@ -145,7 +138,7 @@ class UserSeeder extends Seeder
             'agama' => fake('id_ID')->randomElement(['islam', 'kristen', 'hindu', 'buddha', 'konghucu']),
             'id_kelas' => 1,
             'id_angkatan' => 2,
-            'id_user' => $siswa_solo->id
+            'id_user' => $siswa_solo->id,
         ]);
     }
 }

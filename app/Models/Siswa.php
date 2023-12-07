@@ -33,7 +33,7 @@ class Siswa extends Model
         'id_angkatan',
         'tanggal_keluar',
         'id_user',
-        'asal_sekolah'
+        'asal_sekolah',
     ];
 
     public function kelas()

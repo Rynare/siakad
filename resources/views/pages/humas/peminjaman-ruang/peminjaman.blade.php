@@ -65,17 +65,11 @@ Data Peminjaman Ruang
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive pb-2 px-3">
-<<<<<<< HEAD
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#insert-modal" class="btn btn-primary font-weight-bold btn--edit text-xs " data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail">
-                        <i class="material-icons opacity-10">add</i>Tambah
-                    </button>
-=======
                     @if (auth()->user()->hasRole('admin'))
                     <button type="button" data-bs-toggle="modal" data-bs-target="#insert-modal" class="btn btn-primary font-weight-bold btn--edit text-xs " data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail">
                         <i class="material-icons opacity-10">add</i>Tambah
                     </button>
                     @endif
->>>>>>> bintang
                     <a href="data-peminjaman-history" type="submit" id="btntambah" class="btn btn-danger font-weight-bold text-xs">
                         Riwayat
                     </a>
@@ -103,8 +97,6 @@ Data Peminjaman Ruang
                                 </th>
                                 <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
-<<<<<<< HEAD
-=======
                                     surat Peminjaman
                                 </th>
                                 <th class="
@@ -113,7 +105,6 @@ Data Peminjaman Ruang
                                 </th>
                                 <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
->>>>>>> bintang
                                     Aksi
                                 </th>
                             </tr>
@@ -138,15 +129,6 @@ Data Peminjaman Ruang
                                     {{ $p->tanggal_pengembalian }}
                                 </td>
                                 <td class="text-center">
-<<<<<<< HEAD
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}" class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <a href="/peminjaman-hapus/{{ $p->id }}" onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-=======
                                     <a href="{{ asset('storage/surat/' . str_replace(' ', '%20', $p->surat)) }}" target="_blank">
                                         Lihat file
                                     </a>
@@ -174,7 +156,6 @@ Data Peminjaman Ruang
                                     </a>
                                 </td>
                                 @endif
->>>>>>> bintang
                             </tr>
                             @endforeach
                         </tbody>
@@ -187,10 +168,7 @@ Data Peminjaman Ruang
                         @endif
                     </table>
 
-<<<<<<< HEAD
-=======
                     <!--Update modal-->
->>>>>>> bintang
                     <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog  modal-lg">
                             <div class="modal-content">
@@ -239,18 +217,12 @@ Data Peminjaman Ruang
                                             </div>
                                         </div>
                                         <div class="mb-3">
-<<<<<<< HEAD
-                                            <label for="surat" class="form-label">Surat Peminjaman</label>
-                                            <input class="form-control" type="file" id="surat" name="surat">
-                                        </div>
-=======
                                             <label class="form-label">Surat Peminjaman</label>
                                             <div for="surat" class="input-group">
                                                 <input class="form-control" type="file" id="surat" name="surat" required value="" {{ $errors->has('surat') ? 'autofocus="true"' : '' }}>
                                             </div>
                                         </div>
 
->>>>>>> bintang
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-danger ml-5 text-sm rounded-3" style="float:right; ">
                                                 <i class="fa fa-save"></i>
@@ -259,8 +231,6 @@ Data Peminjaman Ruang
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Batal</button>
                                         </div>
                                     </form>
-<<<<<<< HEAD
-=======
                                 </div>
                             </div>
                         </div>
@@ -398,7 +368,6 @@ Data Peminjaman Ruang
                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tolak</button>
                                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Setuju</button>
                                     </div>
->>>>>>> bintang
                                 </div>
                             </div>
                         </div>
@@ -473,9 +442,6 @@ Data Peminjaman Ruang
         @endif
     </div>
 </div>
-<<<<<<< HEAD
-<script>
-=======
 </div>
 </div>
 </div>
@@ -493,7 +459,6 @@ Data Peminjaman Ruang
     }
 
 
->>>>>>> bintang
     function showUpdateModalDialog(button) {
         // Mendapatkan nilai id-ruang dari button yang diklik
         var idRuang = button.getAttribute("id-ruang");
@@ -504,10 +469,6 @@ Data Peminjaman Ruang
         // Loop melalui semua opsi dalam elemen select
         for (var i = 0; i < selectRuang.options.length; i++) {
             var option = selectRuang.options[i];
-<<<<<<< HEAD
-=======
-
->>>>>>> bintang
             // Membandingkan nilai opsi dengan id-ruang yang diperoleh
             if (option.value == idRuang) {
                 // Mengatur opsi yang sesuai sebagai yang terpilih
@@ -521,11 +482,7 @@ Data Peminjaman Ruang
         var namaPeminjam = button.getAttribute("nama-peminjam");
         var tglPeminjaman = button.getAttribute("tgl-peminjaman");
         var tglPengembalian = button.getAttribute("tgl-pengembalian");
-<<<<<<< HEAD
-        var suratPeminjaman = button.getAttribute("surat-peminjaman");
-=======
         var surat = button.getAttribute("surat");
->>>>>>> bintang
 
 
         // Mengambil elemen input dengan id yang sesuai
@@ -533,26 +490,16 @@ Data Peminjaman Ruang
         var inputNamaPeminjam = document.querySelector('input[name="nama_peminjam"]');
         var inputTglPeminjaman = document.querySelector('input[name="tgl_peminjaman"]');
         var inputTglPengembalian = document.querySelector('input[name="tgl_pengembalian"]');
-<<<<<<< HEAD
-        var inputSuratPeminjaman = document.querySelector('input[name="surat_peminjaman"]');
-=======
         var inputSurat = document.querySelector('input[name="surat"]');
->>>>>>> bintang
 
         // Mengisi nilai input dengan nilai yang diperoleh dari tombol
         inputIdPeminjam.value = idPeminjaman;
         inputNamaPeminjam.value = namaPeminjam;
         inputTglPeminjaman.value = tglPeminjaman;
         inputTglPengembalian.value = tglPengembalian;
-<<<<<<< HEAD
-        inputSuratPeminjaman.value = suratPeminjaman;
-    }
-</script>
-=======
         inputSurat.value = surat;
     }
 </script>
 @endif
->>>>>>> bintang
 @endsection
 {{-- footer --}}
