@@ -15,6 +15,8 @@
             </button>
             <div class="collapse {{ Request::is('administrasi/guru*') || Request::is('administrasi/siswa*') || Request::is('akademik/mapel*') || Request::is('sarana/kelas*') || Request::is('sarana/ruang*') || Request::is('sarana/barang*') ? 'show' : '' }}" id="master-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/users*') ? 'bg-gradient-primary ' : '' }}" style="width: 100%" href="/administrasi/users"><i class="material-icons opacity-10 mx-2">groups</i> Data User</a>
+                    </li>
                     <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/guru*') ? 'bg-gradient-primary ' : '' }}" style="width: 100%" href="/administrasi/guru"><i class="material-icons opacity-10 mx-2">groups</i> Data
                             Guru</a></li>
                     <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/siswa*') ? 'bg-gradient-primary ' : '' }}" style="width: 100%" href="/administrasi/siswa"><i class="material-icons opacity-10 mx-2">groups</i> Data
