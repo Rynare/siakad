@@ -18,6 +18,11 @@ class Peminjaman_barang extends Model
         'tanggal_peminjaman',
         'tanggal_pengembalian',
         'surat',
+<<<<<<< HEAD
+=======
+        'status',
+        'status_pengajuan',
+>>>>>>> bintang
     ];
 
     public function barang()

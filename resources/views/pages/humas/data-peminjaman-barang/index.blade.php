@@ -13,6 +13,7 @@ Data Peminjaman barang
 @section('content')
 {{-- @dd($peminjaman) --}}
 
+<<<<<<< HEAD
 <!--<div class="row">
     <div class="col-3">
         <div class="card my-4">
@@ -44,6 +45,8 @@ Data Peminjaman barang
     </div>
 </div>-->
 
+=======
+>>>>>>> bintang
 <div class="row">
     <div class="col-12">
         @if ($hariini->count())
@@ -100,9 +103,17 @@ Data Peminjaman barang
             </div>
             <div class="card-body px-0 pb-2">
                 <div class="table-responsive pb-2 px-3">
+<<<<<<< HEAD
                     <button type="button" data-bs-toggle="modal" data-bs-target="#insert-modal" class="btn btn-primary font-weight-bold btn--edit text-xs " data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail">
                         <i class="material-icons opacity-10">add</i>Tambah
                     </button>
+=======
+                    @if (auth()->user()->hasRole('admin'))
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#insert-modal" class="btn btn-primary font-weight-bold btn--edit text-xs " data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail">
+                        <i class="material-icons opacity-10">add</i>Tambah
+                    </button>
+                    @endif
+>>>>>>> bintang
                     <a href="/data-peminjaman-barang-history" type="submit" id="btntambah" class="btn btn-danger font-weight-bold text-xs">
                         Riwayat
                     </a>
@@ -131,6 +142,7 @@ Data Peminjaman barang
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                     Tanggal Pengembalian
                                 </th>
+<<<<<<< HEAD
                               <!--  <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                     Surat Pengajuan
@@ -139,6 +151,20 @@ Data Peminjaman barang
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                     Aksi
                                 </th> 
+=======
+                                <th class="
+                                            text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                    Surat Peminjaman
+                                </th>
+                                <th class="
+                                            text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                    Status Pengajuan
+                                </th>
+                                <th class="
+                                            text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                    Aksi
+                                </th>
+>>>>>>> bintang
                             </tr>
                         </thead>
                         @if ($peminjaman->count())
@@ -150,7 +176,13 @@ Data Peminjaman barang
                                 <td class="text-center">
                                     {{ $loop->iteration }}
                                 </td>
+<<<<<<< HEAD
                                 <td data-id-barang="{{ $value->barang_id }}" class="text-center">{{ isset($value->barang) ? $value->barang->nama_barang : 'Barang tidak tersedia' }}</td>
+=======
+                                <td data-id-barang="{{ $value->barang_id }}" class="text-center">
+                                    {{ isset($value->barang) ? $value->barang->nama_barang : 'Barang tidak tersedia' }}
+                                </td>
+>>>>>>> bintang
                                 </td>
                                 <td class="text-center">
                                     {{ $value->jumlah }}
@@ -164,6 +196,7 @@ Data Peminjaman barang
                                 <td class="text-center">
                                     {{ $value->tanggal_pengembalian }}
                                 </td>
+<<<<<<< HEAD
                                <!-- <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
                                     <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#detailSurat" class="btn
                                                 btn-info font-weight-bold btn--edit text-sm text-white" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-placement="bottom" title="Surat" onclick="showUpdateModalDialog(this)">
@@ -172,14 +205,41 @@ Data Peminjaman barang
                                         <i class="fa fa-eye"></i> -->
                                 <td class="text-center">
                                     <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $value->id }}" id-barang="{{ $value->barang_id }}" jumlah="{{ $value->jumlah }}" nama-peminjam="{{ $value->nama_peminjam }}" tgl-peminjaman="{{ $value->tanggal_peminjaman }}" tgl-pengembalian="{{ $value->tanggal_pengembalian }}" class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
+=======
+                                <td class="text-center">
+                                    <a href="{{ asset('storage/surat/' . str_replace(' ', '%20', $value->surat)) }}" target="_blank">Lihat file </a>
+                                </td>
+                                <td class="text-center">
+                                    {{ $value->status_pengajuan ? 'Disetujui' :  'Menunggu' }}
+                                </td>
+                                @if (auth()->user()->hasRole('wakasek'))
+                                <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
+                                    <a href="data-peminjaman-barang-approve/{{ $value->id }}" class=" btn btn-success font-weight-bold text-sm" title="konfirmasi" onclick="return confirm('Apakah anda yakin menyetujui pengajuan ini?')">
+                                        Setuju
+                                    </a>
+                                    <a href="data-peminjaman-barang/{{ $value->id }}" class=" btn btn-danger font-weight-bold text-sm" title="konfirmasi" onclick="return confirm('Apakah anda yakin menolak pengajuan ini?')">
+                                        Tolak
+                                    </a>
+                                </td>
+                                @elseif (auth()->user()->hasRole('admin'))
+                                <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
+                                    <button class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $value->id }}" id-barang="{{ $value->barang_id }}" jumlah="{{ $value->jumlah }}" nama-peminjam="{{ $value->nama_peminjam }}" tgl-peminjaman="{{ $value->tanggal_peminjaman }}" tgl-pengembalian="{{ $value->tanggal_pengembalian }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
+>>>>>>> bintang
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <form class="d-inline" action="{{ route('peminjamanBarang.destroy', $value->id) }}" method="POST">
                                         @method('delete')
                                         @csrf
+<<<<<<< HEAD
                                         <button onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom">
                                             <i class="fa fa-trash"></i>
                                         </button>
+=======
+                                        <button onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                        @endif
+>>>>>>> bintang
                                     </form>
                                     {{-- <a href="{{ route('peminjamanBarang.destroy', $p->id) }}"
                                     onclick="return confirm('Anda yakin akan menghapus data ini?')"
@@ -199,7 +259,10 @@ Data Peminjaman barang
                         </tbody>
                         @endif
                     </table>
+<<<<<<< HEAD
 
+=======
+>>>>>>> bintang
                     <div class="modal fade" id="update-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog  modal-lg">
                             <div class="modal-content">
@@ -253,6 +316,15 @@ Data Peminjaman barang
                                                 <input type="date" name="tanggal_pengembalian" class="form-control rounded-3" id="inputEmail4" required value="" {{ $errors->has('tanggal_pengembalian') ? 'autofocus="true"' : '' }}>
                                             </div>
                                         </div>
+<<<<<<< HEAD
+=======
+                                        <div class="mb-3">
+                                            <label class="form-label">Surat Peminjaman</label>
+                                            <div for="surat" class="input-group">
+                                                <input class="form-control rounded-3" type="file" id="inputEmail4" name="surat" required value="" {{ $errors->has('surat') ? 'autofocus="true"' : '' }}>
+                                            </div>
+                                        </div>
+>>>>>>> bintang
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-primary ml-5 text-sm rounded-3" style="float:right; ">
                                                 <i class="fa fa-save"></i>
@@ -319,7 +391,11 @@ Data Peminjaman barang
                                             </div>
                                         </div>
                                         <div class="mb-3">
+<<<<<<< HEAD
                                             <label for="surat" class="form-label">Surat Peminjaman</label>
+=======
+                                            <label for="surat" class="form-label">Surat Pengajuan</label>
+>>>>>>> bintang
                                             <input class="form-control" type="file" id="surat" name="surat">
                                         </div>
                                         <div class="modal-footer">
@@ -334,6 +410,7 @@ Data Peminjaman barang
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
                   <!--  <div class="modal fade" id="detailSurat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -377,11 +454,34 @@ Data Peminjaman barang
                             </div>
                         </div>
                     </div> -->
+=======
+>>>>>>> bintang
                 </div>
             </div>
         </div>
     </div>
     <script>
+<<<<<<< HEAD
+=======
+        function showModalDialog(element) {
+            const updateModalDialog = document.getElementById('detail-modal');
+            const nama = updateModalDialog.querySelector('#nama_peminjam');
+            const namaBarang = updateModalDialog.querySelector('#barang');
+            const jumlahBarang = updateModalDialog.querySelector('#jumlah');
+            const tglPeminjaman = updateModalDialog.querySelector('#tanggal_peminjaman');
+            const tglPengembalian = updateModalDialog.querySelector('#tanggal_pengembalian');
+            const suratPeminjaman = updateModalDialog.querySelector('#surat');
+
+
+            nama.innerText = element.getAttribute('nama-peminjam');
+            namaBarang.innerText = element.getAttribute('nama-barang')
+            jumlahBarang.innerText = element.getAttribute('jumlah');
+            tglPeminjaman.innerText = element.getAttribute('tgl-peminjaman');
+            tglPengembalian.innerText = element.getAttribute('tgl-pengembalian');
+            suratPeminjaman.innerText = element.getAttribute('surat');
+        }
+
+>>>>>>> bintang
         function showUpdateModalDialog(button) {
             // Mendapatkan nilai id-ruang dari button yang diklik
             var idBarang = button.getAttribute("id-barang");
@@ -394,18 +494,30 @@ Data Peminjaman barang
             let namaPeminjam = tr.children[4].innerHTML;
             let tanggalPeminjam = tr.children[5].innerHTML;
             let tanggalPengembalian = tr.children[6].innerHTML;
+<<<<<<< HEAD
+=======
+            let suratPeminjaman = tr.children[7].innerHTML;
+>>>>>>> bintang
 
             const inputNamaBarang = form_modal.querySelector('select[name="barang"]');
             const inputNamaPeminjan = form_modal.querySelector('input[name="nama_peminjam"]');
             const inputJumlahBarang = form_modal.querySelector('input[name="jumlah"]');
             const inputTanggalPeminjaman = form_modal.querySelector('input[name="tanggal_peminjaman"]');
             const inputTanggalPengembalian = form_modal.querySelector('input[name="tanggal_pengembalian"]');
+<<<<<<< HEAD
+=======
+            const inputSuratPeminjaman = form_modal.querySelector('input[name="surat"]');
+>>>>>>> bintang
 
             inputNamaBarang.value = namaBarang;
             inputJumlahBarang.value = jumlahBarng;
             inputNamaPeminjan.value = namaPeminjam;
             inputTanggalPeminjaman.value = tanggalPeminjam;
             inputTanggalPengembalian.value = tanggalPengembalian;
+<<<<<<< HEAD
+=======
+            inputSuratPeminjaman.value = suratPeminjaman;
+>>>>>>> bintang
 
             console.log(inputNamaPeminjam);
 

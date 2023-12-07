@@ -32,19 +32,11 @@ class InventarisController extends Controller
 
     public function store(Request $request, $id)
     {
-        // Validasi request
         $request->validate([
-            'barang_id' => 'required|integer|min:0',
-            'nama_barang' => 'required|string|max:255',
-            'tahun_pengadaan' => 'required|date',
-            'jenis' => 'required|string|max:255',
             'jumlah_barang' => 'required|integer|min:0',
-            'jumlah_baik' => 'required|integer|min:0',
-            'jumlah_rusak' => 'required|integer|min:0',
         ]);
 
         try {
-            // Mulai transaksi
             DB::beginTransaction();
 
             // Simpan data ke tabel barangs
@@ -54,13 +46,13 @@ class InventarisController extends Controller
                 'tahun_pengadaan' => $request->tahun_pengadaan,
                 'jenis' => $request->jenis,
                 'jumlah_seluruh_barang' => $request->jumlah_barang,
-                'id_ruang' => $id,
+                'id_ruang' => $id,  
             ]);
 
             // Simpan data ke tabel inventaris
             $inventaris = Inventaris::create([
                 'ruang_id' => $id,
-                'barang_id' => $barang->id,
+                'barang_id' => $barang->id, 
                 'nama_barang' => $request->nama_barang,
                 'tahun_pengadaan' => $request->tahun_pengadaan,
                 'jenis' => $request->jenis,
@@ -69,30 +61,34 @@ class InventarisController extends Controller
                 'jumlah_rusak' => $request->jumlah_rusak,
             ]);
 
-            // Commit transaksi
             DB::commit();
 
-            return redirect()->route('atur-barang')->with('toast_success', 'Data inventaris Berhasil di Tambahkan');
+            return redirect()->route('atur-barang', $id)->with('toast_success', 'Data inventaris berhasil ditambahkan');
         } catch (\Exception $e) {
-            // Rollback transaksi jika terjadi exception
             DB::rollBack();
 
             return redirect()->back()->with('error', 'Gagal menyimpan data: '.$e->getMessage());
         }
     }
 
+
+
     public function destroy($id)
     {
         try {
-            // Temukan inventaris berdasarkan ID
             $inventaris = Inventaris::findOrFail($id);
+            $jumlahBarangDihapus = $inventaris->jumlah_barang;
 
-            // Hapus inventaris
             $inventaris->delete();
+
+            $barang = Barang::findOrFail($inventaris->barang_id);
+            $barang->jumlah_seluruh_barang += $jumlahBarangDihapus;
+            $barang->save();
 
             return redirect()->back()->with('success', 'Inventaris berhasil dihapus.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus inventaris: '.$e->getMessage());
         }
     }
+
 }

@@ -61,10 +61,17 @@ class PeminjamanBarangController extends Controller
             'updated_at' => now(),
         ]);
 
+<<<<<<< HEAD
         $path = $request->file('surat')->store('surat');
         // $fileName = uniqid().'.'.$file->getClientOriginalExtension();
         // $file->storeAs('public/surat', $fileName);
         $validated['surat'] = $path;
+=======
+        $file = $request->file('surat');
+        $fileName = time() . '.' . $file->getClientOriginalName();
+        $file->storeAs('public/surat', $fileName);
+        $validated['surat'] = $fileName;
+>>>>>>> bintang
 
         Peminjaman_barang::create($validated);
 
@@ -111,6 +118,7 @@ class PeminjamanBarangController extends Controller
             'tanggal_pengembalian' => ['sometimes', 'date'],
         ]);
 
+<<<<<<< HEAD
         // $data->barang_id = $request->barang_id;
         // $data->jumlah = $request->jumlah;
         // $data->nama_peminjam = $request->nama_peminjam;
@@ -119,6 +127,10 @@ class PeminjamanBarangController extends Controller
         // $data->dokumen = $request->nama_dokumen;
         // $data->save();
         // session::flash('sukses','Data berhasil ditambahkan');
+=======
+    
+        Peminjaman_barang::saved($validated);
+>>>>>>> bintang
 
         return redirect()->route('peminjamanBarang.index');
     }
@@ -146,11 +158,54 @@ class PeminjamanBarangController extends Controller
         $peminjaman_barang = Peminjaman_barang::whereDate('tanggal_pengembalian', '<', now())
             ->get();
 
+<<<<<<< HEAD
         return view('pages.sarana.data-peminjaman-barang.history', compact('peminjaman_barang'))->with('title', 'Data Peminjaman Barang');
+=======
+        return view('pages.humas.data-peminjaman-barang.history', compact('peminjaman_barang'))->with('title', 'Data Peminjaman Barang');
+>>>>>>> bintang
     }
 
     public function surat()
     {
 
     }
+<<<<<<< HEAD
+=======
+
+    public function confirm( $id)
+    {
+        
+        $peminjaman_barang = Peminjaman_barang::find($id);
+
+        if ($peminjaman_barang) {
+            if ($peminjaman_barang->status) {
+                $peminjaman_barang->status = 0;
+            } else {
+                $peminjaman_barang->status = 1;
+            }
+
+            $peminjaman_barang->save();
+        }
+
+        return back();
+    }
+
+    public function approve( $id)
+    {
+        
+        $peminjaman_barang = Peminjaman_barang::find($id);
+
+        if ($peminjaman_barang) {
+            if ($peminjaman_barang->status_pengajuan) {
+                $peminjaman_barang->status_pengajuan = 0;
+            } else {
+                $peminjaman_barang->status_pengajuan = 1;
+            }
+
+            $peminjaman_barang->save();
+        }
+
+        return back();
+    }
+>>>>>>> bintang
 }

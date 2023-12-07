@@ -20,11 +20,30 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\RaportController;
 use App\Http\Controllers\RuangController;
 use App\Http\Controllers\SiswaController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\RaportController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InputNilaiController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PeminjamanBarangController;
+use App\Http\Controllers\EditPasswordController;
+use App\Http\Controllers\JadwalMengajarController;
+use App\Http\Controllers\KalenderAkademikController;
+>>>>>>> bintang
 use App\Http\Controllers\UserController;
 use App\Models\Akademik;
+<<<<<<< HEAD
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+=======
+use App\Models\Peminjaman;
+>>>>>>> bintang
 
 /*
 |--------------------------------------------------------------------------
@@ -118,7 +137,7 @@ Route::middleware(['userRole:admin,guru'])->group(function () {
 });
 
 //==========================================================================================
-Route::middleware(['userRole:admin'])->group(function () {
+Route::middleware(['userRole:admin,wakasek'])->group(function () {
     // Pengumuman
     Route::get('/dashboard/buat-pengumuman', [PengumumanController::class, 'create'])->name('buat-pengumuman');
     Route::post('/dashboard/buat-pengumuman', [PengumumanController::class, 'store']);
@@ -141,6 +160,9 @@ Route::middleware(['userRole:admin'])->group(function () {
     Route::get('atur-barang/{id}', [InventarisController::class, 'aturBarang'])->name('atur-barang');
     Route::post('/store-inventaris/{id}', [InventarisController::class, 'store'])->name('store-inventaris');
     Route::get('/delete-inventaris/{id}', [InventarisController::class, 'destroy'])->name('delete-inventaris');
+    Route::get('/search-barang', [InventarisController::class, 'search'])->name('search-barang');
+    Route::get('/get-barang-detail-by-name', [InventarisController::class, 'getDetailByName'])->name('get-barang-detail-by-name');
+    Route::get('/get-all-barang', [InventarisController::class, 'getAllBarang'])->name('get-all-barang');
 
     Route::get('/administrasi/users', [UserController::class, 'index'])->name('user_management');
     Route::patch('/administrasi/users/{user}', [UserController::class, 'update']);
@@ -158,7 +180,7 @@ Route::middleware(['userRole:admin'])->group(function () {
 });
 //==========================================================================================
 
-Route::middleware(['userRole:admin'])->group(function () {
+Route::middleware(['userRole:admin,wakasek'])->group(function () {
     // ==============[ D a t a - G u r u ]===============
     Route::get('/administrasi/guru', [GuruController::class, 'index']);
     Route::get('/administrasi/guru-tambah', [GuruController::class, 'create']);
@@ -233,6 +255,12 @@ Route::middleware(['userRole:admin'])->group(function () {
     Route::get('/peminjaman-hapus/{id}', [PeminjamanController::class, 'destroy']);
     Route::post('/peminjaman-tambah', [PeminjamanController::class, 'store']);
     Route::put('/peminjaman-update', [PeminjamanController::class, 'update']);
+<<<<<<< HEAD
+=======
+    Route::get('/peminjaman-confirm/{id}', [PeminjamanController::class, 'confirm']);
+    Route::get('/peminjaman-approve/{peminjaman}', [PeminjamanController::class, 'approve']);
+    Route::get('/peminjaman-decline/{peminjaman}', [PeminjamanController::class, 'decline']);
+>>>>>>> bintang
 
     // ==============[ D a t a - P e m i n j a m a n B a r a n g]===============
     Route::get('/data-peminjaman-barang', [PeminjamanBarangController::class, 'index'])->name('peminjamanBarang.index');
@@ -240,6 +268,11 @@ Route::middleware(['userRole:admin'])->group(function () {
     Route::put('/data-peminjaman-barang', [PeminjamanBarangController::class, 'update'])->name('peminjamanBarang.update');
     Route::delete('/data-peminjaman-barang/{id}', [PeminjamanBarangController::class, 'destroy'])->name('peminjamanBarang.destroy');
     Route::get('/data-peminjaman-barang-history', [PeminjamanBarangController::class, 'history']);
+<<<<<<< HEAD
+=======
+    Route::get('/data-peminjaman-barang-confirm/{id}', [PeminjamanBarangController::class, 'confirm']);
+    Route::get('/data-peminjaman-barang-approve/{id}', [PeminjamanController::class, 'approve']);
+>>>>>>> bintang
 });
 //======================== G U R U =========================================================
 Route::middleware(['userRole:guru'])->group(function () {
