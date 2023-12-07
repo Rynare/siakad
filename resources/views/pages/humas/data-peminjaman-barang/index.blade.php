@@ -138,6 +138,14 @@ Data Peminjaman barang
                                 <td class="text-center">
                                     <a href="{{ asset('storage/public/surat/' . str_replace(' ', '%20', $value->surat)) }}" target="_blank">Lihat file </a>
                                 </td>
+                                @if (auth()->user()->hasRole('admin'))
+                                <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
+                                    <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#detail-Surat" class="btn
+                                                btn-info font-weight-bold btn--edit text-sm text-white" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-placement="bottom" title="Surat" onclick="showUpdateModalDialog(this)">
+                                        <span>Lihat Pengajuan</span>
+                                        <i class="fa fa-eye"></i>
+                                </td>
+                                @elseif (auth()->user()->hasRole(''))
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
                                     <button class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $value->id }}" id-barang="{{ $value->barang_id }}" jumlah="{{ $value->jumlah }}" nama-peminjam="{{ $value->nama_peminjam }}" tgl-peminjaman="{{ $value->tanggal_peminjaman }}" tgl-pengembalian="{{ $value->tanggal_pengembalian }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
                                         <i class="fa fa-edit"></i>
@@ -148,6 +156,7 @@ Data Peminjaman barang
                                         <button onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom">
                                             <i class="fa fa-trash"></i>
                                         </button>
+                                        @endif
                                     </form>
                                     {{-- <a href="{{ route('peminjamanBarang.destroy', $p->id) }}"
                                     onclick="return confirm('Anda yakin akan menghapus data ini?')"

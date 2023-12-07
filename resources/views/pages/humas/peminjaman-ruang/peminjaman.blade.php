@@ -92,10 +92,16 @@ Data Peminjaman Ruang
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                     Tanggal Pengembalian
                                 </th>
+                                @if (auth()->user()->hasRole('admin'))
                                 <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                     surat Peminjaman
                                 </th>
+                                @endif
+                                <!-- <th class="
+                                            text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
+                                    Status Pengajuan
+                                </th> -->
                                 <th class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                     Aksi
@@ -121,29 +127,28 @@ Data Peminjaman Ruang
                                 <td class="text-center">
                                     {{ $p->tanggal_pengembalian }}
                                 </td>
+                                <!-- <td class="text-center">
+                                    
+                                </td> -->
+                                @if (auth()->user()->hasRole('admin'))
                                 <td class="text-center">
                                     <a href="{{ asset('storage/public/surat/' . str_replace(' ', '%20', $p->surat)) }}" target="_blank">
                                         Lihat file
-                                     </a>
+                                    </a>
                                 </td>
-                                @if (auth()->user()->hasRole('waka'))
                                 <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
-                                    <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#detail-Surat" class="btn
-                                                btn-info font-weight-bold btn--edit text-sm text-white" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-placement="bottom" title="Surat" onclick="showUpdateModalDialog(this)">
-                                        <span>Lihat Pengajuan</span>
-                                        <i class="fa fa-eye"></i>
-                                </td>
-                                @elseif (auth()->user()->hasRole('admin'))
-                                <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#detail-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}"  class="btn btn-info font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Detail" onclick="showModalDialog(this)">
-                                        <i class="fa fa-eye"></i>
-                                    </button> 
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}"  class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#update-modal" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}" class="btn btn-warning font-weight-bold btn--edit text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit" onclick="showUpdateModalDialog(this)">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                     <a href="/peminjaman-hapus/{{ $p->id }}" onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
                                         <i class="fa fa-trash"></i>
                                     </a>
+                                </td>
+                                @elseif (auth()->user()->hasRole('waka'))
+                                <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
+                                    <button type="button" onclick="showUpdateModalDialog(this)" data-bs-toggle="modal" data-bs-target="#detail-Surat" class="btn btn-info font-weight-bold btn--edit text-sm text-white" id-peminjaman="{{ $p->id }}" id-ruang="{{ $p->ruang_id }}" nama-peminjam="{{ $p->nama_peminjam }}" tgl-peminjaman="{{ $p->tanggal_peminjaman }}" tgl-pengembalian="{{ $p->tanggal_pengembalian }}" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-placement="bottom" title="Surat" onclick="showUpdateModalDialog(this)">
+                                        <span>Lihat Pengajuan</span>
+                                        <i class="fa fa-eye"></i>
                                 </td>
                                 @endif
                             </tr>
@@ -292,55 +297,84 @@ Data Peminjaman Ruang
                     <!--Aksi Detail surat waka-->
                     @if (auth()->user()->hasRole('waka'))
                     <div class="modal fade" id="detail-Surat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog  modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Surat Pengajuan Barang</h1>
+                                <div class="modal-header bg-primary">
+                                    <h5 class="modal-title text-white" id="exampleModalLabel">Detail Pengajuan Peminjaman
+                                    </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div>
-                                        <button class="btn btn-primary">Download</button>
-                                        <button class="btn btn-primary">Update</button>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Nama</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="nama_peminjam">
+
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Tanggal Peminjaman</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="tanggal_peminjaman">
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Tanggal Pengembalian</span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="tanggal_pengembalian">
+
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <span class="float-start fw-bold">Surat Pengajuan
+                                                            </span>
+                                                            <div class="float-end">:</div>
+                                                        </div>
+                                                        <div class="col-md-7" style="text-transform: capitalize" id="surat">
+                                                            <a href="{{ asset('storage/public/surat/' . str_replace(' ', '%20', $p->surat)) }}" target="_blank">
+                                                                Lihat file
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <form action="">
-                                            <div class="mb-3">
-                                                <label for="name" class="form-label">Nama</label>
-                                                <input type="text" class="form-control" id="name" placeholder="" name="nama">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="itemName" class="form-label">Nama Barang</label>
-                                                <input type="text" class="form-control" id="itemName" placeholder="" name="nama_barang">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="loan_date" class="form-label">Tanggal Peminjaman</label>
-                                                <input type="date" class="form-control" id="loan_date" name="tanggal_peminjaman">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="return_date" class="form-label">Tanggal Pengembalian</label>
-                                                <input type="date" class="form-control" id="return_date" name="tanggal_pengembalian">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="file" class="form-label">Surat Pengajuan</label>
-                                                <input type="file" class="form-control" id="file" placeholder="" name="surat_peminjaman">
-                                            </div>
-                                        </form>
+                                    <br>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tolak</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Setuju</button>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tolak</button>
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Setuju</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @endif
                 </div>
             </div>
         </div>
+        @endif
     </div>
+</div>
+</div>
+</div>
 </div>
 <script>
     function showModalDialog(element) {
@@ -348,11 +382,11 @@ Data Peminjaman Ruang
         const nama = updateModalDialog.querySelector('#nama_peminjam');
         const tglPeminjaman = updateModalDialog.querySelector('#tanggal_peminjaman');
         const tglPengembalian = updateModalDialog.querySelector('#tanggal_pengembalian');
-        
+
         nama.innerText = element.getAttribute('nama-peminjam');
         tglPeminjaman.innerText = element.getAttribute('tgl-peminjaman');
         tglPengembalian.innerText = element.getAttribute('tgl-pengembalian');
-        
+
     }
 
 

@@ -1,4 +1,4 @@
-@if (auth()->user()->hasRole('admin'))
+@if (auth()->user()->hasRole(''))
 <div class="row">
     <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <div class="card">
@@ -176,7 +176,7 @@
     </div>
 </div>
 </div>
-@elseif (auth()->user()->hasRole('waka'))
+@elseif (auth()->user()->hasRole('admin'))
 <div class="row gap-4 justify-content-evenly">
     <div class="card col-4" style="height: 700px; border-radius: 25px;">
         <div class="card-body d-flex flex-column justify-content-between">
