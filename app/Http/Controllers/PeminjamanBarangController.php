@@ -51,7 +51,7 @@ class PeminjamanBarangController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'barang_id' => ['numeric'],
+            'barang_id' => ['numeric', 'unique:peminjaman_barangs,barang_id'],
             'jumlah' => ['numeric'],
             'nama_peminjam' => ['string'],
             'tanggal_peminjaman' => ['date'],
@@ -60,6 +60,9 @@ class PeminjamanBarangController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        // Notifikasi Flash Message jika validasi gagal
+        // ...
 
         $file = $request->file('surat');
         $fileName = time().'.'.$file->getClientOriginalName();
