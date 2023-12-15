@@ -95,9 +95,13 @@ Data Peminjaman Barang
                                         <i class="fa fa-calendar-check"></i>
                                     </a>
                                     @endif
-                                    <a href="/dat-peminjaman-barang/{{ $p->id }}" onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
-                                        <i class="fa fa-trash"></i>
-                                    </a> 
+                                    <form action="{{ route('peminjamanBarang.destroy', $p->id) }}" method="post">
+                                        @method('delete')
+                                        @csrf
+                                        <button onclick="return confirm('Anda yakin akan menghapus data ini?')" class=" btn btn-danger font-weight-bold text-sm rounded-circle" style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                                 @endif
                             </tr>

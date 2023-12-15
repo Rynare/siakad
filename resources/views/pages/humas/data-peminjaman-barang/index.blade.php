@@ -79,7 +79,7 @@ Data Peminjaman barang
                     </a>
                     <!-- Button trigger modal -->
 
-                    <table id="example" class="table align-items-center mb-0">
+                    <table id="example" class="table align-items-center align-middle mb-0">
                         <thead>
                             <tr>
                                 <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
@@ -164,16 +164,10 @@ Data Peminjaman barang
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
-                                    {{-- <a href="{{ route('peminjamanBarang.destroy', $p->id) }}"
-                                    onclick="return confirm('Anda yakin akan menghapus data ini?')"
-                                    class=" btn btn-danger font-weight-bold text-sm rounded-circle"
-                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus">
-                                    <i class="fa fa-trash"></i>
-                                    </a> --}}
                                 </td>
                                 @elseif (auth()->user()->hasRole('wakasek'))
-                                <td class="text-center" style="display: flex; gap: 10px; justify-content: center">
-                                    @if (!$value->status_pengajuan)
+                                <td class="text-center">
+                                    @if (is_null($value->status_pengajuan))
                                     <a href="data-peminjaman-barang-approve/{{ $value->id }}" class=" btn btn-success font-weight-bold text-sm" title="konfirmasi" onclick="return confirm('Apakah anda yakin menyetujui pengajuan ini?')">
                                         Setuju
                                     </a>

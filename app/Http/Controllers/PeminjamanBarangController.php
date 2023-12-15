@@ -128,7 +128,7 @@ class PeminjamanBarangController extends Controller
         $barang = Peminjaman_barang::find($id);
         $barang->deleteOrFail();
 
-        return redirect()->route('peminjamanBarang.index');
+        return redirect()->route('peminjamanBarang.index')->with('toast_success', 'Data berhasil dihapus!');
     }
     // public function tampilkandata($id){
 

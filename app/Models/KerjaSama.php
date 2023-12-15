@@ -11,7 +11,7 @@ class KerjaSama extends Model
 {
   use HasFactory;
   
-  protected $table='mou_tabel';
+  protected $table='mou';
 
   protected $fillable = [
       'id',
