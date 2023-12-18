@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('PT_Mitra');
             $table->string('tujuan_mitra');
             $table->timestamps();
-            $table->string('file')->nullabel();
+            $table->string('file')->nullable();
             $table->string('original_name_file');
         });
 
