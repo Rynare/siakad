@@ -247,25 +247,19 @@
                         </div>
                         <br>
                         
-                        <div class="modal-footer">
-<<<<<<< HEAD
-=======
-
->>>>>>> 7c56d9d438752ab416e8c106597cbe0d66862c22
+                        {{-- <div class="modal-footer">
                             <a id="file_link" href="#" target="_blank" class="btn btn-success" style="color: white;">Lihat File</a>
                             <a id="file_download" href="#" download class="btn btn-primary" style="color: white;">Download</a>
                             <button id="detail-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Tutup</button>
-                        </div>
+                        </div> --}}
                     
-                        {{-- <div class="modal-footer">
+                        <div class="modal-footer">
+                            @foreach ($mou as $m)
                             <a href="{{ asset('storage/kerjasama/file/' . str_replace(' ', '%20', $m->file)) }}" target="_blank" class="btn btn-success" style="color: white;">Lihat File</a>
                             <a href="{{ asset('storage/kerjasama/file/' . str_replace(' ', '%20', $m->file)) }}" download="{{ $m->file }}" class="btn btn-primary" style="color: white;">Download</a>
+                            @endforeach
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                        </div>     --}}
-<<<<<<< HEAD
-=======
-
->>>>>>> 7c56d9d438752ab416e8c106597cbe0d66862c22
+                        </div>    
                        
                     </div>
 
@@ -305,10 +299,6 @@
             tujuan_mitra.innerText = element.getAttribute('tujuan_mitra');
             original_name_file.innerText = element.getAttribute('original_name_file');
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 7c56d9d438752ab416e8c106597cbe0d66862c22
         // // Update link "Lihat File" dan "Download"
         // const fileName = element.dataset.file;
         // fileLink.href = `/storage/kerjasama/file/${encodeURIComponent(fileName)}`;

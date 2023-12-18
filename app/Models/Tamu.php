@@ -20,7 +20,8 @@ class Tamu extends Model
       'Keterangan',
       'Opsi_lanjutan',
       'created_at',
-      'updated_at'
+      'updated_at',
+      'status'
   ];
  
   // protected $guarded = [];
