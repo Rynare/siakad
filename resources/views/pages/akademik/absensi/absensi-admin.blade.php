@@ -46,25 +46,29 @@
       <div class="col-lg-10 pr-4 mr-2">
 
         {{-- Table Siswa --}}
-        <div class="border border-2 rounded p-4 my-4 d-flex flex-column text-md" style="height: 450px; max-height: 450px; position: relative;">
+        <div class="border border-2 rounded p-4 my-4 d-flex flex-column text-md" style="height: 500px; max-height: 500px; position: relative;">
             <h5 class="position-relative" style="font-weight: bold; position: sticky; top: 0; background-color: white; z-index: 100;">
                 Data Siswa
             </h5>
-            <div class="input-group mb-3" style="position: sticky; top: 40px; background-color: white; z-index: 99;">
+            <div class="input-group mb-3" style="top: 20px; background-color: white; z-index: 99;">
                 <div style="margin-right: 20px;">
-                    <input type="text" class="form-control rounded" placeholder="Search..." name="search" id="searchSiswa" style="border: 2px solid lightblue; width: 350px;">
+                    <input type="text" class="form-control rounded" placeholder="Search..." name="search" id="searchSiswa" style="border: 2px solid lightblue; width: 250px;">
                 </div>
-                <div class="col-2 mx-3 ml-5">
-                    <select class="form-select rounded" name="dropdownkelas" id="dropdownkelas" style="border: 2px solid lightblue;">
+                <div class="col-2 ml-5" style="margin-right: 15px;">
+                    <select class="form-select rounded" name="dropdownkelas" id="dropdownkelas" style="border: 2px solid lightblue; width: 200px;">
                         <option value="semua">Semua Siswa</option>
                     </select>
                 </div>
-                <div class="col-2 mx-3" id="dropdownsiswacontainer" style="display: none;">
+                <div class="col-2 ml-2" id="dropdownsiswacontainer" style="display: none;">
                     <select class="form-select rounded" name="dropdownnama" id="dropdownsiswa" style="border: 2px solid lightblue;">
                     </select>
                 </div>
+                <div class="col-2" id="calendarSiswaContainer">
+                    <input class="form-control" type="date" id="calendarSiswa" name="calendarSiswa" style="border: 2px solid lightblue; height: 40px; width: 200px">
+                </div>
+
             </div>
-            <div class="table-responsive small col-lg-12" style="flex: 1; overflow: auto;">
+            <div class="table-responsive small col-lg-12 mt-4" style="flex: 1; overflow: auto;">
                 <table id="absensiTableSiswa" class="table table-striped table-sm">
                 <thead>
                     <tr>
@@ -95,12 +99,11 @@
                                 <td>{{ \Carbon\Carbon::parse($absensi->created_at)->format('H:i:s') }}</td>
                                 <td>{{ $absensi->status_absen }}</td>
                                 <td>
+                                    <button class="btn btn-warning" onclick="showEditModal({{ $absensi->id }})"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-danger" onclick="deleteAbsensi({{ $absensi->id }})"><i class="fa fa-trash"></i></button>
                                     @if ($absensi->file_path) <!-- Tambah kondisi untuk menampilkan jika ada file -->
                                         <a href="{{ asset('storage/' . $absensi->file_path) }}" class="btn btn-info btn-sm" target="_blank">Lihat File</a>
                                     @endif
-                                    <button class="btn btn-warning" onclick="showEditModal({{ $absensi->id }})"><i class="fa fa-edit"></i></button>
-                                    <button class="btn btn-danger" onclick="deleteAbsensi({{ $absensi->id }})"><i class="fa fa-trash"></i></button>
-                                    
                                 </td>
                             </tr>
                         @endif
@@ -112,11 +115,11 @@
         </div>
         
     <!-- Table for Data Guru -->
-    <div class="border border-2 rounded p-4 my-4 d-flex flex-column text-md" style="height: 450px; max-height: 450px; position: relative;">
+    <div class="border border-2 rounded p-4 my-4 d-flex flex-column text-md" style="height: 500px; max-height: 500px; position: relative;">
         <h5 class="position-relative" style="font-weight: bold; position: sticky; top: 0; background-color: white; z-index: 100;">
             Data Guru
         </h5>
-        <div class="input-group mb-3" style="position: sticky; top: 40px; background-color: white; z-index: 99;">
+        <div class="input-group mb-3" style="top: 20px; background-color: white; z-index: 99;">
             <div style="margin-right: 20px;">
                 <input type="text" class="form-control rounded" placeholder="Search..." name="search" id="searchGuru" style="border: 2px solid lightblue; width: 350px;">
             </div>
@@ -124,8 +127,12 @@
                 <select class="form-select rounded" name="dropdownkelas" id="dropdownkelasGuru" style="border: 2px solid lightblue;">
                 </select>
             </div>
+            <div class="col-2 mx-3" id="calendarGuruContainer">
+                <input type="date" id="calendarGuru" name="calendarGuru" style="border: 2px solid lightblue;">
+            </div>
+
         </div>
-        <div class="table-responsive small col-lg-12" style="flex: 1; overflow: auto;">
+        <div class="table-responsive small col-lg-12 mt-4" style="flex: 1; overflow: auto;">
             <table id="absensiTableguru" class="table table-striped table-sm">
                 <thead>
                     <tr>
@@ -154,12 +161,11 @@
                                     <td>{{ \Carbon\Carbon::parse($absensi->created_at)->format('H:i:s') }}</td>
                                     <td>{{ $absensi->status_absen }}</td>
                                     <td>
+                                        <button class="btn btn-warning" onclick="showEditModal({{ $absensi->id }})"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-danger" onclick="deleteAbsensi({{ $absensi->id }})"><i class="fa fa-trash"></i></button>
                                         @if ($absensi->file_path) <!-- Tambah kondisi untuk menampilkan jika ada file -->
                                             <a href="{{ asset('storage/' . $absensi->file_path) }}" class="btn btn-info btn-sm" target="_blank">Lihat File</a>
                                         @endif
-                                        <button class="btn btn-warning" onclick="showEditModal({{ $absensi->id }})"><i class="fa fa-edit"></i></button>
-                                        <button class="btn btn-danger" onclick="deleteAbsensi({{ $absensi->id }})"><i class="fa fa-trash"></i></button>
-                                        
                                     </td>
                                 </tr>
                             @endif
@@ -1747,39 +1753,53 @@
             });
     
         // Event listener for changes in the selected class in "Data Siswa" dropdown
-        dropdownKelas.addEventListener("change", function () {
-            var selectedKelas = this.value;
-    
-            // Reset search input for "Data Siswa" table
-            searchInputSiswa.value = '';
-    
-            if (selectedKelas === "semua") {
-                dropdownSiswaContainer.style.display = "none";
+    dropdownKelas.addEventListener("change", function () {
+    var selectedKelas = this.value;
+
+    // Reset search input for "Data Siswa" table
+    searchInputSiswa.value = '';
+
+    if (selectedKelas === "semua") {
+        dropdownSiswaContainer.style.display = "none";
+        // Perform something with the selected value (e.g., filter "Data Siswa" table by class)
+        filterTableSiswaByKelas(selectedKelas);
+    } else {
+        dropdownSiswaContainer.style.display = "block";
+        // Fetch student data based on the selected class (replace with the appropriate endpoint)
+        fetch('/get_siswa?kelas=' + selectedKelas)
+            .then(response => response.json())
+            .then(data => {
+                data.sort((a, b) => a.nama.localeCompare(b.nama));
+                dropdownSiswa.innerHTML = "";
+                var defaultOption = document.createElement("option");
+                defaultOption.text = "Semua Siswa";
+                dropdownSiswa.add(defaultOption);
+                data.forEach(siswa => {
+                    var option = document.createElement("option");
+                    option.text = siswa.nama;
+                    dropdownSiswa.add(option);
+                });
+            })
+            .then(() => {
                 // Perform something with the selected value (e.g., filter "Data Siswa" table by class)
                 filterTableSiswaByKelas(selectedKelas);
-            } else {
-                dropdownSiswaContainer.style.display = "block";
-                // Fetch student data based on the selected class (replace with the appropriate endpoint)
-                fetch('/get_siswa?kelas=' + selectedKelas)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.sort((a, b) => a.nama.localeCompare(b.nama));
-                        dropdownSiswa.innerHTML = "";
-                        var defaultOption = document.createElement("option");
-                        defaultOption.text = "Semua Siswa";
-                        dropdownSiswa.add(defaultOption);
-                        data.forEach(siswa => {
-                            var option = document.createElement("option");
-                            option.text = siswa.nama;
-                            dropdownSiswa.add(option);
-                        });
-                    })
-                    .then(() => {
-                        // Perform something with the selected value (e.g., filter "Data Siswa" table by class)
-                        filterTableSiswaByKelas(selectedKelas);
-                    });
-            }
-        });
+                // Adjust calendar position based on dropdown kedua visibility
+                adjustCalendarPosition();
+            });
+    }
+});
+
+function adjustCalendarPosition() {
+    if (dropdownSiswaContainer.style.display === "block") {
+        // Jika dropdown kedua muncul, atur posisi kalendar di sebelah kanan dropdown kedua
+        calendarSiswaContainer.style.position = "absolute";
+        calendarSiswaContainer.style.left = (dropdownSiswaContainer.offsetWidth + 525) + "px";
+    } else {
+        // Jika dropdown kedua tidak muncul, atur posisi kalendar di sebelah kanan dropdown pertama
+        calendarSiswaContainer.style.position = "relative";
+        calendarSiswaContainer.style.left = "auto";
+    }
+}
     
         // Event listener for changes in the selected student in "Data Siswa" dropdown
         dropdownSiswa.addEventListener("change", function () {
