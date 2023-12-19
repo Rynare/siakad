@@ -67,6 +67,8 @@
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
                                         Tujuan Mitra
                                     </th>
+
+
                                     <th
                                         class="
                                             text-center text-uppercase text-secondary text-xs font-weight-bolder opacity-7">
@@ -107,13 +109,15 @@
                                                 class="btn
                                                 btn-info font-weight-bold btn--edit text-sm rounded-circle"
                                                 style="margin: 5px 0;" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                title="Detail"  id="{{ $m->id }}" nama_mitra="{{ $m->nama_mitra }}" 
-                                                asal_mitra="{{ $m->asal_mitra }}" Deskripsi_singkat_mitra="{{ $m->Deskripsi_singkat_mitra }}" 
-                                                tanggal_mulai_kerjasama="{{ \Carbon\Carbon::parse($m->tanggal_mulai_kerjasama)->format('d/m/Y') }}" 
+                                                title="Detail"  id="{{ $m->id }}" nama_mitra="{{ $m->nama_mitra }}"
+                                                asal_mitra="{{ $m->asal_mitra }}" Deskripsi_singkat_mitra="{{ $m->Deskripsi_singkat_mitra }}"
+                                                tanggal_mulai_kerjasama="{{ \Carbon\Carbon::parse($m->tanggal_mulai_kerjasama)->format('d/m/Y') }}"
                                                 tanggal_berakhir_kerjasama="{{ \Carbon\Carbon::parse($m->tanggal_berakhir_kerjasama)->format('d/m/Y') }}"
-                                                PT_Mitra="{{ $m->PT_Mitra }}" tujuan_mitra="{{ $m->tujuan_mitra }}" 
+                                                PT_Mitra="{{ $m->PT_Mitra }}" tujuan_mitra="{{ $m->tujuan_mitra }}"
+
                                                 original_name_file="{{ $m->original_name_file }}" data-file="{{ $m->file }}"
-                                                onclick="showModalDialog(this)"> 
+
+                                                onclick="showModalDialog(this)">
                                                 <i class="fa fa-eye"></i>
                                             </button>
                                             <a href="/edit-mou/{{ $m->id }}"
@@ -150,7 +154,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            
+
                             <div class="col-md-8">
                                 <ul class="list-group">
                                     <li class="list-group-item">
@@ -159,7 +163,7 @@
                                                 <span class="float-start fw-bold">Nama Mitra</span>
                                                 <div class="float-end">:</div>
                                             </div>
-                                            <div class="col-md-7" style="text-transform: capitalize" 
+                                            <div class="col-md-7" style="text-transform: capitalize"
                                             id="nama_mitra">
                                             </div>
                                         </div>
@@ -170,7 +174,7 @@
                                                 <span class="float-start fw-bold">Asal Mitra atau Instansi</span>
                                                 <div class="float-end">:</div>
                                             </div>
-                                            <div class="col-md-7" style="text-transform: capitalize" 
+                                            <div class="col-md-7" style="text-transform: capitalize"
                                             id="asal_mitra">
                                             </div>
                                         </div>
@@ -181,7 +185,7 @@
                                                 <span class="float-start fw-bold">Deskripsi Singkat Mitra</span>
                                                 <div class="float-end">:</div>
                                             </div>
-                                            <div class="col-md-7" style="text-transform: capitalize" 
+                                            <div class="col-md-7" style="text-transform: capitalize"
                                             id="Deskripsi_singkat_mitra">
                                             </div>
                                         </div>
@@ -242,7 +246,7 @@
                             </div>
                         </div>
                         <br>
-                        
+
                         <div class="modal-footer">
                             @if (isset($m))
                             <a id="file_link" href="{{ asset('storage/kerjasama/file/' . str_replace(' ', '%20', $m->file)) }}" target="_blank" class="btn btn-success" style="color: white;">Lihat File</a>
@@ -250,7 +254,7 @@
                             @endif
                             <button id="detail-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Tutup</button>
                         </div>
-                    
+
                         {{-- <div class="modal-footer">
                             @foreach($mou as $mo)
                             <a href="{{ asset('storage/kerjasama/file/' . str_replace(' ', '%20', $mo->file)) }}" target="_blank" class="btn btn-success" style="color: white;">Lihat File</a>
@@ -258,7 +262,7 @@
                             @endforeach
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         </div>     --}}
-                       
+
                     </div>
 
                 </div>
@@ -270,6 +274,8 @@
 
     <script>
 
+
+
         function showModalDialog(element) {
             const updateModalDialog = document.getElementById('detail-modal');
             const nama_mitra = updateModalDialog.querySelector('#nama_mitra');
@@ -280,6 +286,7 @@
             const PT_Mitra = updateModalDialog.querySelector('#PT_Mitra');
             const tujuan_mitra = updateModalDialog.querySelector('#tujuan_mitra');
             const original_name_file = updateModalDialog.querySelector('#original_name_file');
+
 
             nama_mitra.innerText = element.getAttribute('nama_mitra');
             asal_mitra.innerText = element.getAttribute('asal_mitra');
@@ -296,7 +303,7 @@
 
         const fileLink = updateModalDialog.querySelector('#file_link');
         const fileDownload = updateModalDialog.querySelector('#file_download');
-        
+
         // Update link "Lihat File" dan "Download"
         const fileName = element.dataset.file;
 

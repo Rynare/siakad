@@ -111,7 +111,6 @@ class DashboardController extends Controller
 
                 $datas['pengumumans'] = $pengumumans;
                 $rolePengumuman = $pengumumans->pluck('role')->unique()->toArray();
-
             }
             
             if (Auth::check()) {
@@ -168,4 +167,5 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'Tamu pesan tidak ditemukan.');
         }
     }
+
 }

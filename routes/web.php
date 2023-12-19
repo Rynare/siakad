@@ -162,7 +162,7 @@ Route::middleware(['userRole:admin,wakasek'])->group(function () {
 });
 
 //==========================================================================================
-Route::middleware(['userRole:admin'])->group(function () {
+Route::middleware(['userRole:admin,wakasek'])->group(function () {
     // Daftar Barang
     Route::get('/sarana/barang', [BarangController::class, 'index'])->name('barang_main');
     Route::get('/sarana/barang-tambah', [BarangController::class, 'create'])->name('tambah-barang');
@@ -277,15 +277,6 @@ Route::middleware(['userRole:admin,wakasek'])->group(function () {
     Route::post('/akademik/absensi/{akademik}/{kelas}', [AbsensiController::class, 'showKelasAbsensi']);
     Route::post('/api/akademik/absensi-update/{absensi}', [AbsensiController::class, 'apiUpdateAbsensi'])->name('api.update-absensi');
 
-    // Kims-Absensi
-    Route::get('/akademik/absensi/admin', [AbsensiController::class, 'showAbsensiAdmin']);
-    Route::get('/get_kelas', [KelasController::class, 'getKelas']);
-    Route::get('/get_siswa', [SiswaController::class, 'getSiswaKelasAbsensi']);
-    Route::get('/get_guru', [GuruController::class, 'getGuru']);
-    Route::get('/api/events-from-database', [AbsensiController::class, 'getEventsFromDatabase']);
-    Route::delete('/api/delete-absensi/{id}', [AbsensiController::class, 'deleteAbsensi']);
-    Route::put('/api/update-absensi/{id}', [AbsensiController::class, 'updateAbsensi']);
-
     // ==============[ D a t a - P e m i n j a m a n ]===============
     Route::get('/data-peminjaman', [PeminjamanController::class, 'index']);
     Route::get('/data-peminjaman-history', [PeminjamanController::class, 'history']);
@@ -322,11 +313,24 @@ Route::middleware(['userRole:admin,wakasek'])->group(function () {
     Route::get('/data-peminjaman-barang', [PeminjamanBarangController::class, 'index'])->name('peminjamanBarang.index');
     Route::post('/data-peminjaman-barang', [PeminjamanBarangController::class, 'store'])->name('peminjamanBarang.store');
     Route::put('/data-peminjaman-barang', [PeminjamanBarangController::class, 'update'])->name('peminjamanBarang.update');
-    Route::delete('/data-peminjaman-barang/{id}', [PeminjamanBarangController::class, 'destroy'])->name('peminjamanBarang.destroy');
+    Route::get('/data-peminjaman-barang-hapus/{id}', [PeminjamanBarangController::class, 'destroy'])->name('peminjamanBarang.destroy');
     Route::get('/data-peminjaman-barang-history', [PeminjamanBarangController::class, 'history']);
     Route::get('/data-peminjaman-barang-confirm/{id}', [PeminjamanBarangController::class, 'confirm']);
     Route::get('/data-peminjaman-barang-approve/{peminjaman}', [PeminjamanBarangController::class, 'approve']);
     Route::get('/data-peminjaman-barang-decline/{peminjaman}', [PeminjamanBarangController::class, 'decline']);
+
+    // ==============[ D a t a - A b s e n s i]===============
+    Route::get('/akademik/absensi/admin', [AbsensiController::class, 'showAbsensiAdmin']);
+    Route::get('/get_kelas', [KelasController::class, 'getKelas']);
+    Route::get('/get_siswa', [SiswaController::class, 'getSiswaKelasAbsensi']);
+    Route::get('/get_guru', [GuruController::class, 'getGuru']);
+    Route::get('/get_gurunames', [GuruController::class, 'getGuruNames']);
+    Route::get('/api/events-from-database', [AbsensiController::class, 'getEventsFromDatabase']);
+    Route::delete('/api/delete-absensi/{id}', [AbsensiController::class, 'deleteAbsensi']);
+    Route::put('/api/update-absensi/{id}', [AbsensiController::class, 'updateAbsensi']);  
+    Route::get('/get_siswaadmin', [SiswaController::class, 'getSiswaByKelas']);
+    Route::post('/akademik/absensi/postAbsensi', [AbsensiController::class, 'storeAdmin'])->name('absensi.storeAdmin');
+    Route::get('/getIdUserByNama', [AbsensiController::class, 'getIdUserByNama'])->name('getIdUserByNama');
 
 });
 //======================== G U R U =========================================================
@@ -352,6 +356,7 @@ Route::middleware(['userRole:siswa,admin'])->group(function () {
     Route::get('/akademik/jadwal-siswa/{id}', [JadwalController::class, 'jadwalsiswa']);
 
    
+
 
 });
 

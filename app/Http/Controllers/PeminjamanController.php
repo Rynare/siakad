@@ -28,6 +28,8 @@ class PeminjamanController extends Controller
 
         $ruang = Ruang::all();
 
+        $peminjaman = $peminjaman->sortByDesc('created_at');
+
         return view('pages.humas.peminjaman-ruang.peminjaman', [
             'hariini'      => $hariini,
             'peminjaman'   => $peminjaman,
@@ -253,6 +255,8 @@ class PeminjamanController extends Controller
         ])->with('title', 'Data Peminjaman');
     }
 
+
+
     public function confirm( $id)
     {
         
@@ -289,6 +293,7 @@ class PeminjamanController extends Controller
 
         return back();
     }
-
+    
+    
 
 }
