@@ -1,6 +1,8 @@
 <div class="flex-shrink-0 p-3 bg-transparent" style="">
-    <a href="/" class="d-flex align-items-center pb-3 my-4 link-dark text-decoration-none" style="border-bottom: 2px solid white; justify-content: center">
-        <div class="text-white w-auto " style="display: flex; align-items: center; justify-content: center; column-gap: 3px">
+    <a href="/" class="d-flex align-items-center pb-3 my-4 link-dark text-decoration-none"
+        style="border-bottom: 2px solid white; justify-content: center">
+        <div class="text-white w-auto "
+            style="display: flex; align-items: center; justify-content: center; column-gap: 3px">
             {{-- <img src="{{ asset('assets/img/web-icon-brain.png') }}" alt="HTML tutorial"
             style="height: 36px;filter:brightness(0%) invert(90%)"> --}}
             {{-- <img src="{{ asset('assets/img/smart scholl only icon.png') }}" alt="HTML tutorial" style="height: 36px;"> --}}
@@ -30,7 +32,7 @@
                 <div class="collapse {{ Request::is('administrasi/guru*') || Request::is('administrasi/siswa*') || Request::is('akademik/mapel*') || Request::is('sarana/kelas*') || Request::is('sarana/ruang*') || Request::is('sarana/barang*') ? 'show' : '' }}"
                     id="master-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/users*') ? 'bg-gradient-primary ' : '' }}"
+                        <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/users*') ? 'bg-gradient-primary ' : '' }}"
                                 style="width: 100%" href="/administrasi/users"><i
                                     class="material-icons opacity-10 mx-2">groups</i> Data User</a>
                         </li>
@@ -42,10 +44,10 @@
                                 style="width: 100%" href="/administrasi/siswa"><i
                                     class="material-icons opacity-10 mx-2">groups</i> Data
                                 Siswa</a></li>
-                                <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/usermoodle*') ? 'bg-gradient-primary ' : '' }}"
+                        <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/usermoodle*') ? 'bg-gradient-primary ' : '' }}"
                                 style="width: 100%" href="/administrasi/usermoodle"><i
                                     class="material-icons opacity-10 mx-2">groups</i> Data User Moodle</a>
-                                    </li>
+                        </li>
                         <li><a class="link-light rounded mb-1 {{ Request::is('akademik/mapel*') ? 'bg-gradient-primary ' : '' }}"
                                 style="width: 100%" href="/akademik/mapel"><i
                                     class="material-icons opacity-10 mx-2">task</i> Data Mata
@@ -88,10 +90,10 @@
                                     class="material-icons opacity-10 mx-2">receipt_long</i>
                                 Kalender Akademik</a></li>
                     </ul>
-                   
+
                 </div>
             </li>
-            
+
             {{-- Presensi --}}
 
             <li class="mb-1" style="width: 100%">
@@ -103,7 +105,8 @@
                     </span>
                     Kesiswaan <i class="material-icons opacity-10 ms-auto">expand_more</i>
                 </button>
-                <div class="collapse {{ Request::is('akademik/absensi*') || Request::is('/data-nilai-moodle/course-moodle*') ? 'show' : '' }}" id="kesiswaan-collapse">
+                <div class="collapse {{ Request::is('akademik/absensi*') || Request::is('/data-nilai-moodle/course-moodle*') ? 'show' : '' }}"
+                    id="kesiswaan-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         <li>
                             <a class="link-light rounded mb-1 {{ Request::is('akademik/absensi*') ? 'bg-gradient-primary ' : '' }}"
@@ -162,21 +165,22 @@
                     </span>
                     Humas <i class="material-icons opacity-10 ms-auto">expand_more</i>
                 </button>
-                <div class="collapse {{ Request::is('data-tamu*') || Request::is('mou*') ? 'show' : '' }}" id="humas-collapse">
+                <div class="collapse {{ Request::is('data-tamu*') || Request::is('mou*') ? 'show' : '' }}"
+                    id="humas-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         {{-- <li><a class="link-light rounded mb-1{{ Request::is('data-tamu')}}" style="width: 100%" href="/data-tamu"> <i
                                     class="material-icons opacity-10 mx-2">groups</i>
                                 Tamu</a></li> --}}
-                    {{-- </ul> --}}
-                    <li><a class="link-light rounded mb-1 {{ Request::is('data-tamu')}}" 
-                        href="/data-tamu"> <i class="material-icons opacity-10 mx-2">groups</i> 
-                        Tamu</a></li>
+                        {{-- </ul> --}}
+                        <li><a class="link-light rounded mb-1 {{ Request::is('data-tamu') }}" href="/data-tamu"> <i
+                                    class="material-icons opacity-10 mx-2">groups</i>
+                                Tamu</a></li>
                     </ul>
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
 
-                    {{-- <li><a class="link-light rounded mb-1" href="{{ route('kerjasama.lihat') }}"> <i --}}
+                        {{-- <li><a class="link-light rounded mb-1" href="{{ route('kerjasama.lihat') }}"> <i --}}
                         <li><a class="link-light rounded mb-1" style="width: 100%" href="/mou"> <i
-                            class="material-icons opacity-10 mx-2"> groups </i> Kerja Sama ( MoU ) </a></li>
+                                    class="material-icons opacity-10 mx-2"> groups </i> Kerja Sama ( MoU ) </a></li>
                     </ul>
                 </div>
             </li>
@@ -187,7 +191,6 @@
                     href="javascript:void(0);" onclick="konfirmasiBukaLink()"> <span
                         class="material-symbols-outlined">task</span> Elearning</a>
             </li>
-
         @elseif (auth()->user()->hasRole('wakasek'))
             <li class="mb-1">
                 <button class="btn align-items-center rounded collapsed text-white font-weight-bold"
@@ -220,7 +223,6 @@
                     </ul>
                 </div>
             </li>
-
         @elseif (auth()->user()->hasRole('guru'))
             {{-- <li class="mb-1" style="">
                 <a class="btn rounded text-white font-weight-bold {{ Request::is('#*') ? 'bg-gradient-primary ' : '' }}"
@@ -278,8 +280,6 @@
                     href="javascript:void(0);" onclick="konfirmasiBukaLink()"> <span
                         class="material-symbols-outlined">task</span> Elearning</a>
             </li>
-
-
         @endif
     </ul>
 </div>

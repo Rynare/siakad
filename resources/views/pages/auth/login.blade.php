@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png') }}">
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/smart scholl only icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/smart_scholl-only_icon.png') }}">
 
     <title>
         Smart School
@@ -97,17 +97,18 @@
                                             class="btn bg-gradient-primary w-100 my-3 mb-2">MASUK</button>
                                     </div>
                                 </form>
-                                    <div>
-                                        <style>
-                                            .teks-style{
-                                                font-size: 18px;
-                                                font-family: 'italic', Times, serif;
-                                            }
-                                        </style>
-                                        <a href="{{ route('daftar-tamu') }}" class="teks-style" style="text-decoration-line: initial;" >
-                                            Silahkan klik untuk Tamu
-                                        </a>
-                                    </div>
+                                <div>
+                                    <style>
+                                        .teks-style {
+                                            font-size: 18px;
+                                            font-family: 'italic', Times, serif;
+                                        }
+                                    </style>
+                                    <a href="{{ route('daftar-tamu') }}" class="teks-style"
+                                        style="text-decoration-line: initial;">
+                                        Silahkan klik untuk Tamu
+                                    </a>
+                                </div>
 
                             </div>
                         </div>
