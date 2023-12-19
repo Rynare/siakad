@@ -331,7 +331,6 @@ Route::middleware(['userRole:admin,wakasek'])->group(function () {
     Route::get('/get_siswaadmin', [SiswaController::class, 'getSiswaByKelas']);
     Route::post('/akademik/absensi/postAbsensi', [AbsensiController::class, 'storeAdmin'])->name('absensi.storeAdmin');
     Route::get('/getIdUserByNama', [AbsensiController::class, 'getIdUserByNama'])->name('getIdUserByNama');
-
 });
 //======================== G U R U =========================================================
 Route::middleware(['userRole:guru'])->group(function () {
@@ -354,10 +353,6 @@ Route::middleware(['userRole:siswa,guru'])->group(function () {
 Route::middleware(['userRole:siswa,admin'])->group(function () {
     //jadwal pelajaran
     Route::get('/akademik/jadwal-siswa/{id}', [JadwalController::class, 'jadwalsiswa']);
-
-   
-
-
 });
 
 Route::middleware(['userRole:siswa,admin'])->group(function () {

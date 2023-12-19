@@ -219,6 +219,18 @@ public function storeAdmin(Request $request)
             'id_user' => $userId,
         ]);
 
+        // Cek apakah pengguna telah melakukan presensi pada hari ini
+        $today = now()->format('Y-m-d');
+        $absensi = Absensi::where('id_user', $userId)
+                        ->whereDate('created_at', $today)
+                        ->first();
+
+        if ($absensi) {
+            // Jika pengguna telah melakukan presensi pada hari ini, tampilkan pesan
+            Log::info('Presensi hari ini sudah ada untuk user ' . $userId);
+            return response()->json(['message' => 'Anda telah melakukan presensi pada hari ini'], 400);
+        }
+
         // Buat data absensi dengan mengisi semua kolom yang diperlukan
         $absensi = new Absensi([
             'status_absen' => $request->input('status_absen'),
@@ -253,6 +265,7 @@ public function storeAdmin(Request $request)
         return response()->json(['message' => 'Terjadi kesalahan saat menyimpan data absensi'], 500);
     }
 }
+
 
 
 

@@ -15,8 +15,8 @@ class AbsensisSeeder extends Seeder
 {
     public function run(): void
     {
-        $endDate = now()->subDays(2);
-        $startDate = $endDate->copy()->subDays(7);
+        $endDate = now()->subDays(1);
+        $startDate = $endDate->copy()->subDays(6);
 
         $userIds = range(2, 143);
 
@@ -40,7 +40,7 @@ class AbsensisSeeder extends Seeder
             }
 
             // Reset start date for the next user
-            $startDate = $endDate->copy()->subDays(7);
+            $startDate = $endDate->copy()->subDays(6);
         }
     }
 }

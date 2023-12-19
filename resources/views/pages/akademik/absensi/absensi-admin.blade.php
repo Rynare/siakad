@@ -50,24 +50,39 @@
             <h5 class="position-relative" style="font-weight: bold; position: sticky; top: 0; background-color: white; z-index: 100;">
                 Data Siswa
             </h5>
+
             <div class="input-group mb-3" style="top: 20px; background-color: white; z-index: 99;">
+                <!-- Search Bar -->
                 <div style="margin-right: 20px;">
                     <input type="text" class="form-control rounded" placeholder="Search..." name="search" id="searchSiswa" style="border: 2px solid lightblue; width: 250px;">
                 </div>
+
+                <!-- Dropdown Pertama (Kelas) -->
                 <div class="col-2 ml-5" style="margin-right: 15px;">
                     <select class="form-select rounded" name="dropdownkelas" id="dropdownkelas" style="border: 2px solid lightblue; width: 200px;">
                         <option value="semua">Semua Siswa</option>
+                        <!-- Tambahkan opsi kelas dari database -->
                     </select>
-                </div>
-                <div class="col-2 ml-2" id="dropdownsiswacontainer" style="display: none;">
-                    <select class="form-select rounded" name="dropdownnama" id="dropdownsiswa" style="border: 2px solid lightblue;">
-                    </select>
-                </div>
-                <div class="col-2" id="calendarSiswaContainer">
-                    <input class="form-control" type="date" id="calendarSiswa" name="calendarSiswa" style="border: 2px solid lightblue; height: 40px; width: 200px">
                 </div>
 
+                <!-- Dropdown Kedua (Siswa) -->
+                <div class="col-2 ml-2" id="dropdownsiswacontainer" style="display: none;">
+                    <select class="form-select rounded" name="dropdownnama" id="dropdownsiswa" style="border: 2px solid lightblue;">
+                        <!-- Tambahkan data siswa dari database -->
+                    </select>
+                </div>
+
+                <!-- Kalendar Pertama -->
+                <div class="col-2" id="calendarSiswaContainer1">
+                    <input class="form-control" type="date" id="calendarSiswa1" name="calendarSiswa1" style="border: 2px solid lightblue; height: 40px; width: 200px">
+                </div>
+
+                <!-- Kalendar Kedua -->
+                <div class="col-2" id="calendarSiswaContainer2">
+                    <input class="form-control" type="date" id="calendarSiswa2" name="calendarSiswa2" style="border: 2px solid lightblue; height: 40px; width: 200px">
+                </div>
             </div>
+
             <div class="table-responsive small col-lg-12 mt-4" style="flex: 1; overflow: auto;">
                 <table id="absensiTableSiswa" class="table table-striped table-sm">
                 <thead>
@@ -115,66 +130,77 @@
         </div>
         
     <!-- Table for Data Guru -->
-    <div class="border border-2 rounded p-4 my-4 d-flex flex-column text-md" style="height: 500px; max-height: 500px; position: relative;">
-        <h5 class="position-relative" style="font-weight: bold; position: sticky; top: 0; background-color: white; z-index: 100;">
-            Data Guru
-        </h5>
-        <div class="input-group mb-3" style="top: 20px; background-color: white; z-index: 99;">
-            <div style="margin-right: 20px;">
-                <input type="text" class="form-control rounded" placeholder="Search..." name="search" id="searchGuru" style="border: 2px solid lightblue; width: 350px;">
-            </div>
-            <div class="col-2 mx-3 ml-5">
-                <select class="form-select rounded" name="dropdownkelas" id="dropdownkelasGuru" style="border: 2px solid lightblue;">
-                </select>
-            </div>
-            <div class="col-2 mx-3" id="calendarGuruContainer">
-                <input type="date" id="calendarGuru" name="calendarGuru" style="border: 2px solid lightblue;">
-            </div>
-
+<div class="border border-2 rounded p-4 my-4 d-flex flex-column text-md" style="height: 500px; max-height: 500px; position: relative;">
+    <h5 class="position-relative" style="font-weight: bold; position: sticky; top: 0; background-color: white; z-index: 100;">
+        Data Guru
+    </h5>
+    <div class="input-group mb-3" style="top: 20px; background-color: white; z-index: 99;">
+        <!-- Search Bar -->
+        <div style="margin-right: 20px;">
+            <input type="text" class="form-control rounded" placeholder="Search..." name="search" id="searchGuru" style="border: 2px solid lightblue; width: 250px;">
         </div>
-        <div class="table-responsive small col-lg-12 mt-4" style="flex: 1; overflow: auto;">
-            <table id="absensiTableguru" class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">Tanggal</th>
-                        <th scope="col">Hari</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Jam Absen</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBodyGuru">
-                    @foreach ($guruAbsensis as $absensi)
-                        @php
-                            $user = \App\Models\User::find($absensi->id_user);
-                        @endphp
-                        @if ($user && $user->role == 'guru')
-                            @php
-                                $guru = \App\Models\Guru::where('id_user', $absensi->id_user)->first();
-                            @endphp
-                            @if ($guru)
-                                <tr>
-                                    <td>{{ \Carbon\Carbon::parse($absensi->created_at)->format('d-m-Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($absensi->created_at)->locale('id')->isoFormat('dddd') }}</td>
-                                    <td>{{ optional($guru)->nama }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($absensi->created_at)->format('H:i:s') }}</td>
-                                    <td>{{ $absensi->status_absen }}</td>
-                                    <td>
-                                        <button class="btn btn-warning" onclick="showEditModal({{ $absensi->id }})"><i class="fa fa-edit"></i></button>
-                                        <button class="btn btn-danger" onclick="deleteAbsensi({{ $absensi->id }})"><i class="fa fa-trash"></i></button>
-                                        @if ($absensi->file_path) <!-- Tambah kondisi untuk menampilkan jika ada file -->
-                                            <a href="{{ asset('storage/' . $absensi->file_path) }}" class="btn btn-info btn-sm" target="_blank">Lihat File</a>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endif
-                        @endif
-                    @endforeach
-                </tbody>
-            </table>
+
+        <!-- Dropdown (Kelas) -->
+        <div class="col-2 ml-5" style="margin-right: 15px;">
+            <select class="form-select rounded" name="dropdownkelas" id="dropdownkelasGuru" style="border: 2px solid lightblue; width: 200px;">
+            </select>
+        </div>
+
+        <!-- Kalendar Pertama -->
+        <div class="col-2" id="calendarGuruContainer1">
+            <input class="form-control" type="date" id="calendarGuru1" name="calendarGuru1" style="border: 2px solid lightblue; height: 40px; width: 200px">
+        </div>
+
+        <!-- Kalendar Kedua -->
+        <div class="col-2" id="calendarGuruContainer2">
+            <input class="form-control" type="date" id="calendarGuru2" name="calendarGuru2" style="border: 2px solid lightblue; height: 40px; width: 200px">
         </div>
     </div>
+
+    <div class="table-responsive small col-lg-12 mt-4" style="flex: 1; overflow: auto;">
+        <table id="absensiTableguru" class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Hari</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Jam Absen</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="tableBodyGuru">
+                @foreach ($guruAbsensis as $absensi)
+                    @php
+                        $user = \App\Models\User::find($absensi->id_user);
+                    @endphp
+                    @if ($user && $user->role == 'guru')
+                        @php
+                            $guru = \App\Models\Guru::where('id_user', $absensi->id_user)->first();
+                        @endphp
+                        @if ($guru)
+                            <tr>
+                                <td>{{ \Carbon\Carbon::parse($absensi->created_at)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($absensi->created_at)->locale('id')->isoFormat('dddd') }}</td>
+                                <td>{{ optional($guru)->nama }}</td>
+                                <td>{{ \Carbon\Carbon::parse($absensi->created_at)->format('H:i:s') }}</td>
+                                <td>{{ $absensi->status_absen }}</td>
+                                <td>
+                                    <button class="btn btn-warning" onclick="showEditModal({{ $absensi->id }})"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-danger" onclick="deleteAbsensi({{ $absensi->id }})"><i class="fa fa-trash"></i></button>
+                                    @if ($absensi->file_path) <!-- Tambah kondisi untuk menampilkan jika ada file -->
+                                        <a href="{{ asset('storage/' . $absensi->file_path) }}" class="btn btn-info btn-sm" target="_blank">Lihat File</a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
+                    @endif
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
     <!-- Formulir untuk menambahkan absensi -->
     <form id="absensiForm" enctype="multipart/form-data">
@@ -370,9 +396,13 @@
 
 <style>
 
+#calendarSiswaContainer1 {
+    margin-right: 15px;
+}
+
 .form-check-label {
-    font-size: 20px; /* Sesuaikan dengan ukuran teks yang diinginkan */
-    margin-right: 10px; /* Sesuaikan dengan jarak yang diinginkan antara label dan tombol input */
+    font-size: 20px;
+    margin-right: 10px; 
 }
 
 .form-check {
@@ -1789,17 +1819,33 @@
     }
 });
 
+
 function adjustCalendarPosition() {
-    if (dropdownSiswaContainer.style.display === "block") {
-        // Jika dropdown kedua muncul, atur posisi kalendar di sebelah kanan dropdown kedua
-        calendarSiswaContainer.style.position = "absolute";
-        calendarSiswaContainer.style.left = (dropdownSiswaContainer.offsetWidth + 525) + "px";
-    } else {
-        // Jika dropdown kedua tidak muncul, atur posisi kalendar di sebelah kanan dropdown pertama
-        calendarSiswaContainer.style.position = "relative";
-        calendarSiswaContainer.style.left = "auto";
-    }
+    const dropdownSiswaContainer = document.getElementById('dropdownsiswacontainer');
+    const calendarSiswaContainer1 = document.getElementById('calendarSiswaContainer1');
+    const calendarSiswaContainer2 = document.getElementById('calendarSiswaContainer2');
+
+    // Check if dropdown kedua is visible
+    const isDropdownVisible = dropdownSiswaContainer.style.display === 'block';
+
+    // Set the position style based on the visibility of dropdown kedua
+    const positionStyle = isDropdownVisible ? 'absolute' : 'relative';
+
+    // Calculate the left position based on the visibility of dropdown kedua
+    const leftPosition1 = isDropdownVisible ? (dropdownSiswaContainer.offsetWidth + 525) + 'px' : 'auto';
+    const leftPosition2 = isDropdownVisible ? (dropdownSiswaContainer.offsetWidth + 735) + 'px' : 'auto';
+
+    // Apply styles to calendar containers
+    calendarSiswaContainer1.style.position = positionStyle;
+    calendarSiswaContainer1.style.left = leftPosition1;
+
+    calendarSiswaContainer2.style.position = positionStyle;
+    calendarSiswaContainer2.style.left = leftPosition2;
 }
+
+
+
+
     
         // Event listener for changes in the selected student in "Data Siswa" dropdown
         dropdownSiswa.addEventListener("change", function () {
@@ -2168,13 +2214,11 @@ refreshDropdown(dropdown1, []); // Inisialisasi dropdown1
 refreshDropdown(dropdown2, []); // Inisialisasi dropdown2
 
 function submitData() {
-    // Validasi
-    // const selectedOption = document.querySelector('input[name="flexRadioDefault"]:checked').value;
     const selectedRole = document.querySelector('input[name="roleRadio"]:checked').value;
     const selectedNama = selectedRole === 'siswa' ? document.getElementById('dropdown2').value : document.getElementById('dropdown1').value;
     const selectedStatus = document.getElementById('statusInput').value;
 
-    if (!selectedOption || !selectedRole || !selectedNama) {
+    if (!selectedRole || !selectedNama) {
         alert('Isi semua informasi yang diperlukan.');
         return;
     }
@@ -2182,7 +2226,7 @@ function submitData() {
     const fileInput = document.getElementById('fileInput');
     const formData = new FormData();
 
-    if ((selectedOption === 'sakit' || selectedOption === 'izin') && !fileInput.files.length) {
+    if ((selectedStatus === 'sakit' || selectedStatus === 'izin') && !fileInput.files.length) {
         // Jika sakit atau izin dipilih dan file belum diunggah
         Swal.fire({
             icon: 'warning',
@@ -2193,7 +2237,7 @@ function submitData() {
     }
 
     // Tidak perlu memeriksa file jika opsi yang dipilih adalah 'masuk'
-    if (!(selectedOption === 'masuk')) {
+    if (!(selectedStatus === 'masuk')) {
         if (!fileInput.files.length) {
             Swal.fire({
                 icon: 'warning',
@@ -2221,15 +2265,25 @@ function submitData() {
         },
         body: formData,
     })
-    .then(response => response.json())
-    .then(data => {
-        submitButton.innerHTML = 'Submit';
-
-        Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: 'Data berhasil ditambahkan.',
+    .then(response => {
+        if (!response.ok) {
+            // Tampilkan notifikasi gagal jika respons dari server tidak ok (HTTP status code 200-299)
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Data absensi sudah ada pada hari ini.',
             });
+            throw new Error('Gagal menyimpan data absensi');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Berhasil, tampilkan notifikasi berhasil
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'Data berhasil ditambahkan.',
+        });
         location.reload();
     })
     .catch(error => {
@@ -2241,14 +2295,119 @@ function submitData() {
             title: 'Terjadi Kesalahan',
             text: 'Terjadi kesalahan karena data tidak lengkap. Silakan coba lagi.',
         });
+        location.reload();
 
         console.error('Error:', error);
     });
 }
 
+const calendarSiswa1 = document.getElementById('calendarSiswa1');
+const calendarSiswa2 = document.getElementById('calendarSiswa2');
+let startDate = null;
+let endDate = null;
 
+// Attach event listeners to the date input fields
+calendarSiswa1.addEventListener('change', function () {
+    startDate = formatDateAbsensi(this.value);
+});
+calendarSiswa2.addEventListener('change', function () {
+    endDate = formatDateAbsensi(this.value);
+    if (startDate && endDate) {
+        // Run the search function
+        console.log("kalendar2 terisi")
+        handleDateChange();
+    }
+});
 
+// Function to handle date changes
+function handleDateChange() {
+    // Call the liveSearchByDate function with the selected dates
+    liveSearchByDate(startDate, endDate);
+}
 
+function formatDateAbsensi(dateString) {
+    // Parse the date string in "MM/DD/YYYY" format and convert it to "DD-MM-YYYY"
+    var parts = dateString.split("/");
+    if (parts.length === 3) {
+        return parts[0] + '-' + parts[1] + '-' + parts[2];
+    }
+    return dateString; // Return the original string if parsing fails
+}
+
+function liveSearchByDate(searchStartDate, searchEndDate) {
+    console.log("Start Date:", searchStartDate);
+    console.log("End Date:", searchEndDate)
+
+    var tableRowsSiswa = document.querySelectorAll("#tableBodySiswa tr");
+
+    tableRowsSiswa.forEach(function (row) {
+        var tanggalCell = row.querySelector("td:nth-child(1)"); // Assuming date is in the first column
+        var tanggalAbsensi = tanggalCell.textContent.trim();
+
+        // Parse the table date string to match the format "DD-MM-YYYY"
+        var parts = tanggalAbsensi.split("-");
+        var formattedTableDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+
+        // Display row if it falls within the selected date range or if no date range is specified
+        if (
+            (searchStartDate === "" && searchEndDate === "") ||
+            (formattedTableDate >= searchStartDate && formattedTableDate <= searchEndDate)
+        ) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+const calendarGuru1 = document.getElementById('calendarGuru1');
+const calendarGuru2 = document.getElementById('calendarGuru2');
+let startDateGuru = null;
+let endDateGuru = null;
+
+calendarGuru1.addEventListener('change', function () {
+    startDateGuru = formatDateAbsensi(this.value);
+    console.log(startDateGuru);
+});
+calendarGuru2.addEventListener('change', function () {
+    endDateGuru = formatDateAbsensi(this.value);
+    if (startDateGuru && endDateGuru) {
+        // Run the search function
+        console.log("Kalendar Guru 2 terisi")
+        handleDateChangeGuru();
+    }
+});
+
+function handleDateChangeGuru() {
+    // Call the liveSearchByDate function with the selected dates
+    liveSearchByDateGuru(startDateGuru, endDateGuru);
+}
+
+function liveSearchByDateGuru(searchStartDate, searchEndDate) {
+    console.log("Start Date:", searchStartDate);
+    console.log("End Date:", searchEndDate)
+
+    var tableRowsGuru = document.querySelectorAll("#tableBodyGuru tr");
+
+    tableRowsGuru.forEach(function (row) {
+        var tanggalCell = row.querySelector("td:nth-child(1)"); // Assuming date is in the first column
+        var tanggalAbsensi = tanggalCell.textContent.trim();
+
+        // Parse the table date string to match the format "DD-MM-YYYY"
+        var parts = tanggalAbsensi.split("-");
+        var formattedTableDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+
+        // Display row if it falls within the selected date range or if no date range is specified
+        if (
+            (searchStartDate === "" && searchEndDate === "") ||
+            (formattedTableDate >= searchStartDate && formattedTableDate <= searchEndDate)
+        ) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
 
     </script>
 @endsection
