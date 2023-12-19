@@ -26,6 +26,8 @@ class PeminjamanBarangController extends Controller
 
         $barang = Barang::all();
 
+        $peminjaman_barang = $peminjaman_barang->sortByDesc('created_at');
+
         return view('pages.humas.data-peminjaman-barang.index', [
             'hariini' => $hariini,
             'peminjaman' => $peminjaman_barang,
@@ -51,7 +53,7 @@ class PeminjamanBarangController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'barang_id' => ['numeric'],
+            'barang_id' => ['numeric', 'unique:peminjaman_barangs,barang_id'],
             'jumlah' => ['numeric'],
             'nama_peminjam' => ['string'],
             'tanggal_peminjaman' => ['date'],
