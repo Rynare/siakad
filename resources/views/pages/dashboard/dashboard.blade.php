@@ -219,17 +219,17 @@
                                                                 </div>
                                                                 <div class="col-md-4"> <!-- Kolom untuk tombol -->
                                                                     <div class="col">
-                                                                        <div class="col-md-6">
+                                                                        {{-- <div class="col-md-6">
                                                                             <form action="{{ route('dashboard.terimaPesan', ['id' => $tamu_pesan->id]) }}" method="POST">
                                                                                 @csrf
                                                                                 <button type="submit" class="btn btn-success">Pesan Diterima</button>
                                                                             </form>
-                                                                        </div>
+                                                                        </div> --}}
                                                                         <div class="col-md-6">
                                                                             <form action="{{ route('dashboard.hapusPesan', ['id' => $tamu_pesan->id]) }}" method="POST">
                                                                                 @csrf
                                                                                 @method('DELETE')
-                                                                                <button type="submit" class="btn btn-danger">Hapus Pesan</button>
+                                                                                <button type="submit" class="btn btn-success">Pesan Diterima</button>
                                                                             </form>
                                                                         </div>                                                                        
                                                                     </div>
@@ -437,17 +437,17 @@
                                                                 </div>
                                                                 <div class="col-md-4"> <!-- Kolom untuk tombol -->
                                                                     <div class="col">
-                                                                        <div class="col-md-6">
+                                                                        {{-- <div class="col-md-6">
                                                                             <form action="{{ route('dashboard.terimaPesan', ['id' => $tamu_pesan->id]) }}" method="POST">
                                                                                 @csrf
                                                                                 <button type="submit" class="btn btn-success">Pesan Diterima</button>
                                                                             </form>
-                                                                        </div>
+                                                                        </div> --}}
                                                                         <div class="col-md-6">
                                                                             <form action="{{ route('dashboard.hapusPesan', ['id' => $tamu_pesan->id]) }}" method="POST">
                                                                                 @csrf
                                                                                 @method('DELETE')
-                                                                                <button type="submit" class="btn btn-danger">Hapus Pesan</button>
+                                                                                <button type="submit" class="btn btn-success">Pesan Diterima</button>
                                                                             </form>
                                                                         </div>                                                                        
                                                                     </div>
@@ -511,24 +511,5 @@
         });
     </script>
     @endif
-
-    {{-- Tamu status --}}
-    {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        function hapusPesan(id) {
-            // Lakukan permintaan Ajax untuk menghapus pesan
-            $.ajax({
-                url: '/dashboard/' + id,
-                type: 'DELETE',
-                success: function(response) {
-                    // Sembunyikan elemen dengan ID yang sesuai
-                    $('#pesan-' + id).hide();
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                }
-            });
-        }
-    </script>  --}}
     
 @endsection

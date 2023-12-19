@@ -87,15 +87,6 @@
                                 <!-- Tambahan opsi yang dihasilkan dari data sebelumnya -->
                             </select>
                         </div>
-                        
-                        {{-- <div class="col-md-3">
-                            <label class="form-label" for="keterangan">Keterangan</label>
-                            <div class="input-group">
-                                <input type="text" name="keteranganTamu" class="form-control rounded-3" id="Keterangan"
-                                    required value="{{ $form_input['Keterangan'] }}"
-                                    {{ $errors->has('Keterangan') ? 'autofocus="true"' : '' }}>
-                            </div>
-                        </div> --}}
 
                         <div class="mb-3" style="padding-left: 20px; padding-right: 20px;">
                             <label for="exampleFormControlTextarea1" class="form-label fs-6">Keterangan</label>

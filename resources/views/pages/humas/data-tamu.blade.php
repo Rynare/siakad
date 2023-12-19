@@ -92,10 +92,10 @@
                                         <td class="text-center">
                                             @if ($t->status === 'menunggu')
                                                 Menunggu
-                                            @elseif ($t->status === 'pesan_telah_diterima')
-                                                Pesan Di Terima
+                                            {{-- @elseif ($t->status === 'pesan_telah_diterima')
+                                                Pesan  --}}
                                             @elseif ($t->status === 'pesan_telah_selesai')
-                                                Pesan Selesai
+                                                Pesan Di Terima
                                             @else
                                                 {{ $t->status }}
                                             @endif

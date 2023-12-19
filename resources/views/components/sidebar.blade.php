@@ -3,7 +3,8 @@
         <div class="text-white w-auto " style="display: flex; align-items: center; justify-content: center; column-gap: 3px">
             {{-- <img src="{{ asset('assets/img/web-icon-brain.png') }}" alt="HTML tutorial"
             style="height: 36px;filter:brightness(0%) invert(90%)"> --}}
-            <img src="{{ asset('assets/img/smart scholl only icon.png') }}" alt="HTML tutorial" style="height: 36px;">
+            {{-- <img src="{{ asset('assets/img/smart scholl only icon.png') }}" alt="HTML tutorial" style="height: 36px;"> --}}
+            <img src="{{ asset('assets/img/logo-new.png') }}" alt="HTML tutorial" style="height: 36px;">
             {{-- <span class="ms-1 font-weight-bold text-white" style="font-size:23px">Smart School</span> --}}
             <span class="ms-1 font-weight-bold"
                 style="font-size: 24px; background-image: linear-gradient(to right, #0cb1d8, #00c4dc, #00d5d1, #00e4b8, #29f194);
@@ -29,6 +30,10 @@
                 <div class="collapse {{ Request::is('administrasi/guru*') || Request::is('administrasi/siswa*') || Request::is('akademik/mapel*') || Request::is('sarana/kelas*') || Request::is('sarana/ruang*') || Request::is('sarana/barang*') ? 'show' : '' }}"
                     id="master-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/users*') ? 'bg-gradient-primary ' : '' }}"
+                            style="width: 100%" href="/administrasi/users"><i
+                                class="material-icons opacity-10 mx-2">groups</i> Data User</a>
+                        </li>
                         <li><a class="link-light rounded mb-1 {{ Request::is('administrasi/guru*') ? 'bg-gradient-primary ' : '' }}"
                                 style="width: 100%" href="/administrasi/guru"><i
                                     class="material-icons opacity-10 mx-2">groups</i> Data
